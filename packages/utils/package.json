@@ -1,0 +1,22 @@
+{
+  "name": "@foundation/utils",
+  "version": "1.0.0",
+  "description": "Shared utility functions",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest --passWithNoTests",
+    "lint": "cd ../.. && npx eslint packages/utils/src/**/*.ts",
+    "analyze": "echo 'No static analysis configured for utils'",
+    "clean": "rm -rf dist",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@foundation/contracts": "workspace:*"
+  },
+  "devDependencies": {},
+  "files": [
+    "dist/**/*"
+  ]
+}

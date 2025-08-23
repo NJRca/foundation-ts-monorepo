@@ -1,0 +1,20 @@
+{
+  "name": "@foundation/contracts",
+  "version": "1.0.0",
+  "description": "Domain contracts and interfaces",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest --passWithNoTests",
+    "lint": "cd ../.. && npx eslint packages/contracts/src/**/*.ts",
+    "analyze": "echo 'No static analysis configured for contracts'",
+    "clean": "rm -rf dist",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "files": [
+    "dist/**/*"
+  ]
+}
