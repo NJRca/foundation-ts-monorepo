@@ -84,3 +84,28 @@ export const ResultFactory = {
     error
   })
 };
+
+// Design by Contract - Runtime validation guards
+export function assertNonNull<T>(value: T | null | undefined, message?: string): asserts value is T {
+  if (value === null || value === undefined) {
+    throw new Error(message || 'Value must not be null or undefined');
+  }
+}
+
+export function assertNumberFinite(value: number, message?: string): asserts value is number {
+  if (!Number.isFinite(value)) {
+    throw new Error(message || 'Value must be a finite number');
+  }
+}
+
+export function assertIndexInRange(index: number, length: number, message?: string): asserts index is number {
+  assertNumberFinite(index, 'Index must be a finite number');
+  assertNumberFinite(length, 'Length must be a finite number');
+  if (index < 0 || index >= length) {
+    throw new Error(message || `Index ${index} is out of range [0, ${length})`);
+  }
+}
+
+export function fail(message: string): never {
+  throw new Error(message);
+}

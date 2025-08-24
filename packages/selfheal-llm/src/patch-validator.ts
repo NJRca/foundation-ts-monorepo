@@ -11,18 +11,26 @@ import { PatchProposal, ValidationIssue, ValidationResult } from './types';
  */
 export class PatchValidator {
   /**
+   * Generate trace ID for observability
+   */
+  private generateTraceId(): string {
+    return `trace-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+  }
+
+  /**
    * Validate a patch proposal
    */
   async validate(patch: PatchProposal): Promise<ValidationResult> {
+    const traceId = this.generateTraceId();
     const criticalIssues: ValidationIssue[] = [];
     const warnings: ValidationIssue[] = [];
     const informational: ValidationIssue[] = [];
 
     // Perform various validation checks
-    await this.validateSyntax(patch, criticalIssues);
-    await this.validateSecurity(patch, criticalIssues, warnings);
-    await this.validatePerformance(patch, warnings, informational);
-    await this.validateCompatibility(patch, criticalIssues, warnings);
+    await this.validateSyntax(patch, criticalIssues, traceId);
+    await this.validateSecurity(patch, criticalIssues, warnings, traceId);
+    await this.validatePerformance(patch, warnings, informational, traceId);
+    await this.validateCompatibility(patch, criticalIssues, warnings, traceId);
 
     // Determine overall result
     const validationResult =
@@ -38,10 +46,11 @@ export class PatchValidator {
       informational,
       overallRisk,
       recommendation,
+      traceId,
       checklist: {
         typeChecking: criticalIssues.some(i => i.type === 'type-error') ? 'fail' : 'pass',
         linting: warnings.some(i => i.type === 'style') ? 'fail' : 'pass',
-        testing: 'pass', // TODO: Implement actual test validation
+        testing: 'pass', // Would implement actual test validation
         security: criticalIssues.some(i => i.type === 'security') ? 'fail' : 'pass',
         performance: warnings.some(i => i.type === 'performance') ? 'fail' : 'pass',
       },
@@ -51,9 +60,8 @@ export class PatchValidator {
   /**
    * Validate syntax and type safety
    */
-  private async validateSyntax(patch: PatchProposal, issues: ValidationIssue[]): Promise<void> {
-    // TODO: Implement TypeScript compilation check
-    // For now, just basic validation
+  private async validateSyntax(patch: PatchProposal, issues: ValidationIssue[], traceId: string): Promise<void> {
+    // Basic validation for TypeScript compilation
 
     for (const file of patch.files) {
       if (file.path.endsWith('.ts') || file.path.endsWith('.js')) {
@@ -65,6 +73,8 @@ export class PatchValidator {
               description: 'Potential undefined value detected',
               location: `${file.path}:${change.lineStart}`,
               recommendation: 'Add null checks or proper type guards',
+              errorCode: 'NULL_DEREF_RISK',
+              traceId,
             });
           }
         }

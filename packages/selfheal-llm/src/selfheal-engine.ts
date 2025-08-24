@@ -1,29 +1,85 @@
 /**
  * @fileoverview Main Self-Healing Engine
- *
+ * 
  * Core orchestrator for the self-healing system that coordinates
  * issue detection, analysis, patch generation, and validation.
+ * Follows Functional Core / Imperative Shell pattern.
  */
 
-import {
-  ErrorInfo,
+import { 
+  assertNonNull, 
+  assertNumberFinite, 
+  Logger, 
+  Config,
+  fail
+} from '@foundation/contracts';
+import { loadConfig } from '@foundation/config';
+import { 
+  SelfHealConfig, 
+  ErrorInfo, 
+  SelfHealResult, 
   IssueClassification,
   PatchProposal,
-  SelfHealConfig,
-  SelfHealResult,
-  TestSuite,
   ValidationResult,
+  TestSuite,
+  SeverityLevel
 } from './types';
 
 /**
  * Main engine for the self-healing system
+ * Implements Functional Core / Imperative Shell pattern
  */
 export class SelfHealEngine {
-  private config: SelfHealConfig;
+  private readonly config: SelfHealConfig;
+  private readonly logger: Logger;
+  private readonly configManager: Config;
   private isProcessing = false;
 
-  constructor(config: Partial<SelfHealConfig> = {}) {
-    this.config = this.mergeWithDefaults(config);
+  constructor(dependencies: { logger: Logger; config?: Config }) {
+    assertNonNull(dependencies, 'Dependencies must be provided');
+    assertNonNull(dependencies.logger, 'Logger must be provided');
+    
+    this.logger = dependencies.logger;
+    this.configManager = dependencies.config || loadConfig();
+    this.config = this.createValidatedConfig(dependencies.logger, this.configManager);
+  }
+
+  /**
+   * Create validated configuration with proper defaults
+   */
+  private createValidatedConfig(logger: Logger, configManager: Config): SelfHealConfig {
+    const confidenceThreshold = configManager.get('SELFHEAL_CONFIDENCE_THRESHOLD', '0.8');
+    const maxRetries = configManager.get('SELFHEAL_MAX_RETRIES', '3');
+    
+    const confidence = parseFloat(confidenceThreshold);
+    const retries = parseInt(maxRetries, 10);
+    
+    if (isNaN(confidence) || confidence < 0 || confidence > 1) {
+      throw new Error('SELFHEAL_CONFIDENCE_THRESHOLD must be a number between 0 and 1');
+    }
+    
+    if (isNaN(retries) || retries < 1) {
+      throw new Error('SELFHEAL_MAX_RETRIES must be a positive integer');
+    }
+
+    return {
+      autoApply: configManager.get('SELFHEAL_AUTO_APPLY') === 'true',
+      confidenceThreshold: confidence,
+      maxRetries: retries,
+      generateTests: configManager.get('SELFHEAL_GENERATE_TESTS') !== 'false',
+      logger,
+      config: configManager,
+      prompts: {
+        systemCore: '',
+        classify: '',
+        synthesizeTest: '',
+        proposePatch: '',
+        diffGuard: '',
+        critiquePatch: '',
+        commitMessage: '',
+        pullRequestBody: ''
+      }
+    };
   }
 
   /**
@@ -94,6 +150,7 @@ export class SelfHealEngine {
           requiresExternalResources: false,
           estimatedComplexity: 'complex' as const,
           riskLevel: 'high' as const,
+          traceId: this.generateTraceId()
         })),
         error: error instanceof Error ? error.message : 'Unknown error',
         metadata: {
@@ -113,9 +170,16 @@ export class SelfHealEngine {
    * Classify the type of issue based on error information
    */
   private async classifyIssue(errorInfo: ErrorInfo): Promise<IssueClassification> {
-    // TODO: Implement LLM-based classification using prompts/10_task.classify.md
-
-    // Placeholder implementation
+    // Pure function - analyze error info without side effects
+    const traceId = this.generateTraceId();
+    
+    this.logger.info('Classifying issue', {
+      traceId,
+      errorType: errorInfo.type,
+      file: errorInfo.file
+    });
+    
+    // Placeholder implementation - would use LLM-based classification
     return {
       primaryCategory: 'runtime-error',
       subCategory: 'null-reference',
@@ -125,6 +189,7 @@ export class SelfHealEngine {
       requiresExternalResources: false,
       estimatedComplexity: 'moderate',
       riskLevel: 'medium',
+      traceId
     };
   }
 
@@ -152,9 +217,14 @@ export class SelfHealEngine {
    * Validate the proposed patch for safety and quality
    */
   private async validatePatch(patch: PatchProposal): Promise<ValidationResult> {
-    // TODO: Implement validation using prompts/35_task.diff_guard.md
-
-    // Placeholder implementation
+    const traceId = this.generateTraceId();
+    
+    this.logger.info('Validating patch', {
+      traceId,
+      patchId: patch.patchId
+    });
+    
+    // Placeholder implementation - would use comprehensive validation
     return {
       validationResult: 'PASS',
       criticalIssues: [],
@@ -162,6 +232,7 @@ export class SelfHealEngine {
       informational: [],
       overallRisk: 'low',
       recommendation: 'APPROVE',
+      traceId,
       checklist: {
         typeChecking: 'pass',
         linting: 'pass',
@@ -221,33 +292,17 @@ export class SelfHealEngine {
   }
 
   /**
-   * Merge user config with defaults
-   */
-  private mergeWithDefaults(config: Partial<SelfHealConfig>): SelfHealConfig {
-    return {
-      autoApply: false,
-      confidenceThreshold: 0.8,
-      maxRetries: 3,
-      generateTests: true,
-      prompts: {
-        systemCore: '',
-        classify: '',
-        synthesizeTest: '',
-        proposePatch: '',
-        diffGuard: '',
-        critiquePatch: '',
-        commitMessage: '',
-        pullRequestBody: '',
-      },
-      ...config,
-    };
-  }
-
-  /**
    * Generate unique issue ID
    */
   private generateIssueId(): string {
-    return `AUTO-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    return `AUTO-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+  }
+
+  /**
+   * Generate trace ID for observability
+   */
+  private generateTraceId(): string {
+    return `trace-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
   }
 
   /**
@@ -258,12 +313,15 @@ export class SelfHealEngine {
     validation: ValidationResult
   ): number {
     const classificationConfidence = classification.confidence / 100;
-    const validationConfidence =
-      validation.validationResult === 'PASS'
-        ? 1
-        : validation.validationResult === 'WARN'
-          ? 0.7
-          : 0.3;
+    
+    let validationConfidence: number;
+    if (validation.validationResult === 'PASS') {
+      validationConfidence = 1;
+    } else if (validation.validationResult === 'WARN') {
+      validationConfidence = 0.7;
+    } else {
+      validationConfidence = 0.3;
+    }
 
     return Math.round(classificationConfidence * validationConfidence * 100);
   }

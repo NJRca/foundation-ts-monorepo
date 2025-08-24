@@ -2,6 +2,16 @@
  * @fileoverview Type definitions for the Self-Healing LLM package
  */
 
+import { Logger, Config } from '@foundation/contracts';
+
+// Risk levels as type union
+export type SeverityLevel = 'low' | 'medium' | 'high' | 'critical';
+export type ComplexityLevel = 'simple' | 'moderate' | 'complex';
+export type RiskLevel = 'low' | 'medium' | 'high';
+export type ValidationStatus = 'pass' | 'fail';
+export type ValidationResultType = 'PASS' | 'WARN' | 'FAIL';
+export type RecommendationType = 'APPROVE' | 'APPROVE_WITH_CHANGES' | 'REJECT';
+
 /**
  * Configuration for the self-healing system
  */
@@ -14,6 +24,10 @@ export interface SelfHealConfig {
   maxRetries: number;
   /** Enable test generation */
   generateTests: boolean;
+  /** Logger instance for structured logging */
+  logger: Logger;
+  /** Configuration manager */
+  config: Config;
   /** Prompt templates configuration */
   prompts: {
     systemCore: string;
@@ -28,17 +42,34 @@ export interface SelfHealConfig {
 }
 
 /**
+ * Error information for analysis with observability
+ */
+export interface ErrorInfo {
+  message: string;
+  stack?: string;
+  type: string;
+  file?: string;
+  line?: number;
+  column?: number;
+  context?: Record<string, any>;
+  traceId: string;
+  errorCode: string;
+  riskBreadcrumb?: string[];
+}
+
+/**
  * Issue classification result
  */
 export interface IssueClassification {
   primaryCategory: string;
   subCategory: string;
-  severity: 'low' | 'medium' | 'high' | 'critical';
+  severity: SeverityLevel;
   confidence: number;
   affectedComponents: string[];
   requiresExternalResources: boolean;
-  estimatedComplexity: 'simple' | 'moderate' | 'complex';
-  riskLevel: 'low' | 'medium' | 'high';
+  estimatedComplexity: ComplexityLevel;
+  riskLevel: RiskLevel;
+  traceId: string;
 }
 
 /**
@@ -77,18 +108,19 @@ export interface CodeChange {
  * Patch validation result
  */
 export interface ValidationResult {
-  validationResult: 'PASS' | 'WARN' | 'FAIL';
+  validationResult: ValidationResultType;
   criticalIssues: ValidationIssue[];
   warnings: ValidationIssue[];
   informational: ValidationIssue[];
-  overallRisk: 'low' | 'medium' | 'high' | 'critical';
-  recommendation: 'APPROVE' | 'APPROVE_WITH_CHANGES' | 'REJECT';
+  overallRisk: SeverityLevel;
+  recommendation: RecommendationType;
+  traceId: string;
   checklist: {
-    typeChecking: 'pass' | 'fail';
-    linting: 'pass' | 'fail';
-    testing: 'pass' | 'fail';
-    security: 'pass' | 'fail';
-    performance: 'pass' | 'fail';
+    typeChecking: ValidationStatus;
+    linting: ValidationStatus;
+    testing: ValidationStatus;
+    security: ValidationStatus;
+    performance: ValidationStatus;
   };
 }
 
@@ -97,10 +129,12 @@ export interface ValidationResult {
  */
 export interface ValidationIssue {
   type: string;
-  severity: 'critical' | 'high' | 'medium' | 'low';
+  severity: SeverityLevel;
   description: string;
   location: string;
   recommendation: string;
+  errorCode: string;
+  traceId: string;
 }
 
 /**

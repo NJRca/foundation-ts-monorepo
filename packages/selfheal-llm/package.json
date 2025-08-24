@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "@foundation/contracts": "*",
-    "@foundation/utils": "*"
+    "@foundation/utils": "*",
+    "@foundation/config": "*"
   },
   "devDependencies": {},
   "files": [
