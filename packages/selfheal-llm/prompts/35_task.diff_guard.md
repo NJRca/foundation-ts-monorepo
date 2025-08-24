@@ -157,3 +157,60 @@ A patch is approved if:
 - [ ] Proper test coverage exists
 - [ ] Documentation is updated
 - [ ] Rollback plan is defined
+
+## Specialized DbC Patch Validation
+
+### Task: Validate your previously proposed unified diff against the constraints
+
+For Design by Contract-based minimal patches, perform additional constraint validation:
+
+**Constraints to validate:**
+
+- Only modifies path: `{{filePath}}`
+- All hunks are within lines `{{functionStart}}..{{functionEnd}}` except possible import lines at the top
+- Uses only `@foundation/contracts` functions for DbC; no new dependencies
+- No changes to unrelated exports, package.json, configs, or other files
+- Patch compiles under TypeScript strict mode
+
+**Input:**
+
+```diff
+<<<DIFF::START>>>
+{{diff}}
+<<<DIFF::END>>>
+```
+
+**Output (JSON only):**
+
+```json
+{
+  "ok": true | false,
+  "violations": [ "message", ... ],
+  "justification": "optional brief"
+}
+```
+
+**Validation Rules:**
+
+1. **File Scope Validation**
+   - Verify only `{{filePath}}` is modified
+   - Check no changes to package.json, configs, or unrelated files
+
+2. **Line Range Validation**
+   - Ensure all hunks (except imports) are within `{{functionStart}}..{{functionEnd}}`
+   - Allow import additions only at the top of file
+
+3. **Dependency Constraint Validation**
+   - Verify only `@foundation/contracts` functions are imported/used
+   - Check no new dependencies added to package.json
+   - Ensure no third-party library usage
+
+4. **Export Safety Validation**
+   - Verify no changes to public API exports
+   - Check no modification of unrelated functions or classes
+   - Ensure backward compatibility maintained
+
+5. **TypeScript Compilation Validation**
+   - Verify patch would compile under strict mode
+   - Check no type errors introduced
+   - Validate import/export consistency
