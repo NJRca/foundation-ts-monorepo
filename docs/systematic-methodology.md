@@ -23,3 +23,4 @@
 3. ✅ Create reusable automation scripts
 4. ✅ Monitor metrics continuously
 5. ✅ Repeat Phases 1-3 if errors continue to not resolve after 3 attempts
+6. ✅ Check for Run errors with Github. Repeate Repeat Phases 1-3 to resolve
