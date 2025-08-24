@@ -27,7 +27,12 @@
     "db:up": "docker-compose up -d postgres redis",
     "monitoring:up": "docker-compose up -d prometheus grafana",
     "analyze:security": "npm run analyze --workspace=@foundation/analyzer",
-    "check:health": "curl -f http://localhost:3001/health && curl -f http://localhost:9090/-/healthy && curl -f http://localhost:3000/api/health"
+    "check:health": "curl -f http://localhost:3001/health && curl -f http://localhost:9090/-/healthy && curl -f http://localhost:3000/api/health",
+    "start": "npm run start:user-service",
+    "start:user-service": "cd services/user-service && npm run start",
+    "start:user-service:dev": "cd services/user-service && npm run dev",
+    "start:user-service:build": "cd services/user-service && npm run build && npm run start",
+    "help": "echo '\n🚀 Available Commands:\n  npm run build              - Build all packages\n  npm run start              - Start user service\n  npm run start:user-service - Start user service (production)\n  npm run start:user-service:dev - Start user service (development)\n  npm run dev:setup          - Setup development environment\n  npm run dev:start          - Start all services with Docker\n  npm run check:health       - Check all service health endpoints\n'"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
