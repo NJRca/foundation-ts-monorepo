@@ -10,8 +10,17 @@
   "packageManager": "pnpm@10.15.0",
   "scripts": {
     "build": "npm run build --workspaces",
+    "build:watch": "npm run build --workspaces -- --watch",
+    "build:clean": "npm run clean && npm run build",
     "test": "npm run test --workspaces",
+    "test:watch": "npm run test --workspaces -- --watch",
+    "test:coverage": "npm run test --workspaces -- --coverage",
+    "test:ci": "npm run test --workspaces -- --ci --coverage --watchAll=false",
     "lint": "npm run lint --workspaces",
+    "lint:fix": "npm run lint --workspaces -- --fix",
+    "lint:check": "npm run lint",
+    "format": "prettier --write \"**/*.{ts,js,json,md,yml,yaml}\"",
+    "format:check": "prettier --check \"**/*.{ts,js,json,md,yml,yaml}\"",
     "analyze": "npm run analyze --workspaces",
     "clean": "npm run clean --workspaces",
     "dev": "npm run dev --workspaces",
@@ -32,7 +41,16 @@
     "start:user-service": "cd services/user-service && npm run start",
     "start:user-service:dev": "cd services/user-service && npm run dev",
     "start:user-service:build": "cd services/user-service && npm run build && npm run start",
-    "help": "echo '\n🚀 Available Commands:\n  npm run build              - Build all packages\n  npm run start              - Start user service\n  npm run start:user-service - Start user service (production)\n  npm run start:user-service:dev - Start user service (development)\n  npm run dev:setup          - Setup development environment\n  npm run dev:start          - Start all services with Docker\n  npm run check:health       - Check all service health endpoints\n'"
+    "deps:check": "npm audit && npm outdated",
+    "deps:update": "npm update --workspaces",
+    "deps:install": "npm install --workspaces",
+    "workspace:list": "npm ls --workspaces --depth=0",
+    "workspace:graph": "echo 'Workspace dependency graph:' && npm ls --workspaces",
+    "ci:local": "npm run lint && npm run test:ci && npm run build",
+    "ci:validate": "npm run format:check && npm run lint:check && npm run test:ci",
+    "quick-start": "npm run build && npm run start",
+    "full-setup": "npm install && npm run build && npm run dev:setup",
+    "help": "echo '\n🚀 Foundation Monorepo Commands:\n\n📦 Build & Development:\n  npm run build              - Build all packages\n  npm run build:watch        - Build with watch mode\n  npm run dev                - Start development mode\n  npm run quick-start        - Build and start services\n\n🧪 Testing:\n  npm run test               - Run all tests\n  npm run test:watch         - Run tests in watch mode\n  npm run test:coverage      - Run tests with coverage\n\n🔍 Code Quality:\n  npm run lint               - Lint all code\n  npm run lint:fix           - Auto-fix lint issues\n  npm run format             - Format all code\n  npm run format:check       - Check code formatting\n\n🚀 Services:\n  npm run start              - Start user service\n  npm run start:user-service:dev - Start in development mode\n\n🐳 Docker:\n  npm run dev:start          - Start all services with Docker\n  npm run dev:setup          - Setup development environment\n\n📊 Utilities:\n  npm run deps:check         - Check dependencies\n  npm run workspace:list     - List all workspaces\n  npm run ci:local           - Run CI pipeline locally\n  npm run help               - Show this help\n'"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
@@ -45,6 +63,7 @@
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "^8.0.0",
     "jest": "^29.5.0",
+    "prettier": "^3.0.0",
     "ts-jest": "^29.1.0",
     "typescript": "^5.0.0"
   },
