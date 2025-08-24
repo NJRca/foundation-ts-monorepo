@@ -459,8 +459,8 @@ export class SecurityUtils {
 
   static sanitizeInput(input: string): string {
     return input
-      .replace(/[<>\"']/g, '') // Remove HTML/script injection chars
-      .replace(/[\\\/]/g, '') // Remove path traversal chars
+      .replace(/[<>"']/g, '') // Remove HTML/script injection chars
+      .replace(/[\\/]/g, '') // Remove path traversal chars
       .trim();
   }
 
@@ -469,7 +469,7 @@ export class SecurityUtils {
     const hasUpperCase = /[A-Z]/.test(password);
     const hasLowerCase = /[a-z]/.test(password);
     const hasNumbers = /\d/.test(password);
-    const hasSpecialChar = /[!@#$%^&*(),.?\":{}|<>]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
 
     return password.length >= minLength && 
            hasUpperCase && 
@@ -507,7 +507,7 @@ export class SecurityUtils {
     return count <= maxRequests;
   }
 
-  private static rateLimitStore = new Map<string, number>();
+  private static readonly rateLimitStore = new Map<string, number>();
 }
 
 // Authentication middleware for Express
@@ -530,7 +530,7 @@ export class AuthMiddleware {
     return async (req: any, res: any, next: any): Promise<void> => {
       const authHeader = req.headers.authorization;
       
-      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      if (!authHeader?.startsWith('Bearer ')) {
         res.status(401).json({
           error: 'Unauthorized',
           message: 'Missing or invalid authorization header'
