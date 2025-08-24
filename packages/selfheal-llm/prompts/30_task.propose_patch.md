@@ -192,7 +192,7 @@ Each patch should include:
 +++ b/src/example.ts
 @@ -1,5 +1,6 @@
 +import { assertNonNull } from '@foundation/contracts';
- 
+
  function processData(input: Data | null): Result {
 +  assertNonNull(input, 'Input data cannot be null');
    return input.process();

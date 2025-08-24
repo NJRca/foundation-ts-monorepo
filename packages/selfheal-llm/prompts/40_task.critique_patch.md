@@ -189,3 +189,65 @@ function alternativeB() {
 - Unacceptable performance impact
 - Violates architectural principles
 - Insufficient quality or testing
+
+## Specialized DbC Patch Critique
+
+### Task: Critique the patch for hidden issues and analyzer risks
+
+For Design by Contract-based patches, perform specialized analysis to identify subtle issues:
+
+**Inputs:**
+
+- RULE: `{{rule}}`
+- DIFF: `<<<DIFF::START>>>{{diff}}<<<DIFF::END>>>`
+- RELEVANT CODE (post-patch context if available), or pre-patch: `<<<SOURCE::START>>>{{source}}<<<SOURCE::END>>>`
+
+**Output (JSON only):**
+
+```json
+{
+  "risks": [
+    "False negative: guard too late in control flow",
+    "NaN path not handled for input Z"
+  ],
+  "suggested_small_adjustments": [
+    "Move assertNumberFinite to the top of function next to other contracts"
+  ],
+  "should_revise": true | false
+}
+```
+
+**DbC-Specific Risk Categories:**
+
+1. **Contract Placement Risks**
+   - Guards placed too late in control flow
+   - Contracts after potential side effects
+   - Missing contracts on all entry points
+
+2. **Contract Coverage Risks**  
+   - Incomplete input validation patterns
+   - Missing edge case handling (NaN, Infinity, negative zero)
+   - Insufficient range validation for arrays/strings
+
+3. **Control Flow Risks**
+   - Early returns bypassing necessary contracts
+   - Exception paths not properly guarded
+   - State mutation before validation
+
+4. **Static Analyzer Risks**
+   - New unreachable code warnings
+   - Unused variable introductions
+   - Type narrowing issues after assertions
+
+5. **Performance Risks**
+   - Redundant validation in hot paths
+   - Expensive string operations in error messages
+   - Memory allocation in assertion helpers
+
+**Common Issues by DbC Rule:**
+
+- **null**: Contract placement after first usage, missing null coalescing opportunities
+- **divzero**: Not handling negative zero, infinity cases, floating-point precision issues  
+- **oob**: Off-by-one in range checks, missing empty collection handling
+- **nan**: Not catching Infinity, missing number type validation
+- **unreachable**: Creating new unreachable paths, improper early returns

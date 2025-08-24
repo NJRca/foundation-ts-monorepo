@@ -190,6 +190,15 @@ export interface ErrorInfo {
 }
 
 /**
+ * Patch critique result
+ */
+export interface PatchCritique {
+  risks: string[];
+  suggested_small_adjustments: string[];
+  should_revise: boolean;
+}
+
+/**
  * Self-healing operation result
  */
 export interface SelfHealResult {
@@ -198,6 +207,7 @@ export interface SelfHealResult {
   classification: IssueClassification;
   patch?: PatchProposal;
   validation?: ValidationResult;
+  critique?: PatchCritique;
   tests?: TestSuite;
   commitMessage?: string;
   pullRequestBody?: string;

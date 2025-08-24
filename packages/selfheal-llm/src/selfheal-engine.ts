@@ -11,11 +11,12 @@ import {
   ErrorInfo,
   IssueClassification,
   PatchProposal,
+  PatchCritique,
   SelfHealConfig,
   SelfHealResult,
   TestSuite,
-  ValidationResult,
   ValidationIssue,
+  ValidationResult,
 } from './types';
 
 import { loadConfig } from '@foundation/config';
@@ -100,7 +101,10 @@ export class SelfHealEngine {
       // Step 3: Validate the patch
       const validation = await this.validatePatch(patch);
 
-      // Step 4: Generate tests
+      // Step 4: Critique the patch for hidden issues
+      const critique = await this.critiquePatch(patch, classification, validation);
+
+      // Step 5: Generate tests
       const tests = await this.generateTests(patch, classification);
 
       // Step 5: Generate commit message and PR body
@@ -109,6 +113,7 @@ export class SelfHealEngine {
         patch,
         classification,
         validation,
+        critique,
         tests
       );
 
@@ -120,6 +125,7 @@ export class SelfHealEngine {
         classification,
         patch,
         validation,
+        critique,
         tests,
         commitMessage,
         pullRequestBody,
@@ -236,12 +242,12 @@ export class SelfHealEngine {
     // For runtime errors with specialized analysis, generate DbC-based patch
     if (classification.runtimeErrorAnalysis) {
       const { rule, target, suggested_strategy } = classification.runtimeErrorAnalysis;
-      
+
       description = `Fix ${rule} error in ${target.file} using DbC guards`;
-      
+
       // Determine if @foundation/contracts import is needed
       let needsContractsImport = true; // TODO: Parse existing imports in target file
-      
+
       if (needsContractsImport) {
         dependencies.push('@foundation/contracts');
       }
@@ -250,13 +256,15 @@ export class SelfHealEngine {
       files.push({
         path: target.file,
         changeType: 'MODIFY' as const,
-        changes: [{
-          lineStart: target.startLine,
-          lineEnd: target.endLine,
-          originalCode: '// TODO: Parse actual source code from target',
-          newCode: `// TODO: Apply ${rule} DbC guard: ${suggested_strategy.join(', ')}`,
-          reason: `Apply ${rule} validation using Design by Contract principles`,
-        }],
+        changes: [
+          {
+            lineStart: target.startLine,
+            lineEnd: target.endLine,
+            originalCode: '// TODO: Parse actual source code from target',
+            newCode: `// TODO: Apply ${rule} DbC guard: ${suggested_strategy.join(', ')}`,
+            reason: `Apply ${rule} validation using Design by Contract principles`,
+          },
+        ],
       });
     }
 
@@ -291,7 +299,7 @@ export class SelfHealEngine {
     // Perform specialized DbC constraint validation for minimal patches
     if (patch.files.length === 1 && patch.dependencies.includes('@foundation/contracts')) {
       const file = patch.files[0];
-      
+
       this.logger.info('Performing DbC constraint validation', {
         traceId,
         filePath: file.path,
@@ -310,7 +318,7 @@ export class SelfHealEngine {
       const constraintValidation = {
         ok: true,
         violations: [] as string[],
-        justification: 'DbC constraints validated successfully'
+        justification: 'DbC constraints validated successfully',
       };
 
       if (!constraintValidation.ok) {
@@ -348,6 +356,80 @@ export class SelfHealEngine {
         security: 'pass',
         performance: 'pass',
       },
+    };
+  }
+
+  /**
+   * Critique the patch for hidden issues and analyzer risks
+   */
+  private async critiquePatch(
+    patch: PatchProposal,
+    classification: IssueClassification,
+    validation: ValidationResult
+  ): Promise<PatchCritique> {
+    const traceId = this.generateTraceId();
+
+    this.logger.info('Critiquing patch for hidden issues', {
+      traceId,
+      patchId: patch.patchId,
+      hasRuntimeAnalysis: !!classification.runtimeErrorAnalysis,
+      validationResult: validation.validationResult,
+    });
+
+    // Enhanced critique with DbC-specific analysis
+    const risks: string[] = [];
+    const adjustments: string[] = [];
+
+    // Perform specialized critique for DbC patches
+    if (classification.runtimeErrorAnalysis && patch.dependencies.includes('@foundation/contracts')) {
+      const { rule } = classification.runtimeErrorAnalysis;
+
+      this.logger.info('Performing DbC-specific critique', {
+        traceId,
+        rule,
+        fileCount: patch.files.length,
+      });
+
+      // TODO: Implement actual patch critique using prompts/40_task.critique_patch.md
+      // This would analyze:
+      // - Contract placement in control flow
+      // - Coverage of edge cases (NaN, Infinity, negative zero)
+      // - Static analyzer risks
+      // - Performance implications
+      // - Alternative approaches
+
+      // Simulate rule-specific risk analysis
+      switch (rule) {
+        case 'null':
+          if (patch.files.some(f => f.changes.some(c => c.newCode.includes('assertNonNull') && c.newCode.includes('return')))) {
+            risks.push('Contract placement: assertNonNull may be too late in control flow');
+            adjustments.push('Move assertNonNull to the top of function before any processing');
+          }
+          break;
+        
+        case 'nan':
+          if (patch.files.some(f => f.changes.some(c => !c.newCode.includes('Infinity')))) {
+            risks.push('NaN validation incomplete: Infinity cases not handled');
+            adjustments.push('Add Infinity check alongside assertNumberFinite');
+          }
+          break;
+
+        case 'divzero':
+          if (patch.files.some(f => f.changes.some(c => !c.newCode.includes('=== 0')))) {
+            risks.push('Division by zero: negative zero not handled');
+            adjustments.push('Use Object.is(divisor, 0) to handle negative zero case');
+          }
+          break;
+      }
+    }
+
+    // Determine if revision is needed
+    const shouldRevise = risks.length > 0 || (validation.validationResult === 'WARN' && validation.warnings.length > 2);
+
+    return {
+      risks,
+      suggested_small_adjustments: adjustments,
+      should_revise: shouldRevise,
     };
   }
 
@@ -438,12 +520,25 @@ export class SelfHealEngine {
     patch: PatchProposal,
     classification: IssueClassification,
     validation: ValidationResult,
+    critique: PatchCritique,
     tests: TestSuite
   ): Promise<string> {
     // TODO: Implement using prompts/60_task.pull_request_body.md
 
-    // Placeholder implementation
-    return `## 🤖 Automated Fix Summary\n\n**Issue**: ${classification.primaryCategory}\n**Solution**: ${patch.description}\n**Confidence**: ${classification.confidence}%\n\n*This PR was automatically generated by the SelfHeal-LLM system.*`;
+    // Enhanced placeholder with critique information
+    let body = `## 🤖 Automated Fix Summary\n\n**Issue**: ${classification.primaryCategory}\n**Solution**: ${patch.description}\n**Confidence**: ${classification.confidence}%`;
+    
+    if (critique.risks.length > 0) {
+      body += `\n\n### ⚠️ Identified Risks\n${critique.risks.map(risk => `- ${risk}`).join('\n')}`;
+    }
+    
+    if (critique.suggested_small_adjustments.length > 0) {
+      body += `\n\n### 🔧 Suggested Adjustments\n${critique.suggested_small_adjustments.map(adj => `- ${adj}`).join('\n')}`;
+    }
+    
+    body += `\n\n*This PR was automatically generated by the SelfHeal-LLM system.*`;
+    
+    return body;
   }
 
   /**
