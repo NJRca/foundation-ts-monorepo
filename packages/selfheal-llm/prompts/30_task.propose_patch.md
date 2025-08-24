@@ -5,16 +5,19 @@ Generate a targeted code patch that resolves the identified issue while maintain
 ## Patch Development Process
 
 ### 1. Root Cause Analysis
+
 - Identify the exact location and nature of the issue
 - Understand the context and dependencies
 - Analyze the impact scope
 
 ### 2. Solution Design
+
 - Design minimal invasive fix
 - Consider alternative approaches
 - Evaluate trade-offs and implications
 
 ### 3. Implementation Planning
+
 - Break down changes into atomic units
 - Plan the order of changes
 - Identify dependencies and prerequisites
@@ -22,18 +25,21 @@ Generate a targeted code patch that resolves the identified issue while maintain
 ## Patch Requirements
 
 ### Code Quality Standards
+
 - Follow existing code style and patterns
 - Maintain TypeScript type safety
 - Preserve existing API contracts
 - Ensure backward compatibility
 
 ### Safety Principles
+
 - Minimal surface area of change
 - No breaking changes to public APIs
 - Preserve existing functionality
 - Include proper error handling
 
 ### Documentation Requirements
+
 - Clear inline comments for complex logic
 - Update relevant documentation
 - Explain the reasoning behind the fix
@@ -42,6 +48,7 @@ Generate a targeted code patch that resolves the identified issue while maintain
 ## Patch Format
 
 ### File Changes
+
 ```typescript
 // File: path/to/file.ts
 // Change Type: [ADD|MODIFY|DELETE]

@@ -28,6 +28,7 @@ Create a clear, descriptive commit message that follows conventional commit stan
 ### Scope Guidelines
 
 Common scopes for this project:
+
 - **api**: API-related changes
 - **auth**: Authentication/authorization
 - **db**: Database changes
@@ -40,6 +41,7 @@ Common scopes for this project:
 ## Message Guidelines
 
 ### Description (Required)
+
 - Use imperative mood ("fix bug" not "fixed bug")
 - Start with lowercase letter
 - No period at the end
@@ -47,12 +49,14 @@ Common scopes for this project:
 - Be specific and concise
 
 ### Body (Optional)
+
 - Explain what and why, not how
 - Wrap at 72 characters
 - Separate from description with blank line
 - Use bullet points for multiple changes
 
 ### Footer (Optional)
+
 - Reference related issues
 - Note breaking changes
 - Include co-authors if applicable
@@ -60,6 +64,7 @@ Common scopes for this project:
 ## Examples
 
 ### Bug Fix
+
 ```
 fix(api): handle null response in user endpoint
 
@@ -71,6 +76,7 @@ Fixes #123
 ```
 
 ### Feature Addition
+
 ```
 feat(auth): add JWT token refresh mechanism
 
@@ -84,6 +90,7 @@ Closes #456
 ```
 
 ### Breaking Change
+
 ```
 feat(api)!: update user model schema
 
@@ -96,6 +103,7 @@ Closes #789
 ```
 
 ### Refactoring
+
 ```
 refactor(utils): extract common validation logic
 
@@ -110,6 +118,7 @@ refactor(utils): extract common validation logic
 For self-healing related commits, use these patterns:
 
 ### Automated Fix
+
 ```
 fix(selfheal): resolve type mismatch in user service
 
@@ -123,6 +132,7 @@ Issue: #AUTO-001
 ```
 
 ### Test Generation
+
 ```
 test(selfheal): add regression tests for user validation
 
@@ -137,6 +147,7 @@ Related to: #AUTO-001
 ```
 
 ### Configuration Fix
+
 ```
 fix(config): correct database connection timeout
 
@@ -184,12 +195,14 @@ Auto-Issue: #<unique identifier>
 ## Message Quality Standards
 
 ### Good Examples
+
 - Clear and specific
 - Explains the impact
 - References related work
 - Follows conventional format
 
 ### Poor Examples
+
 - Vague descriptions ("fix stuff")
 - Missing context
 - Incorrect type classification

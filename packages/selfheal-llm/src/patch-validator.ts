@@ -1,10 +1,10 @@
 /**
  * @fileoverview Patch Validator
- * 
+ *
  * Validates proposed patches for safety, quality, and compatibility.
  */
 
-import { PatchProposal, ValidationResult, ValidationIssue } from './types';
+import { PatchProposal, ValidationIssue, ValidationResult } from './types';
 
 /**
  * Validator for code patches
@@ -25,8 +25,8 @@ export class PatchValidator {
     await this.validateCompatibility(patch, criticalIssues, warnings);
 
     // Determine overall result
-    const validationResult = criticalIssues.length > 0 ? 'FAIL' : 
-                           warnings.length > 0 ? 'WARN' : 'PASS';
+    const validationResult =
+      criticalIssues.length > 0 ? 'FAIL' : warnings.length > 0 ? 'WARN' : 'PASS';
 
     const overallRisk = this.calculateRisk(criticalIssues, warnings);
     const recommendation = this.getRecommendation(validationResult, overallRisk);
@@ -43,8 +43,8 @@ export class PatchValidator {
         linting: warnings.some(i => i.type === 'style') ? 'fail' : 'pass',
         testing: 'pass', // TODO: Implement actual test validation
         security: criticalIssues.some(i => i.type === 'security') ? 'fail' : 'pass',
-        performance: warnings.some(i => i.type === 'performance') ? 'fail' : 'pass'
-      }
+        performance: warnings.some(i => i.type === 'performance') ? 'fail' : 'pass',
+      },
     };
   }
 
@@ -54,7 +54,7 @@ export class PatchValidator {
   private async validateSyntax(patch: PatchProposal, issues: ValidationIssue[]): Promise<void> {
     // TODO: Implement TypeScript compilation check
     // For now, just basic validation
-    
+
     for (const file of patch.files) {
       if (file.path.endsWith('.ts') || file.path.endsWith('.js')) {
         for (const change of file.changes) {
@@ -64,7 +64,7 @@ export class PatchValidator {
               severity: 'high',
               description: 'Potential undefined value detected',
               location: `${file.path}:${change.lineStart}`,
-              recommendation: 'Add null checks or proper type guards'
+              recommendation: 'Add null checks or proper type guards',
             });
           }
         }
@@ -76,12 +76,12 @@ export class PatchValidator {
    * Validate security implications
    */
   private async validateSecurity(
-    patch: PatchProposal, 
-    critical: ValidationIssue[], 
+    patch: PatchProposal,
+    critical: ValidationIssue[],
     warnings: ValidationIssue[]
   ): Promise<void> {
     // TODO: Implement security scanning
-    
+
     for (const file of patch.files) {
       for (const change of file.changes) {
         // Check for potential security issues
@@ -91,7 +91,7 @@ export class PatchValidator {
             severity: 'critical',
             description: 'Use of eval() detected - potential code injection risk',
             location: `${file.path}:${change.lineStart}`,
-            recommendation: 'Replace eval() with safer alternatives'
+            recommendation: 'Replace eval() with safer alternatives',
           });
         }
       }
@@ -107,7 +107,7 @@ export class PatchValidator {
     informational: ValidationIssue[]
   ): Promise<void> {
     // TODO: Implement performance analysis
-    
+
     for (const file of patch.files) {
       for (const change of file.changes) {
         // Check for potential performance issues
@@ -117,7 +117,7 @@ export class PatchValidator {
             severity: 'low',
             description: 'Nested loops detected - review for optimization opportunities',
             location: `${file.path}:${change.lineStart}`,
-            recommendation: 'Consider algorithm optimization or caching'
+            recommendation: 'Consider algorithm optimization or caching',
           });
         }
       }
@@ -133,7 +133,7 @@ export class PatchValidator {
     warnings: ValidationIssue[]
   ): Promise<void> {
     // TODO: Implement compatibility checking
-    
+
     for (const file of patch.files) {
       if (file.changeType === 'DELETE') {
         warnings.push({
@@ -141,7 +141,7 @@ export class PatchValidator {
           severity: 'medium',
           description: 'File deletion may cause breaking changes',
           location: file.path,
-          recommendation: 'Verify no external dependencies on this file'
+          recommendation: 'Verify no external dependencies on this file',
         });
       }
     }
@@ -150,15 +150,18 @@ export class PatchValidator {
   /**
    * Calculate overall risk level
    */
-  private calculateRisk(critical: ValidationIssue[], warnings: ValidationIssue[]): 'low' | 'medium' | 'high' | 'critical' {
+  private calculateRisk(
+    critical: ValidationIssue[],
+    warnings: ValidationIssue[]
+  ): 'low' | 'medium' | 'high' | 'critical' {
     if (critical.length > 0) {
       return critical.some(i => i.severity === 'critical') ? 'critical' : 'high';
     }
-    
+
     if (warnings.length > 3) {
       return 'medium';
     }
-    
+
     return warnings.length > 0 ? 'low' : 'low';
   }
 
@@ -172,11 +175,11 @@ export class PatchValidator {
     if (result === 'FAIL' || risk === 'critical') {
       return 'REJECT';
     }
-    
+
     if (result === 'WARN' || risk === 'high') {
       return 'APPROVE_WITH_CHANGES';
     }
-    
+
     return 'APPROVE';
   }
 }

@@ -1,6 +1,6 @@
 /**
  * @fileoverview Prompt Manager
- * 
+ *
  * Manages loading and processing of prompt templates for the self-healing system.
  */
 
@@ -27,7 +27,7 @@ export class PromptManager {
     }
 
     const promptPath = join(this.promptsDir, `${promptName}.md`);
-    
+
     try {
       const content = readFileSync(promptPath, 'utf-8');
       this.promptCache.set(promptName, content);
@@ -43,17 +43,17 @@ export class PromptManager {
   loadAllPrompts(): Record<string, string> {
     const prompts = [
       '00_system.core',
-      '10_task.classify', 
+      '10_task.classify',
       '20_task.synthesize_test',
       '30_task.propose_patch',
       '35_task.diff_guard',
       '40_task.critique_patch',
       '50_task.commit_message',
-      '60_task.pull_request_body'
+      '60_task.pull_request_body',
     ];
 
     const result: Record<string, string> = {};
-    
+
     for (const prompt of prompts) {
       result[prompt] = this.loadPrompt(prompt);
     }
@@ -66,7 +66,7 @@ export class PromptManager {
    */
   processTemplate(template: string, variables: Record<string, any>): string {
     let processed = template;
-    
+
     for (const [key, value] of Object.entries(variables)) {
       const placeholder = `{{${key}}}`;
       processed = processed.replace(new RegExp(placeholder, 'g'), String(value));

@@ -24,18 +24,18 @@ import { SelfHealEngine } from '@foundation/selfheal-llm';
 
 // Initialize the self-healing engine
 const engine = new SelfHealEngine({
-  autoApply: false,           // Manual approval required
-  confidenceThreshold: 0.8,   // High confidence threshold
-  generateTests: true         // Generate comprehensive tests
+  autoApply: false, // Manual approval required
+  confidenceThreshold: 0.8, // High confidence threshold
+  generateTests: true, // Generate comprehensive tests
 });
 
 // Analyze and fix an error
 const errorInfo = {
   message: "Cannot read property 'id' of undefined",
-  type: "TypeError",
-  file: "src/user-service.ts",
+  type: 'TypeError',
+  file: 'src/user-service.ts',
   line: 42,
-  stack: "..."
+  stack: '...',
 };
 
 const result = await engine.heal(errorInfo);
@@ -53,7 +53,9 @@ if (result.success) {
 The package is built around several core components:
 
 ### SelfHealEngine
+
 The main orchestrator that coordinates the entire self-healing process:
+
 - Issue classification
 - Patch proposal generation
 - Validation and safety checks
@@ -61,7 +63,9 @@ The main orchestrator that coordinates the entire self-healing process:
 - Documentation creation
 
 ### PromptManager
+
 Manages LLM prompt templates for different tasks:
+
 - System core prompts
 - Issue classification prompts
 - Patch generation prompts
@@ -69,14 +73,18 @@ Manages LLM prompt templates for different tasks:
 - Test synthesis prompts
 
 ### PatchValidator
+
 Validates proposed patches for:
+
 - Syntax and type safety
 - Security implications
 - Performance impact
 - Compatibility concerns
 
 ### TestSynthesizer
+
 Generates comprehensive test suites:
+
 - Unit tests for individual components
 - Integration tests for component interactions
 - Regression tests to prevent issue recurrence
@@ -99,11 +107,12 @@ The package includes specialized prompt templates for each task:
 
 ```typescript
 interface SelfHealConfig {
-  autoApply: boolean;              // Automatically apply approved fixes
-  confidenceThreshold: number;     // Minimum confidence for auto-application (0-1)
-  maxRetries: number;              // Maximum retry attempts for failed operations
-  generateTests: boolean;          // Generate test suites for patches
-  prompts: {                       // Custom prompt templates
+  autoApply: boolean; // Automatically apply approved fixes
+  confidenceThreshold: number; // Minimum confidence for auto-application (0-1)
+  maxRetries: number; // Maximum retry attempts for failed operations
+  generateTests: boolean; // Generate test suites for patches
+  prompts: {
+    // Custom prompt templates
     systemCore: string;
     classify: string;
     synthesizeTest: string;
@@ -127,11 +136,12 @@ interface SelfHealConfig {
 ## Integration Examples
 
 ### CI/CD Integration
+
 ```typescript
 // In your CI pipeline
 const engine = new SelfHealEngine({
   autoApply: process.env.NODE_ENV === 'development',
-  confidenceThreshold: 0.9
+  confidenceThreshold: 0.9,
 });
 
 // Monitor for build failures and auto-fix
@@ -145,6 +155,7 @@ if (buildFailed) {
 ```
 
 ### Development Workflow
+
 ```typescript
 // During development
 const result = await engine.heal(runtimeError);
@@ -153,7 +164,7 @@ if (result.success) {
   // Review the proposed changes
   console.log('Proposed changes:', result.patch);
   console.log('Safety assessment:', result.validation);
-  
+
   // Apply if approved
   if (userApproves(result)) {
     await applyPatch(result.patch);
