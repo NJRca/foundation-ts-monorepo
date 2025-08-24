@@ -7,6 +7,7 @@
  */
 
 import { Config, Logger, assertNonNull } from '@foundation/contracts';
+import { LLMClient, LLMModel, createLLMClient } from './llm-client';
 import {
   ErrorInfo,
   IssueClassification,
@@ -29,21 +30,37 @@ export class SelfHealEngine {
   private readonly config: SelfHealConfig;
   private readonly logger: Logger;
   private readonly configManager: Config;
+  private llmClient: LLMClient | null = null;
   private isProcessing = false;
 
-  constructor(dependencies: { logger: Logger; config?: Config }) {
+  constructor(dependencies: {
+    logger: Logger;
+    config?: Config;
+    llmModel?: LLMModel;
+    useMockLLM?: boolean;
+  }) {
     assertNonNull(dependencies, 'Dependencies must be provided');
     assertNonNull(dependencies.logger, 'Logger must be provided');
 
     this.logger = dependencies.logger;
     this.configManager = dependencies.config || loadConfig();
-    this.config = this.createValidatedConfig(dependencies.logger, this.configManager);
+    this.config = this.createValidatedConfig(
+      dependencies.logger,
+      this.configManager,
+      dependencies.llmModel,
+      dependencies.useMockLLM
+    );
   }
 
   /**
    * Create validated configuration with proper defaults
    */
-  private createValidatedConfig(logger: Logger, configManager: Config): SelfHealConfig {
+  private createValidatedConfig(
+    logger: Logger,
+    configManager: Config,
+    llmModel?: LLMModel,
+    useMockLLM?: boolean
+  ): SelfHealConfig {
     const confidenceThreshold = configManager.get('SELFHEAL_CONFIDENCE_THRESHOLD', '0.8');
     const maxRetries = configManager.get('SELFHEAL_MAX_RETRIES', '3');
 
@@ -65,6 +82,8 @@ export class SelfHealEngine {
       generateTests: configManager.get('SELFHEAL_GENERATE_TESTS') !== 'false',
       logger,
       config: configManager,
+      llmModel: llmModel || (configManager.get('OPENAI_MODEL') as LLMModel) || 'gpt-4o-mini',
+      useMockLLM: useMockLLM ?? configManager.get('SELFHEAL_USE_MOCK_LLM') === 'true',
       prompts: {
         systemCore: '',
         classify: '',
@@ -164,6 +183,68 @@ export class SelfHealEngine {
       };
     } finally {
       this.isProcessing = false;
+    }
+  }
+
+  /**
+   * Initialize LLM client if not already done
+   */
+  private async ensureLLMClient(): Promise<LLMClient> {
+    if (!this.llmClient) {
+      this.llmClient = await createLLMClient(this.configManager, this.config.useMockLLM);
+
+      this.logger.info('LLM client initialized', {
+        useMock: this.config.useMockLLM,
+        model: this.config.llmModel,
+        configured: this.llmClient.isConfigured(),
+      });
+    }
+    return this.llmClient;
+  }
+
+  /**
+   * Execute LLM request with error handling and logging
+   */
+  private async executeLLMRequest(
+    prompt: string,
+    systemPrompt?: string,
+    traceId?: string
+  ): Promise<string> {
+    const client = await this.ensureLLMClient();
+
+    this.logger.debug('Executing LLM request', {
+      traceId,
+      model: this.config.llmModel,
+      promptLength: prompt.length,
+      hasSystemPrompt: !!systemPrompt,
+    });
+
+    try {
+      const response = await client.complete({
+        prompt,
+        systemPrompt,
+        model: this.config.llmModel,
+        temperature: 0.1, // Low temperature for consistent code generation
+        maxTokens: 2000,
+      });
+
+      this.logger.debug('LLM request completed', {
+        traceId,
+        model: response.model,
+        usage: response.usage,
+        finishReason: response.finishReason,
+      });
+
+      return response.content;
+    } catch (error) {
+      this.logger.error('LLM request failed', {
+        traceId,
+        error: error instanceof Error ? error.message : 'Unknown error',
+        model: this.config.llmModel,
+      });
+      throw new Error(
+        `LLM request failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 

@@ -4,6 +4,8 @@
 
 import { Config, Logger } from '@foundation/contracts';
 
+import { LLMModel } from './llm-client';
+
 // Risk levels as type union
 export type SeverityLevel = 'low' | 'medium' | 'high' | 'critical';
 export type ComplexityLevel = 'simple' | 'moderate' | 'complex';
@@ -28,6 +30,10 @@ export interface SelfHealConfig {
   logger: Logger;
   /** Configuration manager */
   config: Config;
+  /** LLM model to use for completions */
+  llmModel?: LLMModel;
+  /** Use mock LLM client for testing */
+  useMockLLM?: boolean;
   /** Prompt templates configuration */
   prompts: {
     systemCore: string;

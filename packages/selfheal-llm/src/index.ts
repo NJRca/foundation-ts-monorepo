@@ -5,6 +5,7 @@
  * using Large Language Models to create self-healing software systems.
  */
 
+export * from './llm-client';
 export * from './patch-validator';
 export * from './prompt-manager';
 export * from './selfheal-engine';
@@ -20,5 +21,10 @@ export type {
   ValidationResult,
 } from './types';
 
+export type { LLMClient, LLMModel, LLMRequest, LLMResponse } from './llm-client';
+
 // Main entry point for the self-healing system
 export { SelfHealEngine as default } from './selfheal-engine';
+
+// LLM client factory and implementations
+export { createLLMClient, MockLLMClient, OpenAIClient, SUPPORTED_MODELS } from './llm-client';
