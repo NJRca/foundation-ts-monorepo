@@ -192,6 +192,89 @@ Auto-Issue: #<unique identifier>
 [Closes|Fixes|Resolves]: #<original issue if applicable>
 ```
 
+## Specialized DbC Patch Commit Messages
+
+### Task: Produce a concise Conventional Commit message for the patch
+
+For Design by Contract-based patches, generate focused commit messages:
+
+**Inputs:**
+
+- RULE: `{{rule}}`
+- FILE: `{{filePath}}`
+- SYMPTOM: `{{symptom}}` // e.g., "TypeError: cannot read property 'x' of undefined"
+- FINGERPRINT: `{{fingerprint}}`
+
+**Output (single line title + short body):**
+
+```git
+feat(self-heal): guard {{rule}} in {{filePath}} ({{fingerprint}})
+- Adds DbC check and early return with typed error
+- Aligned with analyzer rules; regression test included
+```
+
+**DbC Commit Message Patterns:**
+
+**Null Reference Fixes:**
+
+```git
+fix(self-heal): guard null in {{filePath}} ({{fingerprint}})
+- Add assertNonNull check at function entry
+- Prevent TypeError: cannot read property of undefined
+- Include regression test for null input validation
+```
+
+**Division by Zero Fixes:**
+
+```git
+fix(self-heal): guard divzero in {{filePath}} ({{fingerprint}})
+- Add divisor validation before arithmetic operation
+- Prevent division by zero error in calculation
+- Handle negative zero and infinity edge cases
+```
+
+**Array Bounds Fixes:**
+
+```git
+fix(self-heal): guard oob in {{filePath}} ({{fingerprint}})
+- Add index range validation with assertIndexInRange
+- Prevent array access violation and undefined behavior
+- Include boundary condition testing
+```
+
+**NaN Validation Fixes:**
+
+```git
+fix(self-heal): guard nan in {{filePath}} ({{fingerprint}})
+- Add assertNumberFinite check for arithmetic inputs
+- Prevent NaN propagation in calculations
+- Handle Infinity and invalid number cases
+```
+
+**Unreachable Code Fixes:**
+
+```git
+fix(self-heal): guard unreachable in {{filePath}} ({{fingerprint}})
+- Add fail() assertion for impossible code paths
+- Improve error handling with typed error codes
+- Ensure exhaustive pattern matching coverage
+```
+
+**Template Variables:**
+
+- `{{rule}}`: DbC rule type (null, divzero, oob, nan, unreachable)
+- `{{filePath}}`: Relative path to the fixed file
+- `{{symptom}}`: Original error message or symptom
+- `{{fingerprint}}`: Unique identifier for the fix
+
+**Characteristics:**
+
+- **Concise**: Single line title with 2-3 bullet body
+- **Specific**: Mentions exact DbC rule and file
+- **Traceable**: Includes fingerprint for tracking
+- **Descriptive**: Explains what was added and why
+- **Standards-Compliant**: Follows conventional commit format
+
 ## Message Quality Standards
 
 ### Good Examples

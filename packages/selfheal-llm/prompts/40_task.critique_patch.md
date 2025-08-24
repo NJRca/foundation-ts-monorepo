@@ -224,7 +224,7 @@ For Design by Contract-based patches, perform specialized analysis to identify s
    - Contracts after potential side effects
    - Missing contracts on all entry points
 
-2. **Contract Coverage Risks**  
+2. **Contract Coverage Risks**
    - Incomplete input validation patterns
    - Missing edge case handling (NaN, Infinity, negative zero)
    - Insufficient range validation for arrays/strings
@@ -247,7 +247,7 @@ For Design by Contract-based patches, perform specialized analysis to identify s
 **Common Issues by DbC Rule:**
 
 - **null**: Contract placement after first usage, missing null coalescing opportunities
-- **divzero**: Not handling negative zero, infinity cases, floating-point precision issues  
+- **divzero**: Not handling negative zero, infinity cases, floating-point precision issues
 - **oob**: Off-by-one in range checks, missing empty collection handling
 - **nan**: Not catching Infinity, missing number type validation
 - **unreachable**: Creating new unreachable paths, improper early returns

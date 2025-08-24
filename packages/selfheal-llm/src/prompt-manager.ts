@@ -49,7 +49,7 @@ export class PromptManager {
       '35_task.diff_guard',
       '40_task.critique_patch',
       '50_task.commit_message',
-      '60_task.pull_request_body',
+      '60_task.pr_body',
     ];
 
     const result: Record<string, string> = {};

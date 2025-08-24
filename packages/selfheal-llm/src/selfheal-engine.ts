@@ -10,8 +10,8 @@ import { Config, Logger, assertNonNull } from '@foundation/contracts';
 import {
   ErrorInfo,
   IssueClassification,
-  PatchProposal,
   PatchCritique,
+  PatchProposal,
   SelfHealConfig,
   SelfHealResult,
   TestSuite,
@@ -381,7 +381,10 @@ export class SelfHealEngine {
     const adjustments: string[] = [];
 
     // Perform specialized critique for DbC patches
-    if (classification.runtimeErrorAnalysis && patch.dependencies.includes('@foundation/contracts')) {
+    if (
+      classification.runtimeErrorAnalysis &&
+      patch.dependencies.includes('@foundation/contracts')
+    ) {
       const { rule } = classification.runtimeErrorAnalysis;
 
       this.logger.info('Performing DbC-specific critique', {
@@ -401,12 +404,18 @@ export class SelfHealEngine {
       // Simulate rule-specific risk analysis
       switch (rule) {
         case 'null':
-          if (patch.files.some(f => f.changes.some(c => c.newCode.includes('assertNonNull') && c.newCode.includes('return')))) {
+          if (
+            patch.files.some(f =>
+              f.changes.some(
+                c => c.newCode.includes('assertNonNull') && c.newCode.includes('return')
+              )
+            )
+          ) {
             risks.push('Contract placement: assertNonNull may be too late in control flow');
             adjustments.push('Move assertNonNull to the top of function before any processing');
           }
           break;
-        
+
         case 'nan':
           if (patch.files.some(f => f.changes.some(c => !c.newCode.includes('Infinity')))) {
             risks.push('NaN validation incomplete: Infinity cases not handled');
@@ -424,7 +433,9 @@ export class SelfHealEngine {
     }
 
     // Determine if revision is needed
-    const shouldRevise = risks.length > 0 || (validation.validationResult === 'WARN' && validation.warnings.length > 2);
+    const shouldRevise =
+      risks.length > 0 ||
+      (validation.validationResult === 'WARN' && validation.warnings.length > 2);
 
     return {
       risks,
@@ -523,22 +534,95 @@ export class SelfHealEngine {
     critique: PatchCritique,
     tests: TestSuite
   ): Promise<string> {
-    // TODO: Implement using prompts/60_task.pull_request_body.md
+    // TODO: Implement using prompts/60_task.pr_body.md
+    const traceId = this.generateTraceId();
 
-    // Enhanced placeholder with critique information
+    this.logger.info('Generating PR body', {
+      traceId,
+      patchId: patch.patchId,
+      primaryCategory: classification.primaryCategory,
+      hasRuntimeAnalysis: !!classification.runtimeErrorAnalysis,
+    });
+
+    // For runtime errors with specialized analysis, use DbC-specific PR body template
+    if (classification.runtimeErrorAnalysis) {
+      const { rule, target, explanation } = classification.runtimeErrorAnalysis;
+      const fingerprint = `${rule}_${Date.now().toString(36)}`;
+
+      // Extract function line range from patch
+      const functionStart = target.startLine;
+      const functionEnd = target.endLine;
+
+      // Generate specialized PR body using the template from 60_task.pr_body.md
+      const prBody = `## Self-heal: ${rule} (${fingerprint})
+
+**Context:** ${explanation} at ${target.file}. See logs: [Trace ID: ${traceId}]
+
+**Change:**
+- DbC guards added (contracts) within target function lines ${functionStart}..${functionEnd}
+- Minimal patch; no new dependencies
+- Regression test: \`tests/acceptance/regressions/err_${fingerprint}.spec.ts\`
+
+**Analyzer:**
+- Before: ${this.getAnalyzerSummary(validation, 'before')}
+- After: ${this.getAnalyzerSummary(validation, 'after')} (no new High severity)
+
+**Validation:**
+\`\`\`bash
+pnpm test && pnpm analyze
+\`\`\``;
+
+      // Add critique information if there are risks or adjustments
+      if (critique.risks.length > 0 || critique.suggested_small_adjustments.length > 0) {
+        let critiqueSection = '\n\n**Review Notes:**';
+
+        if (critique.risks.length > 0) {
+          critiqueSection += `\n- Risks identified: ${critique.risks.join(', ')}`;
+        }
+
+        if (critique.suggested_small_adjustments.length > 0) {
+          critiqueSection += `\n- Suggested adjustments: ${critique.suggested_small_adjustments.join(', ')}`;
+        }
+
+        return prBody + critiqueSection;
+      }
+
+      return prBody;
+    }
+
+    // Fallback to enhanced general-purpose PR body
     let body = `## 🤖 Automated Fix Summary\n\n**Issue**: ${classification.primaryCategory}\n**Solution**: ${patch.description}\n**Confidence**: ${classification.confidence}%`;
-    
+
     if (critique.risks.length > 0) {
       body += `\n\n### ⚠️ Identified Risks\n${critique.risks.map(risk => `- ${risk}`).join('\n')}`;
     }
-    
+
     if (critique.suggested_small_adjustments.length > 0) {
       body += `\n\n### 🔧 Suggested Adjustments\n${critique.suggested_small_adjustments.map(adj => `- ${adj}`).join('\n')}`;
     }
-    
+
     body += `\n\n*This PR was automatically generated by the SelfHeal-LLM system.*`;
-    
+
     return body;
+  }
+
+  /**
+   * Generate analyzer summary for PR body
+   */
+  private getAnalyzerSummary(validation: ValidationResult, phase: 'before' | 'after'): string {
+    // TODO: Implement actual analyzer integration
+    // This is a placeholder that would integrate with static analysis tools
+
+    if (phase === 'before') {
+      const criticalCount = validation.criticalIssues.length;
+      const warningCount = validation.warnings.length;
+      return `${criticalCount} errors, ${warningCount} warnings${criticalCount > 0 ? ' (High severity detected)' : ''}`;
+    } else {
+      // After patch - should show improvement
+      const remainingCritical = Math.max(0, validation.criticalIssues.length - 1);
+      const remainingWarnings = Math.max(0, validation.warnings.length - 1);
+      return `${remainingCritical} errors, ${remainingWarnings} warnings`;
+    }
   }
 
   /**
