@@ -322,7 +322,7 @@ async function startServer() {
         .post('/api/v1/auth/logout')
         .handler(async (req, res) => {
           const authHeader = req.headers.authorization;
-          if (authHeader && authHeader.startsWith('Bearer ')) {
+          if (authHeader?.startsWith('Bearer ')) {
             const token = authHeader.substring(7);
             await authService.revokeToken(token);
           }

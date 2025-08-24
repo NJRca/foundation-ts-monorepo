@@ -160,9 +160,9 @@ class StructuredLogOutput implements LogOutput {
       timestamp: entry.timestamp.toISOString(),
       level: LogLevel[entry.level],
       message: entry.message,
-      ...(entry.service ? { service: entry.service } : {}),
-      ...(entry.requestId ? { requestId: entry.requestId } : {}),
-      ...(entry.meta ? entry.meta : {})
+      service: entry.service ?? undefined,
+      requestId: entry.requestId ?? undefined,
+      ...(entry.meta ?? {})
     };
     
     // eslint-disable-next-line no-console
@@ -171,9 +171,9 @@ class StructuredLogOutput implements LogOutput {
 }
 
 export class AppLogger implements Logger {
-  private outputs: LogOutput[];
-  private minLevel: LogLevel;
-  private service: string | undefined;
+  private readonly outputs: LogOutput[];
+  private readonly minLevel: LogLevel;
+  private readonly service: string | undefined;
   private requestId: string | undefined;
 
   constructor(
