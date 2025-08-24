@@ -32,10 +32,10 @@ export interface EventStoreSnapshot {
 
 // In-memory event store implementation
 export class InMemoryEventStore implements EventStore {
-  private events: Map<string, StoredEvent[]> = new Map();
-  private snapshots: Map<string, EventStoreSnapshot> = new Map();
-  private logger: Logger;
-  private eventHandlers: Map<string, ((event: DomainEvent) => void)[]> = new Map();
+  private readonly events: Map<string, StoredEvent[]> = new Map();
+  private readonly snapshots: Map<string, EventStoreSnapshot> = new Map();
+  private readonly logger: Logger;
+  private readonly eventHandlers: Map<string, ((event: DomainEvent) => void | Promise<void>)[]> = new Map();
 
   constructor(logger?: Logger) {
     this.logger = logger || createLogger(false, 0, 'EventStore');
@@ -234,8 +234,8 @@ export abstract class AggregateRoot {
 
 // Event bus for cross-aggregate communication
 export class EventBus {
-  private logger: Logger;
-  private subscribers: Map<string, ((event: DomainEvent) => Promise<void>)[]> = new Map();
+  private readonly logger: Logger;
+  private readonly subscribers: Map<string, ((event: DomainEvent) => Promise<void>)[]> = new Map();
 
   constructor(logger?: Logger) {
     this.logger = logger || createLogger(false, 0, 'EventBus');

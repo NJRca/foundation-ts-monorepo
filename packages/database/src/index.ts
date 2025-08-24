@@ -1,5 +1,5 @@
-import { Config, Logger, Repository } from '@foundation/contracts';
-import { Pool, PoolClient, QueryResult, QueryResultRow } from 'pg';
+import { Logger, Repository } from '@foundation/contracts';
+import { Pool, QueryResult, QueryResultRow } from 'pg';
 import { RedisClientType, createClient } from 'redis';
 
 import { createLogger } from '@foundation/observability';

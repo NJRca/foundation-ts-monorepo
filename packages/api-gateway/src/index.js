@@ -46,9 +46,9 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommonMiddleware = exports.RouteBuilder = exports.ApiGateway = void 0;
+var observability_1 = require("@foundation/observability");
 var express = require('express');
 var cors = require('cors');
-var observability_1 = require("@foundation/observability");
 var helmet = require('helmet');
 // API Gateway class
 var ApiGateway = /** @class */ (function () {
@@ -102,7 +102,7 @@ var ApiGateway = /** @class */ (function () {
                 requestId: requestId,
                 userId: req.headers['x-user-id'],
                 userAgent: req.headers['user-agent'],
-                ip: req.ip || req.connection.remoteAddress || 'unknown',
+                ip: req.ip || req.socket.remoteAddress || 'unknown',
                 startTime: new Date(),
                 path: req.path,
                 method: req.method
@@ -137,7 +137,7 @@ var ApiGateway = /** @class */ (function () {
         };
     };
     ApiGateway.prototype.generateRequestId = function () {
-        return "req_".concat(Date.now(), "_").concat(Math.random().toString(36).substr(2, 9));
+        return "req_".concat(Date.now(), "_").concat(Math.random().toString(36).substring(2, 11));
     };
     // Add global middleware
     ApiGateway.prototype.addMiddleware = function (middleware) {

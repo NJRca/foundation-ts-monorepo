@@ -62,10 +62,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthMiddleware = exports.SecurityUtils = exports.AuthorizationService = exports.AuthenticationService = void 0;
-var crypto_1 = require("crypto");
 var bcrypt = require("bcrypt");
-var observability_1 = require("@foundation/observability");
 var jwt = require("jsonwebtoken");
+var crypto_1 = require("crypto");
+var observability_1 = require("@foundation/observability");
 // Authentication service
 var AuthenticationService = /** @class */ (function () {
     function AuthenticationService(config, logger) {

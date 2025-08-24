@@ -1,7 +1,8 @@
 import { Application, NextFunction, Request, Response } from 'express';
-import { Config, Logger } from '@foundation/contracts';
 
+import { Logger } from '@foundation/contracts';
 import { createLogger } from '@foundation/observability';
+
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -17,13 +18,9 @@ export interface RouteConfig {
   validation?: ValidationConfig;
 }
 
-export interface Middleware {
-  (req: Request, res: Response, next: NextFunction): Promise<void> | void;
-}
+export type Middleware = (req: Request, res: Response, next: NextFunction) => Promise<void> | void;
 
-export interface ErrorMiddleware {
-  (error: Error, req: Request, res: Response, next: NextFunction): Promise<void> | void;
-}
+export type ErrorMiddleware = (error: Error, req: Request, res: Response, next: NextFunction) => Promise<void> | void;
 
 export interface RateLimitConfig {
   windowMs: number;
@@ -123,7 +120,7 @@ export class ApiGateway {
         requestId,
         userId: req.headers['x-user-id'] as string,
         userAgent: req.headers['user-agent'],
-        ip: req.ip || req.connection.remoteAddress || 'unknown',
+        ip: req.ip || req.socket.remoteAddress || 'unknown',
         startTime: new Date(),
         path: req.path,
         method: req.method
@@ -166,7 +163,7 @@ export class ApiGateway {
   }
 
   private generateRequestId(): string {
-    return `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `req_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
   }
 
   // Add global middleware
@@ -207,7 +204,7 @@ export class ApiGateway {
 
     // Register route with Express
     const method = config.method.toLowerCase() as keyof Application;
-    (this.app[method] as any)(config.path, ...middlewares);
+    this.app[method](config.path, ...middlewares);
 
     this.logger.info(`Registered route: ${config.method} ${config.path}`, {
       method: config.method,
@@ -415,67 +412,67 @@ export class ApiGateway {
 
 // Route builder for fluent API
 export class RouteBuilder {
-  private config: Partial<RouteConfig> = {};
+  private readonly config: Partial<RouteConfig> = {};
 
   static create(): RouteBuilder {
     return new RouteBuilder();
   }
 
-  path(path: string): RouteBuilder {
+  path(path: string): this {
     this.config.path = path;
     return this;
   }
 
-  method(method: RouteConfig['method']): RouteBuilder {
+  method(method: RouteConfig['method']): this {
     this.config.method = method;
     return this;
   }
 
-  get(path: string): RouteBuilder {
+  get(path: string): this {
     this.config.path = path;
     this.config.method = 'GET';
     return this;
   }
 
-  post(path: string): RouteBuilder {
+  post(path: string): this {
     this.config.path = path;
     this.config.method = 'POST';
     return this;
   }
 
-  put(path: string): RouteBuilder {
+  put(path: string): this {
     this.config.path = path;
     this.config.method = 'PUT';
     return this;
   }
 
-  delete(path: string): RouteBuilder {
+  delete(path: string): this {
     this.config.path = path;
     this.config.method = 'DELETE';
     return this;
   }
 
-  handler(handler: RouteConfig['handler']): RouteBuilder {
+  handler(handler: RouteConfig['handler']): this {
     this.config.handler = handler;
     return this;
   }
 
-  middleware(...middleware: Middleware[]): RouteBuilder {
+  middleware(...middleware: Middleware[]): this {
     this.config.middleware = [...(this.config.middleware || []), ...middleware];
     return this;
   }
 
-  requireAuth(): RouteBuilder {
+  requireAuth(): this {
     this.config.requiresAuth = true;
     return this;
   }
 
-  rateLimit(windowMs: number, maxRequests: number): RouteBuilder {
+  rateLimit(windowMs: number, maxRequests: number): this {
     this.config.rateLimit = { windowMs, maxRequests };
     return this;
   }
 
-  validate(validation: ValidationConfig): RouteBuilder {
+  validate(validation: ValidationConfig): this {
     this.config.validation = validation;
     return this;
   }

@@ -50,7 +50,7 @@ interface SarifReport {
 }
 
 export class StaticAnalyzer {
-  private rules: Map<string, {
+  private readonly rules: Map<string, {
     name: string;
     shortDescription: string;
     fullDescription: string;
@@ -63,7 +63,7 @@ export class StaticAnalyzer {
   }
 
   private initializeRules(): void {
-    // Example rule: detect TODO comments
+    // Rule implementation: detect pending work comments in source code
     this.rules.set('todo-comment', {
       name: 'TODO Comment Detection',
       shortDescription: 'Detects TODO comments in code',
@@ -74,7 +74,8 @@ export class StaticAnalyzer {
         const lines = content.split('\n');
         
         lines.forEach((line, index) => {
-          const todoMatch = line.match(/(\/\/|\/\*|\*|#)\s*TODO:?\s*(.*)/i);
+          const todoRegex = /(\/\/|\/\*|\*|#)\s*TODO:?\s*(.*)/i;
+          const todoMatch = todoRegex.exec(line);
           if (todoMatch) {
             results.push({
               ruleId: 'todo-comment',
@@ -119,7 +120,8 @@ export class StaticAnalyzer {
         }
         
         lines.forEach((line, index) => {
-          const dbMatch = line.match(/(client\.query|db\.query|\.execute\(|\.findOne\(|\.save\(|\.delete\()/);
+          const dbRegex = /(client\.query|db\.query|\.execute\(|\.findOne\(|\.save\(|\.delete\()/;
+          const dbMatch = dbRegex.exec(line);
           if (dbMatch && !line.includes('repository') && !line.includes('Repository')) {
             results.push({
               ruleId: 'direct-db-access',
@@ -159,7 +161,8 @@ export class StaticAnalyzer {
         const lines = content.split('\n');
         
         lines.forEach((line, index) => {
-          const awaitMatch = line.match(/await\s+/);
+          const awaitRegex = /await\s+/;
+          const awaitMatch = awaitRegex.exec(line);
           if (awaitMatch) {
             // Check if this await is within a try-catch block
             const beforeLines = lines.slice(Math.max(0, index - 10), index);
@@ -216,7 +219,7 @@ export class StaticAnalyzer {
           ];
           
           secretPatterns.forEach(pattern => {
-            const match = line.match(pattern);
+            const match = pattern.exec(line);
             if (match) {
               results.push({
                 ruleId: 'hardcoded-secrets',
@@ -257,7 +260,8 @@ export class StaticAnalyzer {
         const lines = content.split('\n');
         
         lines.forEach((line, index) => {
-          const consoleMatch = line.match(/console\.(log|warn|error|info|debug)/);
+          const consoleRegex = /console\.(log|warn|error|info|debug)/;
+          const consoleMatch = consoleRegex.exec(line);
           if (consoleMatch) {
             results.push({
               ruleId: 'console-usage',
@@ -353,7 +357,8 @@ export class StaticAnalyzer {
         results.push(...ruleResults);
       });
     } catch (error) {
-      // Silently skip files that can't be read
+      // Log error but continue processing other files
+      console.warn(`Warning: Could not analyze file ${filePath}:`, error instanceof Error ? error.message : String(error));
     }
   }
 }
