@@ -1,9 +1,10 @@
+import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
+
 import { createHash, randomBytes, timingSafeEqual } from 'crypto';
 
 import { Logger } from '@foundation/contracts';
-import * as bcrypt from 'bcrypt';
 import { createLogger } from '@foundation/observability';
-import * as jwt from 'jsonwebtoken';
 
 // Authentication interfaces
 export interface User {

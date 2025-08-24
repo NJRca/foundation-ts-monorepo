@@ -1,8 +1,9 @@
-import { Config, Logger } from '@foundation/contracts';
-const express = require('express');
 import { Application, NextFunction, Request, Response } from 'express';
-const cors = require('cors');
+import { Config, Logger } from '@foundation/contracts';
+
 import { createLogger } from '@foundation/observability';
+const express = require('express');
+const cors = require('cors');
 const helmet = require('helmet');
 
 // Types and interfaces
