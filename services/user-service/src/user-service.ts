@@ -1,9 +1,66 @@
+import { AuthenticationService, User } from '@foundation/security';
+import { User as BaseUser, UserRepository } from '@foundation/database';
 import { DomainEventFactory, InMemoryEventStore } from '@foundation/events';
-import { User, UserRepository } from '@foundation/database';
 
-import { AuthenticationService } from '@foundation/security';
 import { Logger } from '@foundation/contracts';
 import { randomUUID } from 'crypto';
+
+// Extended UserRepository that works with security User interface
+class SecureUserRepository {
+  private readonly baseRepository: UserRepository;
+
+  constructor(baseRepository: UserRepository) {
+    this.baseRepository = baseRepository;
+  }
+
+  async findById(id: string): Promise<User | undefined> {
+    const baseUser = await this.baseRepository.findById(id);
+    return baseUser ? this.toSecureUser(baseUser) : undefined;
+  }
+
+  async findByEmail(email: string): Promise<User | undefined> {
+    const baseUser = await this.baseRepository.findByEmail(email);
+    return baseUser ? this.toSecureUser(baseUser) : undefined;
+  }
+
+  async findAll(): Promise<User[]> {
+    const baseUsers = await this.baseRepository.findAll();
+    return baseUsers.map(user => this.toSecureUser(user));
+  }
+
+  async save(user: User): Promise<User> {
+    const baseUser: BaseUser = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt
+    };
+    
+    const savedUser = await this.baseRepository.save(baseUser);
+    return {
+      ...savedUser,
+      passwordHash: user.passwordHash,
+      roles: user.roles,
+      isActive: user.isActive,
+      lastLoginAt: user.lastLoginAt
+    };
+  }
+
+  async delete(id: string): Promise<void> {
+    return this.baseRepository.delete(id);
+  }
+
+  private toSecureUser(baseUser: BaseUser): User {
+    return {
+      ...baseUser,
+      passwordHash: '', // Will be populated separately
+      roles: ['user'], // Default role
+      isActive: true, // Default active
+      lastLoginAt: undefined
+    };
+  }
+}
 
 export interface CreateUserRequest {
   name: string;
@@ -17,7 +74,7 @@ export interface UpdateUserRequest {
 }
 
 export class UserService {
-  private readonly userRepository: UserRepository;
+  private readonly userRepository: SecureUserRepository;
   private readonly eventStore: InMemoryEventStore;
   private readonly authService: AuthenticationService;
   private readonly logger: Logger;
@@ -27,7 +84,7 @@ export class UserService {
     eventStore: InMemoryEventStore,
     logger: Logger
   ) {
-    this.userRepository = userRepository;
+    this.userRepository = new SecureUserRepository(userRepository);
     this.eventStore = eventStore;
     this.logger = logger;
     

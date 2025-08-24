@@ -9,12 +9,12 @@
   },
   "packageManager": "pnpm@10.15.0",
   "scripts": {
-    "build": "pnpm -r build",
-    "test": "pnpm -r test",
-    "lint": "pnpm -r lint",
-    "analyze": "pnpm -r analyze",
-    "clean": "pnpm -r clean",
-    "dev": "pnpm -r dev",
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces",
+    "lint": "npm run lint --workspaces",
+    "analyze": "npm run analyze --workspaces",
+    "clean": "npm run clean --workspaces",
+    "dev": "npm run dev --workspaces",
     "dev:setup": "./scripts/dev-setup.sh",
     "dev:start": "docker-compose up -d",
     "dev:stop": "docker-compose down",
@@ -26,7 +26,7 @@
     "services:user": "docker-compose up -d user-service",
     "db:up": "docker-compose up -d postgres redis",
     "monitoring:up": "docker-compose up -d prometheus grafana",
-    "analyze:security": "pnpm --filter @foundation/analyzer run analyze",
+    "analyze:security": "npm run analyze --workspace=@foundation/analyzer",
     "check:health": "curl -f http://localhost:3001/health && curl -f http://localhost:9090/-/healthy && curl -f http://localhost:3000/api/health"
   },
   "devDependencies": {

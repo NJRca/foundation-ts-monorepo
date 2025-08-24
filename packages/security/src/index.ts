@@ -3,19 +3,16 @@ import * as jwt from 'jsonwebtoken';
 
 import { createHash, randomBytes, timingSafeEqual } from 'crypto';
 
+// Authentication interfaces
+import { User as BaseUser } from '@foundation/database';
 import { Logger } from '@foundation/contracts';
 import { createLogger } from '@foundation/observability';
 
-// Authentication interfaces
-export interface User {
-  id: string;
-  email: string;
+export interface User extends BaseUser {
   passwordHash: string;
   roles: string[];
   isActive: boolean;
   lastLoginAt?: Date;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 export interface AuthToken {
@@ -223,6 +220,7 @@ export class AuthenticationService {
       // Generate new tokens
       const user: User = {
         id: session.userId,
+        name: session.email.split('@')[0], // Default name from email
         email: session.email,
         roles: session.roles,
         passwordHash: '', // Not needed for token generation

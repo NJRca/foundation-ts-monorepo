@@ -19,8 +19,8 @@ const config = {
     password: process.env.DB_PASSWORD || 'password'
   },
   jwt: {
-    secret: process.env.JWT_SECRET || 'your-secret-key',
-    refreshSecret: process.env.JWT_REFRESH_SECRET || 'your-refresh-secret'
+    jwtSecret: process.env.JWT_SECRET || 'your-secret-key',
+    jwtRefreshSecret: process.env.JWT_REFRESH_SECRET || 'your-refresh-secret'
   }
 };
 

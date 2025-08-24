@@ -1,6 +1,5 @@
+import { LogLevel, createLogger } from '@foundation/observability';
 import express, { Request, Response } from 'express';
-
-import { createLogger } from '@foundation/observability';
 
 // Configuration with proper typing
 interface ServiceConfig {
@@ -36,7 +35,7 @@ const config: ServiceConfig = {
 };
 
 // Initialize logger
-const logger = createLogger('user-service');
+const logger = createLogger(false, LogLevel.INFO, 'user-service');
 
 // Create Express application
 const app = express();
