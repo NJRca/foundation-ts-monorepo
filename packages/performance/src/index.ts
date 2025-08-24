@@ -184,12 +184,12 @@ export class MemoryCache<T> {
     const now = Date.now();
     let cleaned = 0;
 
-    for (const [key, entry] of this.cache) {
+    Array.from(this.cache.entries()).forEach(([key, entry]) => {
       if (now > entry.timestamp + entry.ttl) {
         this.cache.delete(key);
         cleaned++;
       }
-    }
+    });
 
     if (cleaned > 0) {
       this.logger.debug('Cleaned up expired entries', { count: cleaned });
@@ -411,7 +411,7 @@ export class RateLimiter {
     const windowStart = now - this.config.windowSize;
     let cleaned = 0;
 
-    for (const [identifier, requestTimes] of this.requests) {
+    Array.from(this.requests.entries()).forEach(([identifier, requestTimes]) => {
       const validRequests = requestTimes.filter(time => time > windowStart);
       
       if (validRequests.length === 0) {
@@ -420,7 +420,7 @@ export class RateLimiter {
       } else {
         this.requests.set(identifier, validRequests);
       }
-    }
+    });
 
     if (cleaned > 0) {
       this.logger.debug('Cleaned up old rate limit entries', { count: cleaned });
@@ -486,7 +486,13 @@ export class PerformanceMonitor {
 
   recordMetric(metric: PerformanceMetric): void {
     this.metrics.push(metric);
-    this.logger.debug('Performance metric recorded', metric);
+    this.logger.debug('Performance metric recorded', {
+      name: metric.name,
+      value: metric.value,
+      unit: metric.unit,
+      timestamp: metric.timestamp.toISOString(),
+      tags: metric.tags
+    });
 
     // Keep only recent metrics to prevent memory leaks
     if (this.metrics.length > 10000) {
@@ -523,7 +529,7 @@ export class PerformanceMonitor {
       const originalMethod = descriptor.value;
 
       descriptor.value = function (...args: any[]) {
-        const monitor = this.performanceMonitor || new PerformanceMonitor();
+        const monitor = (this as any).performanceMonitor || new PerformanceMonitor();
         monitor.startTimer(metricName);
 
         try {
@@ -700,9 +706,7 @@ export class ConnectionPool<T> {
     this.pool.length = 0;
 
     // Destroy all in-use resources
-    for (const resource of this.inUse) {
-      await this.destroyer(resource);
-    }
+    await Promise.all(Array.from(this.inUse).map(resource => this.destroyer(resource)));
     this.inUse.clear();
 
     this.logger.info('Connection pool destroyed');

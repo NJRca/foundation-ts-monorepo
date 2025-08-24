@@ -13,9 +13,9 @@
     "start": "node dist/index.js"
   },
   "dependencies": {
-    "@foundation/contracts": "workspace:*",
-    "@foundation/config": "workspace:*",
-    "@foundation/observability": "workspace:*"
+    "@foundation/contracts": "*",
+    "@foundation/config": "*",
+    "@foundation/observability": "*"
   },
   "devDependencies": {
     "@types/node": "^20.0.0"

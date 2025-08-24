@@ -348,10 +348,10 @@ export class StaticAnalyzer {
     try {
       const content = fs.readFileSync(filePath, 'utf-8');
       
-      for (const [, rule] of this.rules) {
+      Array.from(this.rules.values()).forEach(rule => {
         const ruleResults = rule.check(content, filePath);
         results.push(...ruleResults);
-      }
+      });
     } catch (error) {
       // Silently skip files that can't be read
     }

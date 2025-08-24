@@ -1,9 +1,9 @@
 import { Config, Logger } from '@foundation/contracts';
-import express, { Application, NextFunction, Request, Response } from 'express';
-
-import cors from 'cors';
+const express = require('express');
+import { Application, NextFunction, Request, Response } from 'express';
+const cors = require('cors');
 import { createLogger } from '@foundation/observability';
-import helmet from 'helmet';
+const helmet = require('helmet');
 
 // Types and interfaces
 export interface RouteConfig {
@@ -18,6 +18,10 @@ export interface RouteConfig {
 
 export interface Middleware {
   (req: Request, res: Response, next: NextFunction): Promise<void> | void;
+}
+
+export interface ErrorMiddleware {
+  (error: Error, req: Request, res: Response, next: NextFunction): Promise<void> | void;
 }
 
 export interface RateLimitConfig {
@@ -526,7 +530,7 @@ export const CommonMiddleware = {
   },
 
   // Error handling middleware
-  errorHandler: (logger: Logger): Middleware => {
+  errorHandler: (logger: Logger): ErrorMiddleware => {
     return (error: Error, req: Request, res: Response, next: NextFunction): void => {
       const context = (req as any).context as RequestContext;
 

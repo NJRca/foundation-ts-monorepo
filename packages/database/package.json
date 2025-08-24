@@ -12,8 +12,8 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "@foundation/contracts": "workspace:*",
-    "@foundation/observability": "workspace:*",
+    "@foundation/contracts": "*",
+    "@foundation/observability": "*",
     "@types/node": "^20.0.0",
     "pg": "^8.11.0",
     "@types/pg": "^8.10.0",

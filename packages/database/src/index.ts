@@ -1,18 +1,18 @@
 import { Config, Logger, Repository } from '@foundation/contracts';
-import { Pool, PoolClient, QueryResult } from 'pg';
+import { Pool, PoolClient, QueryResult, QueryResultRow } from 'pg';
 import { RedisClientType, createClient } from 'redis';
 
 import { createLogger } from '@foundation/observability';
 
 // Database connection interfaces
 export interface DatabaseConnection {
-  query<T = any>(text: string, params?: any[]): Promise<QueryResult<T>>;
+  query<T extends QueryResultRow = any>(text: string, params?: any[]): Promise<QueryResult<T>>;
   transaction<T>(callback: (client: TransactionClient) => Promise<T>): Promise<T>;
   close(): Promise<void>;
 }
 
 export interface TransactionClient {
-  query<T = any>(text: string, params?: any[]): Promise<QueryResult<T>>;
+  query<T extends QueryResultRow = any>(text: string, params?: any[]): Promise<QueryResult<T>>;
   commit(): Promise<void>;
   rollback(): Promise<void>;
 }
@@ -62,7 +62,7 @@ export class PostgresConnection implements DatabaseConnection {
     });
   }
 
-  async query<T = any>(text: string, params?: any[]): Promise<QueryResult<T>> {
+  async query<T extends QueryResultRow = any>(text: string, params?: any[]): Promise<QueryResult<T>> {
     const start = Date.now();
     
     try {
@@ -96,7 +96,7 @@ export class PostgresConnection implements DatabaseConnection {
       await client.query('BEGIN');
       
       const transactionClient: TransactionClient = {
-        query: async <U = any>(text: string, params?: any[]): Promise<QueryResult<U>> => {
+        query: async <U extends QueryResultRow = any>(text: string, params?: any[]): Promise<QueryResult<U>> => {
           return client.query<U>(text, params);
         },
         commit: async (): Promise<void> => {
@@ -256,12 +256,12 @@ export abstract class BaseRepository<T, ID> implements Repository<T, ID> {
 
   // Helper methods for common operations
   protected async findOne(query: string, params: any[]): Promise<T | undefined> {
-    const result = await this.db.query<T>(query, params);
+    const result = await this.db.query<T & QueryResultRow>(query, params);
     return result.rows[0];
   }
 
   protected async findMany(query: string, params?: any[]): Promise<T[]> {
-    const result = await this.db.query<T>(query, params);
+    const result = await this.db.query<T & QueryResultRow>(query, params);
     return result.rows;
   }
 
@@ -467,7 +467,7 @@ export class MigrationRunner {
     await this.initializeMigrationTable();
     
     const currentVersion = await this.getCurrentVersion();
-    const target = targetVersion || Math.max(...this.migrations.keys());
+    const target = targetVersion || Math.max(...Array.from(this.migrations.keys()));
 
     if (currentVersion >= target) {
       this.logger.info('Database is already up to date', {

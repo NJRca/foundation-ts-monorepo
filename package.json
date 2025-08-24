@@ -61,5 +61,9 @@
     "prom-client": "^15.0.0",
     "redis": "^4.6.0",
     "tslib": "^2.8.1"
-  }
+  },
+  "workspaces": [
+    "packages/*",
+    "services/*"
+  ]
 }

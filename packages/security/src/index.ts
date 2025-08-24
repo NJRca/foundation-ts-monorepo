@@ -1,9 +1,9 @@
 import { createHash, randomBytes, timingSafeEqual } from 'crypto';
 
 import { Logger } from '@foundation/contracts';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 import { createLogger } from '@foundation/observability';
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 
 // Authentication interfaces
 export interface User {
@@ -271,11 +271,11 @@ export class AuthenticationService {
   async revokeAllUserTokens(userId: string): Promise<void> {
     const sessionsToRemove: string[] = [];
     
-    for (const [sessionId, session] of this.sessions) {
+    Array.from(this.sessions.entries()).forEach(([sessionId, session]) => {
       if (session.userId === userId) {
         sessionsToRemove.push(sessionId);
       }
-    }
+    });
 
     for (const sessionId of sessionsToRemove) {
       this.sessions.delete(sessionId);
@@ -295,7 +295,7 @@ export class AuthenticationService {
   getActiveSessions(userId: string): SessionInfo[] {
     const userSessions: SessionInfo[] = [];
     
-    for (const [sessionId, session] of this.sessions) {
+    Array.from(this.sessions.entries()).forEach(([sessionId, session]) => {
       if (session.userId === userId) {
         userSessions.push({
           sessionId,
@@ -303,7 +303,7 @@ export class AuthenticationService {
           lastAccessedAt: session.lastAccessedAt
         });
       }
-    }
+    });
 
     return userSessions;
   }
@@ -312,12 +312,12 @@ export class AuthenticationService {
     const now = new Date();
     const expiredSessions: string[] = [];
 
-    for (const [sessionId, session] of this.sessions) {
+    Array.from(this.sessions.entries()).forEach(([sessionId, session]) => {
       const sessionAge = now.getTime() - session.lastAccessedAt.getTime();
       if (sessionAge > this.refreshTokenTtl * 1000) {
         expiredSessions.push(sessionId);
       }
-    }
+    });
 
     for (const sessionId of expiredSessions) {
       this.sessions.delete(sessionId);
@@ -498,12 +498,12 @@ export class SecurityUtils {
     this.rateLimitStore.set(key, count);
 
     // Clean up old entries
-    for (const [storeKey] of this.rateLimitStore) {
+    Array.from(this.rateLimitStore.keys()).forEach(storeKey => {
       const keyTime = parseInt(storeKey.split(':')[1]);
       if (keyTime < windowStart) {
         this.rateLimitStore.delete(storeKey);
       }
-    }
+    });
 
     return count <= maxRequests;
   }

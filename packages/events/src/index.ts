@@ -151,11 +151,11 @@ export class InMemoryEventStore implements EventStore {
   async getAllEvents(aggregateType?: string): Promise<StoredEvent[]> {
     const allEvents: StoredEvent[] = [];
     
-    for (const [streamKey, events] of this.events) {
+    Array.from(this.events.entries()).forEach(([streamKey, events]) => {
       if (!aggregateType || streamKey.startsWith(`${aggregateType}:`)) {
         allEvents.push(...events);
       }
-    }
+    });
     
     return allEvents.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
   }

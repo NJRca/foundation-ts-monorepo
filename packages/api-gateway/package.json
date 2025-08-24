@@ -12,9 +12,9 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "@foundation/contracts": "workspace:*",
-    "@foundation/observability": "workspace:*",
-    "@foundation/security": "workspace:*",
+    "@foundation/contracts": "*",
+    "@foundation/observability": "*",
+    "@foundation/security": "*",
     "@types/node": "^20.0.0",
     "express": "^4.18.0",
     "cors": "^2.8.0",
