@@ -253,33 +253,27 @@ export class ApiGateway {
   }
 
   private createValidationMiddleware(config: ValidationConfig): Middleware {
-    return (req: Request, res: Response, next: NextFunction): void => {
+    const validateSection = (
+      section: Record<string, unknown> | undefined,
+      values: Record<string, any>,
+      sectionName: string
+    ): string[] => {
       const errors: string[] = [];
-
-      // Simple validation - in a real implementation, use a library like Joi or Yup
-      if (config.body) {
-        for (const [key, schema] of Object.entries(config.body)) {
-          if (!req.body[key] && schema) {
-            errors.push(`Missing required field in body: ${key}`);
+      if (section) {
+        for (const [key, schema] of Object.entries(section)) {
+          if (!values[key] && schema) {
+            errors.push(`Missing required field in ${sectionName}: ${key}`);
           }
         }
       }
+      return errors;
+    };
 
-      if (config.query) {
-        for (const [key, schema] of Object.entries(config.query)) {
-          if (!req.query[key] && schema) {
-            errors.push(`Missing required field in query: ${key}`);
-          }
-        }
-      }
-
-      if (config.params) {
-        for (const [key, schema] of Object.entries(config.params)) {
-          if (!req.params[key] && schema) {
-            errors.push(`Missing required field in params: ${key}`);
-          }
-        }
-      }
+    return (req: Request, res: Response, next: NextFunction): void => {
+      let errors: string[] = [];
+      errors = errors.concat(validateSection(config.body, req.body, 'body'));
+      errors = errors.concat(validateSection(config.query, req.query, 'query'));
+      errors = errors.concat(validateSection(config.params, req.params, 'params'));
 
       if (errors.length > 0) {
         res.status(400).json({

@@ -1,7 +1,6 @@
 import { ApiGateway, RouteBuilder } from '@foundation/api-gateway';
 import { AuthenticationService, AuthorizationService } from '@foundation/security';
 import { PostgresConnection, UserRepository } from '@foundation/database';
-import express, { NextFunction, Request, Response } from 'express';
 
 import { InMemoryEventStore } from '@foundation/events';
 import { UserService } from './user-service';
@@ -137,6 +136,9 @@ async function startServer() {
               updatedAt: user.updatedAt
             });
           } catch (error) {
+            logger.error('Failed to fetch user', {
+              error: error instanceof Error ? error.message : error
+            });
             res.status(500).json({
               error: 'Internal Server Error',
               message: 'Failed to fetch user'
@@ -163,6 +165,9 @@ async function startServer() {
               }))
             });
           } catch (error) {
+            logger.error('Failed to fetch users', {
+              error: error instanceof Error ? error.message : error
+            });
             res.status(500).json({
               error: 'Internal Server Error',
               message: 'Failed to fetch users'
@@ -225,6 +230,9 @@ async function startServer() {
             await userService.deleteUser(id);
             res.status(204).send();
           } catch (error) {
+            logger.error('Failed to delete user', {
+              error: error instanceof Error ? error.message : error
+            });
             res.status(500).json({
               error: 'Internal Server Error',
               message: 'Failed to delete user'
@@ -255,6 +263,9 @@ async function startServer() {
             const tokens = await authService.generateTokens(user);
             res.json(tokens);
           } catch (error) {
+            logger.error('Authentication failed', {
+              error: error instanceof Error ? error.message : error
+            });
             res.status(500).json({
               error: 'Internal Server Error',
               message: 'Authentication failed'
@@ -289,6 +300,9 @@ async function startServer() {
 
             res.json(tokens);
           } catch (error) {
+            logger.error('Token refresh failed', {
+              error: error instanceof Error ? error.message : error
+            });
             res.status(500).json({
               error: 'Internal Server Error',
               message: 'Token refresh failed'

@@ -265,9 +265,9 @@ export interface Metrics {
 
 // Simple in-memory metrics implementation
 export class SimpleMetrics implements Metrics {
-  private counters = new Map<string, number>();
-  private histograms = new Map<string, number[]>();
-  private gauges = new Map<string, number>();
+  private readonly counters = new Map<string, number>();
+  private readonly histograms = new Map<string, number[]>();
+  private readonly gauges = new Map<string, number>();
 
   counter(name: string): Counter {
     return {
