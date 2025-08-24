@@ -36,17 +36,21 @@ export interface UseCase<TRequest, TResponse> {
 }
 
 export interface DomainEvent {
-  eventId: string;
-  eventType: string;
   aggregateId: string;
-  version: number;
+  eventType: string;
+  eventData: Record<string, unknown>;
   timestamp: Date;
-  data: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
 }
 
 export interface EventStore {
-  append(aggregateId: string, events: DomainEvent[]): Promise<void>;
-  getEvents(aggregateId: string, fromVersion?: number): Promise<DomainEvent[]>;
+  saveEvents(
+    aggregateId: string,
+    aggregateType: string,
+    events: DomainEvent[],
+    expectedVersion?: number
+  ): Promise<void>;
+  loadEvents(aggregateId: string, aggregateType: string, fromVersion?: number): Promise<unknown[]>;
 }
 
 export interface Command {

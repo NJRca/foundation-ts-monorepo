@@ -1,5 +1,7 @@
 import { Logger } from '@foundation/contracts';
+import { randomUUID } from 'crypto';
 
+// Enhanced logging with tracing support
 export enum LogLevel {
   DEBUG = 0,
   INFO = 1,
@@ -14,10 +16,129 @@ interface LogEntry {
   meta?: Record<string, unknown>;
   service?: string;
   requestId?: string;
+  traceId?: string;
+  spanId?: string;
 }
 
 interface LogOutput {
   write(entry: LogEntry): void;
+}
+
+// Distributed tracing interfaces
+export interface Span {
+  traceId: string;
+  spanId: string;
+  parentSpanId?: string;
+  operationName: string;
+  startTime: number;
+  endTime?: number;
+  duration?: number;
+  tags: Record<string, any>;
+  logs: Array<{ timestamp: number; message: string; level?: string }>;
+  status: 'success' | 'error' | 'cancelled';
+  baggage: Record<string, string>;
+}
+
+export interface Tracer {
+  startSpan(operationName: string, parentSpan?: Span): Span;
+  finishSpan(span: Span): void;
+  extractSpan(context: Record<string, any>): Span | undefined;
+  injectSpan(span: Span, context: Record<string, any>): void;
+}
+
+// In-memory distributed tracer
+export class InMemoryTracer implements Tracer {
+  private readonly spans: Map<string, Span> = new Map();
+  private readonly logger: Logger;
+
+  constructor(logger?: Logger) {
+    this.logger = logger || createLogger(false, LogLevel.INFO, 'Tracer');
+  }
+
+  startSpan(operationName: string, parentSpan?: Span): Span {
+    const traceId = parentSpan?.traceId || randomUUID();
+    const spanId = randomUUID();
+    
+    const span: Span = {
+      traceId,
+      spanId,
+      parentSpanId: parentSpan?.spanId,
+      operationName,
+      startTime: Date.now(),
+      tags: {},
+      logs: [],
+      status: 'success',
+      baggage: parentSpan?.baggage || {}
+    };
+
+    this.spans.set(spanId, span);
+    
+    this.logger.debug('Started span', {
+      traceId,
+      spanId,
+      operationName,
+      parentSpanId: parentSpan?.spanId
+    });
+
+    return span;
+  }
+
+  finishSpan(span: Span): void {
+    span.endTime = Date.now();
+    span.duration = span.endTime - span.startTime;
+
+    this.logger.debug('Finished span', {
+      traceId: span.traceId,
+      spanId: span.spanId,
+      operationName: span.operationName,
+      duration: span.duration,
+      status: span.status
+    });
+
+    // In a real implementation, you'd send this to a tracing backend
+    this.exportSpan(span);
+  }
+
+  extractSpan(context: Record<string, any>): Span | undefined {
+    const spanId = context['span-id'] || context.spanId;
+    return spanId ? this.spans.get(spanId) : undefined;
+  }
+
+  injectSpan(span: Span, context: Record<string, any>): void {
+    context['trace-id'] = span.traceId;
+    context['span-id'] = span.spanId;
+    context['parent-span-id'] = span.parentSpanId;
+  }
+
+  private exportSpan(span: Span): void {
+    // Export to tracing backend (e.g., Jaeger, Zipkin)
+    this.logger.info('Span completed', {
+      trace: {
+        traceId: span.traceId,
+        spanId: span.spanId,
+        parentSpanId: span.parentSpanId,
+        operationName: span.operationName,
+        startTime: span.startTime,
+        endTime: span.endTime,
+        duration: span.duration,
+        tags: span.tags,
+        logs: span.logs,
+        status: span.status
+      }
+    });
+  }
+
+  getSpan(spanId: string): Span | undefined {
+    return this.spans.get(spanId);
+  }
+
+  getAllSpans(): Span[] {
+    return Array.from(this.spans.values());
+  }
+
+  getTrace(traceId: string): Span[] {
+    return Array.from(this.spans.values()).filter(span => span.traceId === traceId);
+  }
 }
 
 class ConsoleLogOutput implements LogOutput {

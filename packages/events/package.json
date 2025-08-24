@@ -1,0 +1,22 @@
+{
+  "name": "@foundation/events",
+  "version": "1.0.0",
+  "description": "Event sourcing and domain events implementation",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest --passWithNoTests",
+    "lint": "cd ../.. && npx eslint packages/events/src/**/*.ts",
+    "clean": "rm -rf dist",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@foundation/contracts": "workspace:*",
+    "@foundation/observability": "workspace:*",
+    "@types/node": "^20.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

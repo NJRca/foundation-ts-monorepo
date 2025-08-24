@@ -14,10 +14,27 @@
     "lint": "pnpm -r lint",
     "analyze": "pnpm -r analyze",
     "clean": "pnpm -r clean",
-    "dev": "pnpm -r dev"
+    "dev": "pnpm -r dev",
+    "dev:setup": "./scripts/dev-setup.sh",
+    "dev:start": "docker-compose up -d",
+    "dev:stop": "docker-compose down",
+    "dev:restart": "docker-compose restart",
+    "dev:logs": "docker-compose logs -f",
+    "dev:clean": "docker-compose down -v --remove-orphans",
+    "dev:full": "docker-compose --profile full-stack up -d",
+    "services:build": "docker-compose build",
+    "services:user": "docker-compose up -d user-service",
+    "db:up": "docker-compose up -d postgres redis",
+    "monitoring:up": "docker-compose up -d prometheus grafana",
+    "analyze:security": "pnpm --filter @foundation/analyzer run analyze",
+    "check:health": "curl -f http://localhost:3001/health && curl -f http://localhost:9090/-/healthy && curl -f http://localhost:3000/api/health"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/cors": "^2.8.0",
+    "@types/express": "^5.0.3",
     "@types/jest": "^29.5.0",
+    "@types/jsonwebtoken": "^9.0.0",
     "@types/node": "^20.0.0",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
@@ -27,9 +44,22 @@
     "typescript": "^5.0.0"
   },
   "pnpm": {
-    "overrides": {}
+    "overrides": {
+      "@opentelemetry/api": "^1.8.0"
+    }
   },
   "dependencies": {
+    "@opentelemetry/api": "^1.8.0",
+    "@opentelemetry/auto-instrumentations-node": "^0.52.0",
+    "@opentelemetry/sdk-node": "^0.52.0",
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.0",
+    "express": "^4.18.0",
+    "helmet": "^7.0.0",
+    "jsonwebtoken": "^9.0.0",
+    "pg": "^8.11.0",
+    "prom-client": "^15.0.0",
+    "redis": "^4.6.0",
     "tslib": "^2.8.1"
   }
 }

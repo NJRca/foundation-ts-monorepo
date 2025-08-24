@@ -103,6 +103,149 @@ export class StaticAnalyzer {
       }
     });
 
+    // Domain-specific rule: detect direct database access
+    this.rules.set('direct-db-access', {
+      name: 'Direct Database Access Detection',
+      shortDescription: 'Detects direct database access outside repositories',
+      fullDescription: 'This rule identifies potential violations of repository pattern by detecting direct database calls',
+      help: 'Use repository interfaces instead of direct database access for better testability and separation of concerns',
+      check: (content: string, filePath: string): SarifResult[] => {
+        const results: SarifResult[] = [];
+        const lines = content.split('\n');
+        
+        // Skip repository implementations
+        if (filePath.includes('repository') || filePath.includes('Repository')) {
+          return results;
+        }
+        
+        lines.forEach((line, index) => {
+          const dbMatch = line.match(/(client\.query|db\.query|\.execute\(|\.findOne\(|\.save\(|\.delete\()/);
+          if (dbMatch && !line.includes('repository') && !line.includes('Repository')) {
+            results.push({
+              ruleId: 'direct-db-access',
+              level: 'warning',
+              message: {
+                text: `Direct database access detected: ${dbMatch[0]}`
+              },
+              locations: [{
+                physicalLocation: {
+                  artifactLocation: {
+                    uri: filePath
+                  },
+                  region: {
+                    startLine: index + 1,
+                    startColumn: line.indexOf(dbMatch[0]) + 1,
+                    endLine: index + 1,
+                    endColumn: line.indexOf(dbMatch[0]) + dbMatch[0].length + 1
+                  }
+                }
+              }]
+            });
+          }
+        });
+        
+        return results;
+      }
+    });
+
+    // Domain-specific rule: detect missing error handling
+    this.rules.set('missing-error-handling', {
+      name: 'Missing Error Handling Detection',
+      shortDescription: 'Detects async operations without proper error handling',
+      fullDescription: 'This rule identifies async operations that may not have proper error handling',
+      help: 'Use try-catch blocks or proper error handling for async operations',
+      check: (content: string, filePath: string): SarifResult[] => {
+        const results: SarifResult[] = [];
+        const lines = content.split('\n');
+        
+        lines.forEach((line, index) => {
+          const awaitMatch = line.match(/await\s+/);
+          if (awaitMatch) {
+            // Check if this await is within a try-catch block
+            const beforeLines = lines.slice(Math.max(0, index - 10), index);
+            const afterLines = lines.slice(index + 1, Math.min(lines.length, index + 10));
+            
+            const hasTryCatch = beforeLines.some(l => l.includes('try')) && 
+                               afterLines.some(l => l.includes('catch'));
+            
+            if (!hasTryCatch && !line.includes('.catch(')) {
+              results.push({
+                ruleId: 'missing-error-handling',
+                level: 'warning',
+                message: {
+                  text: 'Async operation without proper error handling'
+                },
+                locations: [{
+                  physicalLocation: {
+                    artifactLocation: {
+                      uri: filePath
+                    },
+                    region: {
+                      startLine: index + 1,
+                      startColumn: line.indexOf('await') + 1,
+                      endLine: index + 1,
+                      endColumn: line.indexOf('await') + 5
+                    }
+                  }
+                }]
+              });
+            }
+          }
+        });
+        
+        return results;
+      }
+    });
+
+    // Domain-specific rule: detect hardcoded secrets
+    this.rules.set('hardcoded-secrets', {
+      name: 'Hardcoded Secrets Detection',
+      shortDescription: 'Detects potential hardcoded secrets',
+      fullDescription: 'This rule identifies potential hardcoded passwords, API keys, and other secrets',
+      help: 'Use environment variables or secure configuration management for secrets',
+      check: (content: string, filePath: string): SarifResult[] => {
+        const results: SarifResult[] = [];
+        const lines = content.split('\n');
+        
+        lines.forEach((line, index) => {
+          const secretPatterns = [
+            /password\s*[:=]\s*['"][^'"]+['"]/i,
+            /api[_-]?key\s*[:=]\s*['"][^'"]+['"]/i,
+            /secret\s*[:=]\s*['"][^'"]+['"]/i,
+            /token\s*[:=]\s*['"][^'"]+['"]/i
+          ];
+          
+          secretPatterns.forEach(pattern => {
+            const match = line.match(pattern);
+            if (match) {
+              results.push({
+                ruleId: 'hardcoded-secrets',
+                level: 'error',
+                message: {
+                  text: `Potential hardcoded secret detected: ${match[0].split(':')[0]}`
+                },
+                locations: [{
+                  physicalLocation: {
+                    artifactLocation: {
+                      uri: filePath
+                    },
+                    region: {
+                      startLine: index + 1,
+                      startColumn: line.indexOf(match[0]) + 1,
+                      endLine: index + 1,
+                      endColumn: line.indexOf(match[0]) + match[0].length + 1
+                    }
+                  }
+                }]
+              });
+            }
+          });
+        });
+        
+        return results;
+      }
+    });
+
     // Example rule: detect console.log statements
     this.rules.set('console-usage', {
       name: 'Console Usage Detection',

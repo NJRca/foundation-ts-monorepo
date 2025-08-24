@@ -1,0 +1,223 @@
+version: '3.8'
+
+services:
+  # Database Services
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: foundation_db
+      POSTGRES_USER: foundation_user
+      POSTGRES_PASSWORD: foundation_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U foundation_user -d foundation_db"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    networks:
+      - foundation-network
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - foundation-network
+
+  # Monitoring Services
+  prometheus:
+    image: prom/prometheus:latest
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    networks:
+      - foundation-network
+    depends_on:
+      - user-service
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana-dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./monitoring/grafana-datasources:/etc/grafana/provisioning/datasources:ro
+    networks:
+      - foundation-network
+    depends_on:
+      - prometheus
+
+  # Application Services
+  user-service:
+    build:
+      context: ./services/user-service
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: foundation_db
+      DB_USER: foundation_user
+      DB_PASSWORD: foundation_password
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_SECRET: your-super-secret-jwt-key-change-in-production
+      JWT_REFRESH_SECRET: your-super-secret-refresh-key-change-in-production
+      LOG_LEVEL: info
+      PROMETHEUS_PORT: 9464
+    ports:
+      - "3001:3001"
+      - "9464:9464"  # Prometheus metrics
+    volumes:
+      - ./logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - foundation-network
+    restart: unless-stopped
+
+  # API Gateway (future)
+  api-gateway:
+    build:
+      context: ./services/api-gateway
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      USER_SERVICE_URL: http://user-service:3001
+      AUTH_SERVICE_URL: http://auth-service:3002
+      NOTIFICATION_SERVICE_URL: http://notification-service:3003
+      JWT_SECRET: your-super-secret-jwt-key-change-in-production
+      LOG_LEVEL: info
+      RATE_LIMIT_WINDOW_MS: 900000  # 15 minutes
+      RATE_LIMIT_MAX_REQUESTS: 100
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      - user-service
+    networks:
+      - foundation-network
+    restart: unless-stopped
+    profiles:
+      - full-stack  # Only start with --profile full-stack
+
+  # Future Services (disabled by default)
+  auth-service:
+    build:
+      context: ./services/auth-service
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      PORT: 3002
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: foundation_db
+      DB_USER: foundation_user
+      DB_PASSWORD: foundation_password
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_SECRET: your-super-secret-jwt-key-change-in-production
+      JWT_REFRESH_SECRET: your-super-secret-refresh-key-change-in-production
+      LOG_LEVEL: info
+    ports:
+      - "3002:3002"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - foundation-network
+    restart: unless-stopped
+    profiles:
+      - full-stack
+
+  notification-service:
+    build:
+      context: ./services/notification-service
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      PORT: 3003
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: foundation_db
+      DB_USER: foundation_user
+      DB_PASSWORD: foundation_password
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      EMAIL_FROM: noreply@foundation.local
+      EMAIL_SMTP_HOST: smtp.gmail.com
+      EMAIL_SMTP_PORT: 587
+      EMAIL_SMTP_SECURE: false
+      LOG_LEVEL: info
+    ports:
+      - "3003:3003"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - foundation-network
+    restart: unless-stopped
+    profiles:
+      - full-stack
+
+networks:
+  foundation-network:
+    driver: bridge
+    name: foundation-network
+
+volumes:
+  postgres_data:
+    name: foundation_postgres_data
+  redis_data:
+    name: foundation_redis_data
+  prometheus_data:
+    name: foundation_prometheus_data
+  grafana_data:
+    name: foundation_grafana_data
