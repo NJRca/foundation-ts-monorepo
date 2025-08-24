@@ -2,12 +2,12 @@
  * @fileoverview Type definitions for the Self-Healing LLM package
  */
 
-import { Logger, Config } from '@foundation/contracts';
+import { Config, Logger } from '@foundation/contracts';
 
 // Risk levels as type union
 export type SeverityLevel = 'low' | 'medium' | 'high' | 'critical';
 export type ComplexityLevel = 'simple' | 'moderate' | 'complex';
-export type RiskLevel = 'low' | 'medium' | 'high';
+export type RiskLevel = 'low' | 'medium' | 'high' | 'critical';
 export type ValidationStatus = 'pass' | 'fail';
 export type ValidationResultType = 'PASS' | 'WARN' | 'FAIL';
 export type RecommendationType = 'APPROVE' | 'APPROVE_WITH_CHANGES' | 'REJECT';
@@ -70,6 +70,21 @@ export interface IssueClassification {
   estimatedComplexity: ComplexityLevel;
   riskLevel: RiskLevel;
   traceId: string;
+  runtimeErrorAnalysis?: RuntimeErrorAnalysis;
+}
+
+/**
+ * Enhanced runtime error analysis for DbC-based fixes
+ */
+export interface RuntimeErrorAnalysis {
+  rule: 'null' | 'divzero' | 'oob' | 'nan' | 'unreachable' | 'other';
+  explanation: string;
+  target: {
+    file: string;
+    startLine: number;
+    endLine: number;
+  };
+  suggested_strategy: string[];
 }
 
 /**

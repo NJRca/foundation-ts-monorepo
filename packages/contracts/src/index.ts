@@ -75,18 +75,21 @@ export const ResultFactory = {
   success: <T>(value: T): Result<T> => ({
     isSuccess: true,
     isFailure: false,
-    value
+    value,
   }),
-  
+
   failure: <T, E = Error>(error: E): Result<T, E> => ({
     isSuccess: false,
     isFailure: true,
-    error
-  })
+    error,
+  }),
 };
 
 // Design by Contract - Runtime validation guards
-export function assertNonNull<T>(value: T | null | undefined, message?: string): asserts value is T {
+export function assertNonNull<T>(
+  value: T | null | undefined,
+  message?: string
+): asserts value is T {
   if (value === null || value === undefined) {
     throw new Error(message || 'Value must not be null or undefined');
   }
@@ -98,7 +101,11 @@ export function assertNumberFinite(value: number, message?: string): asserts val
   }
 }
 
-export function assertIndexInRange(index: number, length: number, message?: string): asserts index is number {
+export function assertIndexInRange(
+  index: number,
+  length: number,
+  message?: string
+): asserts index is number {
   assertNumberFinite(index, 'Index must be a finite number');
   assertNumberFinite(length, 'Length must be a finite number');
   if (index < 0 || index >= length) {

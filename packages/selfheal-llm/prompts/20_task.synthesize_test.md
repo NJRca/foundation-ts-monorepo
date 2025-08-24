@@ -77,6 +77,58 @@ describe('Component/Feature Name', () => {
 - Test memory usage and resource consumption
 - Test under high load conditions
 
+## Specialized Regression Test Generation
+
+When working with a specific stack trace and failure, generate a minimal regression test:
+
+### Task: Write a minimal regression test that reproduces the failure from the stack
+
+**Constraints:**
+
+- Jest only, no new dependencies
+- The test MUST fail against current code and pass after the patch
+- Include realistic input derived from the stack trace; if unknown, construct the lightest reproducible case
+- Reference only exported/public APIs
+
+**Input Context:**
+
+- STACK: `{{stack}}`
+- TARGET: `{{filePath}}` lines `{{functionStart}}..{{functionEnd}}`
+
+**Output Template:**
+
+```typescript
+/* Regression test for {{fingerprint}}: {{rule}} */
+import { {{publicApiName}} } from "{{publicApiImport}}";
+
+describe("Regression {{fingerprint}} ({{rule}})", () => {
+  it("reproduces the failure before fix", async () => {
+    // Arrange
+    {{arrange}}
+
+    // Act / Assert (expect the current failure mode)
+    await expect(
+      {{invoke}}
+    ).{{expectedFailureMatcher}};
+  });
+});
+```
+
+**DbC Rule Mapping for Expected Failures:**
+
+- `null`: `.rejects.toThrow('Cannot read property')`
+- `divzero`: `.rejects.toThrow('Division by zero')`
+- `oob`: `.rejects.toThrow('Index out of bounds')`
+- `nan`: `.rejects.toThrow('Not a finite number')`
+- `unreachable`: `.rejects.toThrow('Should not reach this code path')`
+- `other`: `.rejects.toThrow()` or appropriate error matcher
+
+**File Path Convention:**
+
+- Place in: `tests/acceptance/regressions/err_{{fingerprint}}.spec.ts`
+- Use acceptance-style testing (public API) when possible
+- Fall back to unit-level testing if public API insufficient
+
 ## Test Data Generation
 
 Provide realistic test data that covers:

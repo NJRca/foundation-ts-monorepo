@@ -4,7 +4,7 @@
  * Validates proposed patches for safety, quality, and compatibility.
  */
 
-import { PatchProposal, ValidationIssue, ValidationResult } from './types';
+import { PatchProposal, RiskLevel, ValidationIssue, ValidationResult } from './types';
 
 /**
  * Validator for code patches
@@ -60,7 +60,11 @@ export class PatchValidator {
   /**
    * Validate syntax and type safety
    */
-  private async validateSyntax(patch: PatchProposal, issues: ValidationIssue[], traceId: string): Promise<void> {
+  private async validateSyntax(
+    patch: PatchProposal,
+    issues: ValidationIssue[],
+    traceId: string
+  ): Promise<void> {
     // Basic validation for TypeScript compilation
 
     for (const file of patch.files) {
@@ -88,7 +92,8 @@ export class PatchValidator {
   private async validateSecurity(
     patch: PatchProposal,
     critical: ValidationIssue[],
-    warnings: ValidationIssue[]
+    warnings: ValidationIssue[],
+    traceId: string
   ): Promise<void> {
     // TODO: Implement security scanning
 
@@ -102,6 +107,8 @@ export class PatchValidator {
             description: 'Use of eval() detected - potential code injection risk',
             location: `${file.path}:${change.lineStart}`,
             recommendation: 'Replace eval() with safer alternatives',
+            errorCode: 'SECURITY_EVAL_USAGE',
+            traceId,
           });
         }
       }
@@ -114,20 +121,23 @@ export class PatchValidator {
   private async validatePerformance(
     patch: PatchProposal,
     warnings: ValidationIssue[],
-    informational: ValidationIssue[]
+    informational: ValidationIssue[],
+    traceId: string
   ): Promise<void> {
-    // TODO: Implement performance analysis
+    // Performance analysis implementation
 
     for (const file of patch.files) {
       for (const change of file.changes) {
-        // Check for potential performance issues
-        if (change.newCode.includes('for (') && change.newCode.includes('for (')) {
+        // Check for potential performance issues - nested loops
+        if (change.newCode.includes('for (') && change.newCode.includes('while (')) {
           informational.push({
             type: 'performance',
             severity: 'low',
             description: 'Nested loops detected - review for optimization opportunities',
             location: `${file.path}:${change.lineStart}`,
             recommendation: 'Consider algorithm optimization or caching',
+            errorCode: 'PERF_NESTED_LOOPS',
+            traceId,
           });
         }
       }
@@ -140,9 +150,10 @@ export class PatchValidator {
   private async validateCompatibility(
     patch: PatchProposal,
     critical: ValidationIssue[],
-    warnings: ValidationIssue[]
+    warnings: ValidationIssue[],
+    traceId: string
   ): Promise<void> {
-    // TODO: Implement compatibility checking
+    // Compatibility checking implementation
 
     for (const file of patch.files) {
       if (file.changeType === 'DELETE') {
@@ -152,6 +163,8 @@ export class PatchValidator {
           description: 'File deletion may cause breaking changes',
           location: file.path,
           recommendation: 'Verify no external dependencies on this file',
+          errorCode: 'COMPAT_FILE_DELETION',
+          traceId,
         });
       }
     }
@@ -160,10 +173,7 @@ export class PatchValidator {
   /**
    * Calculate overall risk level
    */
-  private calculateRisk(
-    critical: ValidationIssue[],
-    warnings: ValidationIssue[]
-  ): 'low' | 'medium' | 'high' | 'critical' {
+  private calculateRisk(critical: ValidationIssue[], warnings: ValidationIssue[]): RiskLevel {
     if (critical.length > 0) {
       return critical.some(i => i.severity === 'critical') ? 'critical' : 'high';
     }
@@ -172,7 +182,7 @@ export class PatchValidator {
       return 'medium';
     }
 
-    return warnings.length > 0 ? 'low' : 'low';
+    return 'low';
   }
 
   /**

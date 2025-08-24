@@ -1,29 +1,23 @@
 /**
  * @fileoverview Main Self-Healing Engine
- * 
+ *
  * Core orchestrator for the self-healing system that coordinates
  * issue detection, analysis, patch generation, and validation.
  * Follows Functional Core / Imperative Shell pattern.
  */
 
-import { 
-  assertNonNull, 
-  assertNumberFinite, 
-  Logger, 
-  Config,
-  fail
-} from '@foundation/contracts';
-import { loadConfig } from '@foundation/config';
-import { 
-  SelfHealConfig, 
-  ErrorInfo, 
-  SelfHealResult, 
+import { Config, Logger, assertNonNull } from '@foundation/contracts';
+import {
+  ErrorInfo,
   IssueClassification,
   PatchProposal,
-  ValidationResult,
+  SelfHealConfig,
+  SelfHealResult,
   TestSuite,
-  SeverityLevel
+  ValidationResult,
 } from './types';
+
+import { loadConfig } from '@foundation/config';
 
 /**
  * Main engine for the self-healing system
@@ -38,7 +32,7 @@ export class SelfHealEngine {
   constructor(dependencies: { logger: Logger; config?: Config }) {
     assertNonNull(dependencies, 'Dependencies must be provided');
     assertNonNull(dependencies.logger, 'Logger must be provided');
-    
+
     this.logger = dependencies.logger;
     this.configManager = dependencies.config || loadConfig();
     this.config = this.createValidatedConfig(dependencies.logger, this.configManager);
@@ -50,14 +44,14 @@ export class SelfHealEngine {
   private createValidatedConfig(logger: Logger, configManager: Config): SelfHealConfig {
     const confidenceThreshold = configManager.get('SELFHEAL_CONFIDENCE_THRESHOLD', '0.8');
     const maxRetries = configManager.get('SELFHEAL_MAX_RETRIES', '3');
-    
+
     const confidence = parseFloat(confidenceThreshold);
     const retries = parseInt(maxRetries, 10);
-    
+
     if (isNaN(confidence) || confidence < 0 || confidence > 1) {
       throw new Error('SELFHEAL_CONFIDENCE_THRESHOLD must be a number between 0 and 1');
     }
-    
+
     if (isNaN(retries) || retries < 1) {
       throw new Error('SELFHEAL_MAX_RETRIES must be a positive integer');
     }
@@ -77,8 +71,8 @@ export class SelfHealEngine {
         diffGuard: '',
         critiquePatch: '',
         commitMessage: '',
-        pullRequestBody: ''
-      }
+        pullRequestBody: '',
+      },
     };
   }
 
@@ -150,7 +144,7 @@ export class SelfHealEngine {
           requiresExternalResources: false,
           estimatedComplexity: 'complex' as const,
           riskLevel: 'high' as const,
-          traceId: this.generateTraceId()
+          traceId: this.generateTraceId(),
         })),
         error: error instanceof Error ? error.message : 'Unknown error',
         metadata: {
@@ -172,15 +166,17 @@ export class SelfHealEngine {
   private async classifyIssue(errorInfo: ErrorInfo): Promise<IssueClassification> {
     // Pure function - analyze error info without side effects
     const traceId = this.generateTraceId();
-    
+
     this.logger.info('Classifying issue', {
       traceId,
       errorType: errorInfo.type,
-      file: errorInfo.file
+      file: errorInfo.file,
     });
-    
-    // Placeholder implementation - would use LLM-based classification
-    return {
+
+    // TODO: Implement LLM-based classification using prompts/10_task.classify.md
+
+    // Placeholder implementation showing enhanced runtime error analysis
+    const baseClassification: IssueClassification = {
       primaryCategory: 'runtime-error',
       subCategory: 'null-reference',
       severity: 'medium',
@@ -189,8 +185,28 @@ export class SelfHealEngine {
       requiresExternalResources: false,
       estimatedComplexity: 'moderate',
       riskLevel: 'medium',
-      traceId
+      traceId,
     };
+
+    // Add enhanced runtime error analysis for runtime errors
+    if (baseClassification.primaryCategory === 'runtime-error') {
+      baseClassification.runtimeErrorAnalysis = {
+        rule: 'null',
+        explanation: 'Null reference detected in function parameter validation',
+        target: {
+          file: errorInfo.file || 'unknown',
+          startLine: errorInfo.line || 1,
+          endLine: (errorInfo.line || 1) + 5,
+        },
+        suggested_strategy: [
+          'Add assertNonNull on parameter at function entry',
+          'Validate input before processing',
+          'Early return with typed error code',
+        ],
+      };
+    }
+
+    return baseClassification;
   }
 
   /**
@@ -201,14 +217,54 @@ export class SelfHealEngine {
     classification: IssueClassification
   ): Promise<PatchProposal> {
     // TODO: Implement LLM-based patch generation using prompts/30_task.propose_patch.md
+    const traceId = this.generateTraceId();
 
-    // Placeholder implementation
+    this.logger.info('Generating patch proposal', {
+      traceId,
+      primaryCategory: classification.primaryCategory,
+      hasRuntimeAnalysis: !!classification.runtimeErrorAnalysis,
+      file: errorInfo.file,
+    });
+
+    // Enhanced patch generation with DbC specialization
+    const patchId = `patch-${Date.now()}`;
+    let description = `Fix ${classification.primaryCategory} in ${errorInfo.file}`;
+    const files = [];
+    const dependencies = [];
+
+    // For runtime errors with specialized analysis, generate DbC-based patch
+    if (classification.runtimeErrorAnalysis) {
+      const { rule, target, suggested_strategy } = classification.runtimeErrorAnalysis;
+      
+      description = `Fix ${rule} error in ${target.file} using DbC guards`;
+      
+      // Determine if @foundation/contracts import is needed
+      let needsContractsImport = true; // TODO: Parse existing imports in target file
+      
+      if (needsContractsImport) {
+        dependencies.push('@foundation/contracts');
+      }
+
+      // Create minimal patch file based on DbC rule
+      files.push({
+        path: target.file,
+        changeType: 'MODIFY' as const,
+        changes: [{
+          lineStart: target.startLine,
+          lineEnd: target.endLine,
+          originalCode: '// TODO: Parse actual source code from target',
+          newCode: `// TODO: Apply ${rule} DbC guard: ${suggested_strategy.join(', ')}`,
+          reason: `Apply ${rule} validation using Design by Contract principles`,
+        }],
+      });
+    }
+
     return {
-      patchId: `patch-${Date.now()}`,
-      description: `Fix ${classification.primaryCategory} in ${errorInfo.file}`,
-      files: [],
-      dependencies: [],
-      riskAssessment: 'low',
+      patchId,
+      description,
+      files,
+      dependencies,
+      riskAssessment: classification.riskLevel === 'high' ? 'high' : 'low',
       rollbackPlan: 'Revert commit to restore previous functionality',
     };
   }
@@ -218,12 +274,12 @@ export class SelfHealEngine {
    */
   private async validatePatch(patch: PatchProposal): Promise<ValidationResult> {
     const traceId = this.generateTraceId();
-    
+
     this.logger.info('Validating patch', {
       traceId,
-      patchId: patch.patchId
+      patchId: patch.patchId,
     });
-    
+
     // Placeholder implementation - would use comprehensive validation
     return {
       validationResult: 'PASS',
@@ -251,12 +307,43 @@ export class SelfHealEngine {
     classification: IssueClassification
   ): Promise<TestSuite> {
     // TODO: Implement test generation using prompts/20_task.synthesize_test.md
+    const traceId = this.generateTraceId();
 
-    // Placeholder implementation
+    this.logger.info('Generating test suite', {
+      traceId,
+      patchId: patch.patchId,
+      primaryCategory: classification.primaryCategory,
+      hasRuntimeAnalysis: !!classification.runtimeErrorAnalysis,
+    });
+
+    // Enhanced test generation with regression test support
+    const testFiles = [];
+
+    // For runtime errors with specialized analysis, generate regression test
+    if (classification.runtimeErrorAnalysis) {
+      const { rule, target } = classification.runtimeErrorAnalysis;
+      const fingerprint = `${rule}_${Date.now().toString(36)}`;
+
+      testFiles.push({
+        path: `tests/acceptance/regressions/err_${fingerprint}.spec.ts`,
+        content: `/* Regression test for ${fingerprint}: ${rule} */
+// Generated by SelfHeal-LLM test synthesis
+// TODO: Implement using actual stack trace and public API analysis`,
+        testType: 'regression' as const,
+      });
+    }
+
+    // Add standard test files
+    testFiles.push({
+      path: `tests/unit/${patch.patchId}.test.ts`,
+      content: '// Unit tests for the patch implementation',
+      testType: 'unit' as const,
+    });
+
     return {
       testId: `test-${patch.patchId}`,
       description: `Test suite for ${patch.description}`,
-      files: [],
+      files: testFiles,
       coverage: {
         statements: 90,
         branches: 85,
@@ -313,7 +400,7 @@ export class SelfHealEngine {
     validation: ValidationResult
   ): number {
     const classificationConfidence = classification.confidence / 100;
-    
+
     let validationConfidence: number;
     if (validation.validationResult === 'PASS') {
       validationConfidence = 1;

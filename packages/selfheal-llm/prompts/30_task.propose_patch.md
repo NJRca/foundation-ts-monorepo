@@ -37,6 +37,19 @@ Generate a targeted code patch that resolves the identified issue while maintain
 - No breaking changes to public APIs
 - Preserve existing functionality
 - Include proper error handling
+- Apply Design by Contract (DbC) at function boundaries
+- Use early returns with typed error codes over deep throwing
+- Ensure static analyzer compliance (no new High severity warnings)
+
+### Design by Contract Integration
+
+When applying DbC principles for runtime error fixes:
+
+- **Function Boundary Validation**: Use `@foundation/contracts` assertions at entry points
+- **Input Validation**: Apply `assertNonNull`, `assertNumberFinite`, `assertIndexInRange` as needed
+- **Error Path Handling**: Use `fail()` for unreachable code paths
+- **Minimal Scope**: Modify only the specified function range unless import needed
+- **Type Safety**: Preserve existing API types, maintain backward compatibility
 
 ### Documentation Requirements
 
@@ -135,3 +148,53 @@ Each patch should include:
 - Integration tests for affected components
 - Regression tests to prevent recurrence
 - Performance benchmarks if applicable
+
+## Specialized DbC Minimal Patches
+
+### Task: Produce a minimal patch that fixes the error by applying DbC at the boundary and safe guards inside the specified function range
+
+**Constraints:**
+
+- Modify ONLY `{{filePath}}` and ONLY lines `{{functionStart}}..{{functionEnd}}` unless a tiny import of contracts is needed
+- Use contracts from `@foundation/contracts` (`assertNonNull`, `assertNumberFinite`, `assertIndexInRange`, `fail`)
+- Do NOT add dependencies. Do NOT change public API types unless strictly necessary; if you must, keep it backward compatible
+- Prefer early return with typed error codes over throwing in deep layers
+- Avoid changing behavior unrelated to the failure
+- Ensure static analyzer will not introduce new High severity warnings
+
+**Context Template:**
+
+- RULE: `{{rule}}`
+- STACK (redacted): `<<<STACK::{{stack}}>>>`
+- FILE PATH: `{{filePath}}`
+- FUNCTION RANGE: `{{functionStart}}..{{functionEnd}}`
+- SOURCE: `<<<SOURCE::START>>>{{source}}<<<SOURCE::END>>>`
+
+**Output Format:**
+
+- **Unified diff only**
+- Absolute or repo-root relative paths are fine
+- **No prose, no extra fences**
+
+**DbC Rule Application:**
+
+- `null`: Add `assertNonNull(param, 'Parameter description')` at function entry
+- `divzero`: Add conditional guard before division with early return
+- `oob`: Add `assertIndexInRange(index, length, 'Index description')` before array access
+- `nan`: Add `assertNumberFinite(value, 'Value description')` for arithmetic operations
+- `unreachable`: Add `fail('Should not reach this code path')` for impossible conditions
+- `other`: Apply appropriate validation based on error context
+
+**Example Patch Structure:**
+
+```diff
+--- a/src/example.ts
++++ b/src/example.ts
+@@ -1,5 +1,6 @@
++import { assertNonNull } from '@foundation/contracts';
+ 
+ function processData(input: Data | null): Result {
++  assertNonNull(input, 'Input data cannot be null');
+   return input.process();
+ }
+```
