@@ -1,0 +1,31 @@
+{
+  "name": "@foundation/selfheal-llm",
+  "version": "1.0.0",
+  "description": "Self-healing LLM package for automated code repair and testing",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest --passWithNoTests",
+    "lint": "cd ../.. && npx eslint packages/selfheal-llm/src/**/*.ts",
+    "analyze": "echo 'Static analysis for selfheal-llm package'",
+    "clean": "rm -rf dist",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@foundation/contracts": "*",
+    "@foundation/utils": "*"
+  },
+  "devDependencies": {},
+  "files": [
+    "dist/**/*",
+    "prompts/**/*"
+  ],
+  "keywords": [
+    "llm",
+    "self-healing",
+    "automated-testing",
+    "code-repair",
+    "ai"
+  ]
+}
