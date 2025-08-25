@@ -19,7 +19,7 @@ app.get('/health', (req, res) => {
     service: 'user-service',
     timestamp: new Date().toISOString(),
     version: '1.0.0',
-    environment: config.nodeEnv
+    environment: config.nodeEnv,
   });
 });
 
@@ -32,20 +32,20 @@ app.get('/api/v1/users', (req, res) => {
         name: 'Admin User',
         email: 'admin@foundation.local',
         roles: ['admin'],
-        isActive: true
-      }
+        isActive: true,
+      },
     ],
-    total: 1
+    total: 1,
   });
 });
 
 app.post('/api/v1/auth/login', (req, res) => {
   const { email, password } = req.body;
-  
+
   if (!email || !password) {
     res.status(400).json({
       error: 'Bad Request',
-      message: 'Email and password are required'
+      message: 'Email and password are required',
     });
     return;
   }
@@ -59,15 +59,15 @@ app.post('/api/v1/auth/login', (req, res) => {
         id: '1',
         email: email,
         name: 'Admin User',
-        roles: ['admin']
-      }
+        roles: ['admin'],
+      },
     });
     return;
   }
 
   res.status(401).json({
     error: 'Unauthorized',
-    message: 'Invalid credentials'
+    message: 'Invalid credentials',
   });
 });
 
@@ -77,12 +77,7 @@ app.get('/api/v1/info', (req, res) => {
     service: 'user-service',
     version: '1.0.0',
     description: 'Foundation TypeScript User Management Service',
-    endpoints: [
-      'GET /health',
-      'GET /api/v1/users',
-      'POST /api/v1/auth/login',
-      'GET /api/v1/info'
-    ]
+    endpoints: ['GET /health', 'GET /api/v1/users', 'POST /api/v1/auth/login', 'GET /api/v1/info'],
   });
 });
 
@@ -91,7 +86,7 @@ app.use((err, req, res, next) => {
   console.error('Error:', err.message);
   res.status(500).json({
     error: 'Internal Server Error',
-    message: 'Something went wrong'
+    message: 'Something went wrong',
   });
 });
 
@@ -99,7 +94,7 @@ app.use((err, req, res, next) => {
 app.use((req, res) => {
   res.status(404).json({
     error: 'Not Found',
-    message: `Route ${req.method} ${req.path} not found`
+    message: `Route ${req.method} ${req.path} not found`,
   });
 });
 
@@ -126,7 +121,6 @@ async function startServer() {
 
     process.on('SIGTERM', shutdown);
     process.on('SIGINT', shutdown);
-
   } catch (error) {
     console.error('Failed to start user service:', error);
     process.exit(1);
@@ -134,7 +128,7 @@ async function startServer() {
 }
 
 // Start the server
-startServer().catch((error) => {
+startServer().catch(error => {
   console.error('Startup error:', error);
   process.exit(1);
 });

@@ -221,7 +221,7 @@ export const validators = {
 // Factory function to create a config manager with common sources and validation
 export function loadConfig(additionalConfig?: Record<string, string>): ConfigManager {
   const config = createValidatedConfig(additionalConfig);
-  
+
   // Validate configuration on load
   try {
     config.validate();
