@@ -13,7 +13,8 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "@foundation/contracts": "*"
+    "@foundation/contracts": "*",
+    "@foundation/config": "*"
   },
   "devDependencies": {},
   "files": [
