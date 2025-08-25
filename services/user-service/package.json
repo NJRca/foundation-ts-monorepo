@@ -14,7 +14,8 @@
     "lint": "cd ../.. && npx eslint services/user-service/src/**/*.ts",
     "clean": "rm -rf dist",
     "docker:build": "docker build -t user-service .",
-    "docker:run": "docker run -p 3001:3001 user-service"
+  "docker:run": "docker run -p 3001:3001 user-service",
+  "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@types/node": "^20.0.0",

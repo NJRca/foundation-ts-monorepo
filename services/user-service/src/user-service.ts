@@ -25,7 +25,7 @@ class SecureUserRepository {
 
   async findAll(): Promise<User[]> {
     const baseUsers = await this.baseRepository.findAll();
-    return baseUsers.map(user => this.toSecureUser(user));
+  return baseUsers.map((user: BaseUser) => this.toSecureUser(user));
   }
 
   async save(user: User): Promise<User> {

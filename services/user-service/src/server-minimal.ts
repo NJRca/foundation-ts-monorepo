@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { Express, Request, Response } from 'express';
 
 import { loadConfig } from '@foundation/config';
 
@@ -9,8 +9,8 @@ const config = {
   nodeEnv: (cfgManager.get<string>('NODE_ENV') as unknown as string) || 'development',
 };
 
-// Create Express application
-const app = express();
+// Create Express application (explicit annotation avoids TS2742 inferred type referencing another package's node_modules)
+const app: Express = express();
 
 // Middleware
 app.use(express.json());

@@ -9,8 +9,9 @@
     "test": "jest --passWithNoTests",
     "lint": "cd ../.. && npx eslint packages/domain-sample/src/**/*.ts",
     "analyze": "echo 'No static analysis configured for domain-sample'",
-    "clean": "rm -rf dist",
-    "dev": "tsc --watch"
+  "clean": "rm -rf dist",
+  "dev": "tsc --watch",
+  "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@foundation/contracts": "*"
