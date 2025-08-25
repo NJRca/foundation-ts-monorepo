@@ -1,6 +1,6 @@
-import { AuthenticationService, User } from '@foundation/security';
 import { User as BaseUser, UserRepository } from '@foundation/database';
 import { DomainEventFactory, InMemoryEventStore } from '@foundation/events';
+import { AuthenticationService, User } from '@foundation/security';
 
 import { Logger } from '@foundation/contracts';
 import { randomUUID } from 'crypto';
@@ -25,7 +25,7 @@ class SecureUserRepository {
 
   async findAll(): Promise<User[]> {
     const baseUsers = await this.baseRepository.findAll();
-  return baseUsers.map((user: BaseUser) => this.toSecureUser(user));
+    return baseUsers.map((user: BaseUser) => this.toSecureUser(user));
   }
 
   async save(user: User): Promise<User> {
@@ -34,16 +34,16 @@ class SecureUserRepository {
       name: user.name,
       email: user.email,
       createdAt: user.createdAt,
-      updatedAt: user.updatedAt
+      updatedAt: user.updatedAt,
     };
-    
+
     const savedUser = await this.baseRepository.save(baseUser);
     return {
       ...savedUser,
       passwordHash: user.passwordHash,
       roles: user.roles,
       isActive: user.isActive,
-      lastLoginAt: user.lastLoginAt
+      lastLoginAt: user.lastLoginAt,
     };
   }
 
@@ -57,7 +57,7 @@ class SecureUserRepository {
       passwordHash: '', // Will be populated separately
       roles: ['user'], // Default role
       isActive: true, // Default active
-      lastLoginAt: undefined
+      lastLoginAt: undefined,
     };
   }
 }
@@ -79,20 +79,19 @@ export class UserService {
   private readonly authService: AuthenticationService;
   private readonly logger: Logger;
 
-  constructor(
-    userRepository: UserRepository,
-    eventStore: InMemoryEventStore,
-    logger: Logger
-  ) {
+  constructor(userRepository: UserRepository, eventStore: InMemoryEventStore, logger: Logger) {
     this.userRepository = new SecureUserRepository(userRepository);
     this.eventStore = eventStore;
     this.logger = logger;
-    
+
     // Initialize auth service for password hashing
-    this.authService = new AuthenticationService({
-      jwtSecret: 'temp-secret',
-      jwtRefreshSecret: 'temp-refresh-secret'
-    }, logger);
+    this.authService = new AuthenticationService(
+      {
+        jwtSecret: 'temp-secret',
+        jwtRefreshSecret: 'temp-refresh-secret',
+      },
+      logger
+    );
   }
 
   async createUser(name: string, email: string, password: string): Promise<User> {
@@ -116,7 +115,7 @@ export class UserService {
       roles: ['user'],
       isActive: true,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     // Save user
@@ -130,11 +129,11 @@ export class UserService {
         userId: user.id,
         name: user.name,
         email: user.email,
-        createdAt: user.createdAt
+        createdAt: user.createdAt,
       },
       {
         service: 'user-service',
-        version: '1.0.0'
+        version: '1.0.0',
       }
     );
 
@@ -142,7 +141,7 @@ export class UserService {
 
     this.logger.info('User created successfully', {
       userId: user.id,
-      email: user.email
+      email: user.email,
     });
 
     return savedUser;
@@ -184,7 +183,7 @@ export class UserService {
       ...user,
       ...(updates.name ? { name: updates.name } : {}),
       ...(updates.email ? { email: updates.email } : {}),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     const savedUser = await this.userRepository.save(updatedUser);
@@ -196,11 +195,11 @@ export class UserService {
       {
         userId: user.id,
         changes: updates,
-        updatedAt: updatedUser.updatedAt
+        updatedAt: updatedUser.updatedAt,
       },
       {
         service: 'user-service',
-        version: '1.0.0'
+        version: '1.0.0',
       }
     );
 
@@ -208,7 +207,7 @@ export class UserService {
 
     this.logger.info('User updated successfully', {
       userId: user.id,
-      changes: updates
+      changes: updates,
     });
 
     return savedUser;
@@ -231,11 +230,11 @@ export class UserService {
       {
         userId: user.id,
         email: user.email,
-        deletedAt: new Date()
+        deletedAt: new Date(),
       },
       {
         service: 'user-service',
-        version: '1.0.0'
+        version: '1.0.0',
       }
     );
 
@@ -268,7 +267,7 @@ export class UserService {
     const updatedUser: User = {
       ...user,
       lastLoginAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     await this.userRepository.save(updatedUser);
@@ -280,11 +279,11 @@ export class UserService {
       {
         userId: user.id,
         email: user.email,
-        loginAt: updatedUser.lastLoginAt
+        loginAt: updatedUser.lastLoginAt,
       },
       {
         service: 'user-service',
-        version: '1.0.0'
+        version: '1.0.0',
       }
     );
 
@@ -292,7 +291,7 @@ export class UserService {
 
     this.logger.info('User authenticated successfully', {
       userId: user.id,
-      email: user.email
+      email: user.email,
     });
 
     return updatedUser;
@@ -309,7 +308,7 @@ export class UserService {
     const updatedUser: User = {
       ...user,
       isActive: false,
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     const savedUser = await this.userRepository.save(updatedUser);
@@ -321,11 +320,11 @@ export class UserService {
       {
         userId: user.id,
         email: user.email,
-        deactivatedAt: updatedUser.updatedAt
+        deactivatedAt: updatedUser.updatedAt,
       },
       {
         service: 'user-service',
-        version: '1.0.0'
+        version: '1.0.0',
       }
     );
 
@@ -347,7 +346,7 @@ export class UserService {
     const updatedUser: User = {
       ...user,
       isActive: true,
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     const savedUser = await this.userRepository.save(updatedUser);
@@ -359,11 +358,11 @@ export class UserService {
       {
         userId: user.id,
         email: user.email,
-        activatedAt: updatedUser.updatedAt
+        activatedAt: updatedUser.updatedAt,
       },
       {
         service: 'user-service',
-        version: '1.0.0'
+        version: '1.0.0',
       }
     );
 
@@ -383,7 +382,10 @@ export class UserService {
     }
 
     // Verify old password
-    const isOldPasswordValid = await this.authService.verifyPassword(oldPassword, user.passwordHash);
+    const isOldPasswordValid = await this.authService.verifyPassword(
+      oldPassword,
+      user.passwordHash
+    );
     if (!isOldPasswordValid) {
       this.logger.warn('Password change failed: invalid old password', { userId: id });
       return false;
@@ -396,7 +398,7 @@ export class UserService {
     const updatedUser: User = {
       ...user,
       passwordHash: newPasswordHash,
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
 
     await this.userRepository.save(updatedUser);
@@ -407,11 +409,11 @@ export class UserService {
       'UserPasswordChanged',
       {
         userId: user.id,
-        changedAt: updatedUser.updatedAt
+        changedAt: updatedUser.updatedAt,
       },
       {
         service: 'user-service',
-        version: '1.0.0'
+        version: '1.0.0',
       }
     );
 
