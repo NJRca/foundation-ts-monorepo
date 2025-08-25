@@ -1,4 +1,17 @@
-import { Config } from '@foundation/contracts';
+import * as dotenv from 'dotenv';
+import * as path from 'path';
+
+// Load environment variables from .env file if present
+dotenv.config({ path: path.join(process.cwd(), '.env') });
+
+// Local Config interface to avoid circular dependency
+interface Config {
+  get<T>(key: string): T | undefined;
+  get<T>(key: string, defaultValue: T): T;
+  has(key: string): boolean;
+  getRequired?<T>(key: string): T;
+  validate?(): void;
+}
 
 interface ConfigSource {
   get(key: string): string | undefined;
@@ -271,6 +284,64 @@ export function loadValidatedConfig(additionalConfig?: Record<string, string>): 
   });
 
   return config;
+}
+
+// Typed configuration interface for development
+export interface TypedConfig {
+  // Server configuration
+  port: number;
+  nodeEnv: 'development' | 'test' | 'production';
+  
+  // Database configuration
+  dbHost: string;
+  dbPort: number;
+  dbName: string;
+  dbUser: string;
+  dbPassword: string;
+  
+  // Redis configuration
+  redisHost: string;
+  redisPort: number;
+  
+  // JWT configuration
+  jwtSecret: string;
+  jwtRefreshSecret: string;
+  
+  // CORS configuration
+  corsOrigins: string[];
+  
+  // Logging configuration
+  logLevel: 'debug' | 'info' | 'warn' | 'error';
+}
+
+// Helper function to create typed configuration
+export function getTypedConfig(config: Config): TypedConfig {
+  return {
+    port: parseInt(config.get('PORT', '3000'), 10),
+    nodeEnv: config.get('NODE_ENV', 'development') as 'development' | 'test' | 'production',
+    
+    dbHost: config.get('DB_HOST', 'localhost'),
+    dbPort: parseInt(config.get('DB_PORT', '5432'), 10),
+    dbName: config.get('DB_NAME', 'foundation_dev'),
+    dbUser: config.get('DB_USER', 'postgres'),
+    dbPassword: config.get('DB_PASSWORD', 'postgres'),
+    
+    redisHost: config.get('REDIS_HOST', 'localhost'),
+    redisPort: parseInt(config.get('REDIS_PORT', '6379'), 10),
+    
+    jwtSecret: config.get('JWT_SECRET', 'your-super-secret-jwt-key-change-this-in-production-make-it-at-least-32-characters'),
+    jwtRefreshSecret: config.get('JWT_REFRESH_SECRET', 'your-super-secret-refresh-key-change-this-in-production-make-it-at-least-32-characters'),
+    
+    corsOrigins: (config.get('CORS_ORIGINS', 'http://localhost:3000') as string).split(',').map(s => s.trim()),
+    
+    logLevel: config.get('LOG_LEVEL', 'info') as 'debug' | 'info' | 'warn' | 'error',
+  };
+}
+
+// Convenience function to load config with typed interface
+export function loadTypedConfig(additionalConfig?: Record<string, string>): TypedConfig {
+  const config = loadConfig(additionalConfig);
+  return getTypedConfig(config);
 }
 
 // Export config sources and error class for testing
