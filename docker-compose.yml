@@ -73,6 +73,34 @@ services:
     depends_on:
       - prometheus
 
+  # Log Aggregation with Loki
+  loki:
+    image: grafana/loki:2.9.0
+    ports:
+      - '3100:3100'
+    command: -config.file=/etc/loki/loki-config.yaml
+    volumes:
+      - ./monitoring/loki-config.yaml:/etc/loki/loki-config.yaml:ro
+      - loki_data:/loki
+    networks:
+      - foundation-network
+    restart: unless-stopped
+
+  # Log shipper (Promtail)
+  promtail:
+    image: grafana/promtail:2.9.0
+    volumes:
+      - ./logs:/var/log/app:ro
+      - ./monitoring/promtail-config.yaml:/etc/promtail/config.yml:ro
+      - /var/log:/var/log:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - foundation-network
+    depends_on:
+      - loki
+    restart: unless-stopped
+
   # Application Services
   user-service:
     build:
@@ -222,3 +250,5 @@ volumes:
     name: foundation_prometheus_data
   grafana_data:
     name: foundation_grafana_data
+  loki_data:
+    name: foundation_loki_data

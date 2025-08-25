@@ -1,0 +1,161 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+scrape_configs:
+  # Self-healing system application logs
+  - job_name: self-healing-app
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: self-healing-app
+          __path__: /var/log/app/*.log
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: timestamp
+            level: level
+            message: message
+            service: service
+            error_type: error_type
+            fingerprint: fingerprint
+      - labels:
+          level:
+          service:
+          error_type:
+      - timestamp:
+          source: timestamp
+          format: RFC3339
+
+  # Container logs for self-healing monitoring
+  - job_name: docker-containers
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 5s
+    relabel_configs:
+      - source_labels: ['__meta_docker_container_name']
+        regex: '/(.+)'
+        target_label: 'container'
+      - source_labels: ['__meta_docker_container_log_stream']
+        target_label: 'stream'
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: time
+            message: log
+      - timestamp:
+          source: timestamp
+          format: RFC3339Nano
+      - labels:
+          stream:
+          container:
+
+  # System logs with error pattern detection
+  - job_name: system-logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: system-logs
+          __path__: /var/log/*.log
+    pipeline_stages:
+      - match:
+          selector: '{job="system-logs"}'
+          stages:
+            - regex:
+                expression: '(?P<timestamp>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) (?P<level>\w+) (?P<message>.*)'
+            - labels:
+                level:
+            - timestamp:
+                source: timestamp
+                format: '2006-01-02 15:04:05'
+
+  # Self-healing specific error patterns
+  - job_name: self-healing-errors
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: self-healing-errors
+          __path__: /var/log/app/errors/*.log
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: timestamp
+            level: level
+            message: message
+            service: service
+            error_type: error_type
+            fingerprint: fingerprint
+            stack_trace: stack_trace
+            healing_eligible: healing_eligible
+      - labels:
+          level:
+          service:
+          error_type:
+          healing_eligible:
+      - timestamp:
+          source: timestamp
+          format: RFC3339
+      # Mark high-frequency errors for self-healing
+      - match:
+          selector: '{level="error"}'
+          action: keep
+          stages:
+            - labels:
+                auto_heal: 'candidate'
+
+  # Performance metrics logs
+  - job_name: performance-logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: performance-logs
+          __path__: /var/log/app/performance/*.log
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: timestamp
+            metric_name: metric_name
+            value: value
+            service: service
+            endpoint: endpoint
+      - labels:
+          metric_name:
+          service:
+          endpoint:
+      - timestamp:
+          source: timestamp
+          format: RFC3339
+
+  # Security audit logs
+  - job_name: security-audit
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: security-audit
+          __path__: /var/log/app/security/*.log
+    pipeline_stages:
+      - json:
+          expressions:
+            timestamp: timestamp
+            event_type: event_type
+            user_id: user_id
+            action: action
+            result: result
+      - labels:
+          event_type:
+          action:
+          result:
+      - timestamp:
+          source: timestamp
+          format: RFC3339

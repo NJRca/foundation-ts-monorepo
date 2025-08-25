@@ -1,18 +1,32 @@
 /**
- * @fileoverview LLM Client Interface and OpenAI Implementation
+ * @fileoverview LLM Client Interface and Multiple Provider Implementations
  *
  * Provides secure, configurable access to Large Language Models
- * with support for multiple providers and model selection.
+ * with support for OpenAI, GitHub Models, and Ollama providers.
  */
 
 import { Config } from '@foundation/contracts';
 
 /**
- * Supported LLM models
+ * Supported LLM providers
  */
-export const SUPPORTED_MODELS = ['gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo', 'gpt-3.5-turbo'] as const;
+export type LLMProvider = 'openai' | 'github' | 'ollama' | 'mock';
 
-export type LLMModel = (typeof SUPPORTED_MODELS)[number];
+/**
+ * Supported LLM models by provider
+ */
+export const SUPPORTED_MODELS = {
+  openai: ['gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo', 'gpt-3.5-turbo'],
+  github: ['gpt-4o', 'gpt-4o-mini', 'meta-llama-3.1-405b-instruct', 'phi-3-medium-128k-instruct'],
+  ollama: ['llama3.1', 'codellama', 'mistral', 'qwen2.5-coder'],
+  mock: ['mock-gpt-4'],
+} as const;
+
+export type LLMModel =
+  | (typeof SUPPORTED_MODELS.openai)[number]
+  | (typeof SUPPORTED_MODELS.github)[number]
+  | (typeof SUPPORTED_MODELS.ollama)[number]
+  | (typeof SUPPORTED_MODELS.mock)[number];
 
 /**
  * LLM request configuration
@@ -192,7 +206,7 @@ export class OpenAIClient implements LLMClient {
    * Get available OpenAI models
    */
   getAvailableModels(): LLMModel[] {
-    return [...SUPPORTED_MODELS];
+    return SUPPORTED_MODELS.openai.slice();
   }
 }
 
@@ -261,7 +275,7 @@ function fixNullReference(input: any) {
   }
 
   getAvailableModels(): LLMModel[] {
-    return [...SUPPORTED_MODELS];
+    return SUPPORTED_MODELS.mock.slice();
   }
 }
 
