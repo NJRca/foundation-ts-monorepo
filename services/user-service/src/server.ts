@@ -1,8 +1,8 @@
 import { ApiGateway, RouteBuilder } from '@foundation/api-gateway';
-import { loadValidatedConfig } from '@foundation/config';
 import { PostgresConnection, UserRepository } from '@foundation/database';
 import { AuthenticationService, AuthorizationService } from '@foundation/security';
 
+import { loadValidatedConfig } from '@foundation/config';
 import { InMemoryEventStore } from '@foundation/events';
 import { createObservabilitySetup } from '@foundation/observability';
 import { UserService } from './user-service';

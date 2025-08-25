@@ -2,7 +2,7 @@
 
 import * as fs from 'fs';
 
-import { generateSarifReport, SarifResult } from './index.js';
+import { SarifResult, generateSarifReport } from './index.js';
 
 interface CliOptions {
   directory: string;
@@ -22,7 +22,7 @@ function parseArgs(): CliOptions {
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
 
-  switch (arg) {
+    switch (arg) {
       case '--help':
       case '-h': {
         printHelp();
@@ -232,7 +232,7 @@ function printConsoleResults(results: SarifResult[], quiet: boolean): void {
     const icon = getLevelIcon(level);
     console.log(`\n${icon} ${level.toUpperCase()} (${levelResults.length}):`);
 
-  levelResults.forEach((result, index) => {
+    levelResults.forEach((result, index) => {
       const location = result.locations[0]?.physicalLocation;
       const file = location?.artifactLocation?.uri || 'unknown';
       const line = location?.region?.startLine || 0;

@@ -1,6 +1,7 @@
-import { loadValidatedConfig } from '@foundation/config';
 import { LogLevel, createLogger } from '@foundation/observability';
 import express, { Request, Response } from 'express';
+
+import { loadValidatedConfig } from '@foundation/config';
 
 // Load and validate configuration at startup
 const configManager = loadValidatedConfig();
