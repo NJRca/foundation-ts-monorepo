@@ -21,9 +21,12 @@ This monorepo implements a sophisticated microservices architecture with the fol
 
 ### Microservices (`services/`)
 
-- **`user-service`** - User management with authentication
-- **`auth-service`** - (Planned) Dedicated authentication service
-- **`notification-service`** - (Planned) Notification and messaging service
+- **`user-service`** - User management with authentication (implemented)
+
+### Roadmap
+
+- **`auth-service`** - Dedicated authentication service
+- **`notification-service`** - Notification and messaging service
 
 ### Infrastructure
 

@@ -66,8 +66,7 @@ export class ConfigManager implements Config {
     this.sources = sources;
   }
 
-  get<T>(key: string): T | undefined;
-  get<T>(key: string, defaultValue: T): T;
+  // Single signature (was previously expressed with overloads that triggered no-dupe-class-members)
   get<T>(key: string, defaultValue?: T): T | undefined {
     for (const source of this.sources) {
       if (source.has(key)) {
@@ -274,4 +273,88 @@ export function loadValidatedConfig(additionalConfig?: Record<string, string>): 
 }
 
 // Export config sources and error class for testing
+// Typed, application-level config shape used by services
+export interface TypedConfig {
+  port: number;
+  nodeEnv: 'development' | 'test' | 'production';
+  database: {
+    host?: string;
+    port?: number;
+    name?: string;
+    user?: string;
+    password?: string;
+  };
+  redis: {
+    host?: string;
+    port?: number;
+  };
+  jwt: {
+    secret?: string;
+    expiresIn?: string;
+  };
+  observability: {
+    tracing: boolean;
+    metrics: boolean;
+    logLevel: string;
+  };
+}
+
+/**
+ * Create a typed view of the provided `Config` implementation.
+ * This is lightweight mapping from environment keys -> strongly-typed object used by services.
+ */
+export function getTypedConfig(manager: Config): TypedConfig {
+  const port = (manager.get<number>('PORT') as unknown as number) ?? 3000;
+  const nodeEnv = (manager.get<string>('NODE_ENV') as unknown as string) || 'development';
+
+  const dbHost = manager.get<string>('DB_HOST') as unknown as string;
+  const dbPort = manager.get<number>('DB_PORT') as unknown as number | undefined;
+  const dbName = manager.get<string>('DB_NAME') as unknown as string | undefined;
+  const dbUser = manager.get<string>('DB_USER') as unknown as string | undefined;
+  const dbPassword = manager.get<string>('DB_PASSWORD') as unknown as string | undefined;
+
+  const redisHost = manager.get<string>('REDIS_HOST') as unknown as string | undefined;
+  const redisPort = manager.get<number>('REDIS_PORT') as unknown as number | undefined;
+
+  const jwtSecret = manager.get<string>('JWT_SECRET') as unknown as string | undefined;
+  const jwtExpiresIn = manager.get<string>('JWT_EXPIRES_IN') as unknown as string | undefined;
+
+  const tracing = (manager.get<string>('OBS_TRACING') as unknown as string) === 'true';
+  const metrics = (manager.get<string>('OBS_METRICS') as unknown as string) !== 'false';
+  const logLevel = (manager.get<string>('OBS_LOG_LEVEL') as unknown as string) || 'info';
+
+  return {
+    port: Number(port),
+    nodeEnv,
+    database: {
+      host: dbHost,
+      port: dbPort !== undefined ? Number(dbPort) : undefined,
+      name: dbName,
+      user: dbUser,
+      password: dbPassword,
+    },
+    redis: {
+      host: redisHost,
+      port: redisPort !== undefined ? Number(redisPort) : undefined,
+    },
+    jwt: {
+      secret: jwtSecret,
+      expiresIn: jwtExpiresIn,
+    },
+    observability: {
+      tracing,
+      metrics,
+      logLevel,
+    },
+  } as TypedConfig;
+}
+
+/**
+ * Convenience wrapper that loads config sources and returns a typed config in one call.
+ */
+export function loadTypedConfig(additionalConfig?: Record<string, string>): TypedConfig {
+  const manager = loadConfig(additionalConfig);
+  return getTypedConfig(manager);
+}
+
 export { ConfigValidationError, EnvironmentConfigSource, MemoryConfigSource };

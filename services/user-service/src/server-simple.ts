@@ -1,9 +1,11 @@
-import { ConfigManager, loadValidatedConfig } from '@foundation/config';
 import { LogLevel, createLogger } from '@foundation/observability';
 import express, { Request, Response } from 'express';
 
+import { loadValidatedConfig } from '@foundation/config';
+
 // Load and validate configuration at startup
-const configManager: ConfigManager = loadValidatedConfig();
+const configManager = loadValidatedConfig();
+// typed config view removed until used to satisfy no-unused-vars
 
 // Validate configuration immediately - fail fast if misconfigured
 try {
@@ -105,7 +107,7 @@ app.post('/api/v1/auth/login', (req: Request, res: Response) => {
 });
 
 // Error handling middleware
-app.use((err: Error, req: Request, res: Response, next: express.NextFunction) => {
+app.use((err: Error, req: Request, res: Response) => {
   logger.error('Unhandled error', { error: err.message, stack: err.stack });
   res.status(500).json({
     error: 'Internal Server Error',
@@ -121,7 +123,7 @@ async function startServer(): Promise<void> {
     const server = app.listen(config.port, () => {
       logger.info('User service started successfully', {
         port: config.port,
-        environment: process.env.NODE_ENV || 'development',
+        environment: configManager.get('NODE_ENV') || 'development',
       });
     });
 

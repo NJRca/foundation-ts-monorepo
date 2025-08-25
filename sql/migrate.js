@@ -10,13 +10,33 @@ const path = require('path');
 const { Client } = require('pg');
 
 // Default database configuration (can be overridden by environment variables)
-const DEFAULT_CONFIG = {
+let DEFAULT_CONFIG = {
   host: process.env.DB_HOST || 'localhost',
   port: parseInt(process.env.DB_PORT || '5432'),
   database: process.env.DB_NAME || 'foundation_db',
   user: process.env.DB_USER || 'foundation_user',
   password: process.env.DB_PASSWORD || 'foundation_password',
 };
+
+// If @foundation/config is installed and built, prefer loading typed config
+try {
+  // require at runtime so scripts in CI/dev can opt into package
+  // eslint-disable-next-line global-require
+  const { loadConfig, getTypedConfig } = require('@foundation/config');
+  const manager = loadConfig();
+  const typed = getTypedConfig ? getTypedConfig(manager) : undefined;
+  if (typed && typed.database) {
+    DEFAULT_CONFIG = {
+      host: typed.database.host || DEFAULT_CONFIG.host,
+      port: typed.database.port || DEFAULT_CONFIG.port,
+      database: typed.database.name || DEFAULT_CONFIG.database,
+      user: typed.database.user || DEFAULT_CONFIG.user,
+      password: typed.database.password || DEFAULT_CONFIG.password,
+    };
+  }
+} catch (err) {
+  // ignore, fallback to env defaults
+}
 
 // Colors for console output
 const colors = {

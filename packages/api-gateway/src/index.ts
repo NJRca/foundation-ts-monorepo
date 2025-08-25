@@ -20,7 +20,12 @@ export interface RouteConfig {
 
 export type Middleware = (req: Request, res: Response, next: NextFunction) => Promise<void> | void;
 
-export type ErrorMiddleware = (error: Error, req: Request, res: Response, next: NextFunction) => Promise<void> | void;
+export type ErrorMiddleware = (
+  error: Error,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => Promise<void> | void;
 
 export interface RateLimitConfig {
   windowMs: number;
@@ -68,7 +73,7 @@ export class ApiGateway {
     this.app = express();
     this.logger = logger || createLogger(false, 0, 'ApiGateway');
     this.config = config;
-    
+
     this.setupBaseMiddleware();
   }
 
@@ -88,12 +93,14 @@ export class ApiGateway {
     }
 
     // CORS configuration
-    this.app.use(cors({
-      origin: this.config.corsOrigins,
-      credentials: true,
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-      allowedHeaders: ['Content-Type', 'Authorization', 'X-Request-ID']
-    }));
+    this.app.use(
+      cors({
+        origin: this.config.corsOrigins,
+        credentials: true,
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+        allowedHeaders: ['Content-Type', 'Authorization', 'X-Request-ID'],
+      })
+    );
 
     // Parse JSON with size limit
     this.app.use(express.json({ limit: '10mb' }));
@@ -115,7 +122,7 @@ export class ApiGateway {
 
   private createRequestContextMiddleware(): Middleware {
     return (req: Request, res: Response, next: NextFunction): void => {
-      const requestId = req.headers['x-request-id'] as string || this.generateRequestId();
+      const requestId = (req.headers['x-request-id'] as string) || this.generateRequestId();
       const context: RequestContext = {
         requestId,
         userId: req.headers['x-user-id'] as string,
@@ -123,7 +130,7 @@ export class ApiGateway {
         ip: req.ip || req.socket.remoteAddress || 'unknown',
         startTime: new Date(),
         path: req.path,
-        method: req.method
+        method: req.method,
       };
 
       // Attach context to request
@@ -138,7 +145,7 @@ export class ApiGateway {
         method: req.method,
         path: req.path,
         userAgent: context.userAgent,
-        ip: context.ip
+        ip: context.ip,
       });
 
       next();
@@ -149,8 +156,8 @@ export class ApiGateway {
     return (req: Request, res: Response, next: NextFunction): void => {
       // Simple compression middleware
       const originalSend = res.send;
-      
-      res.send = function(data: any): Response {
+
+      res.send = function (data: any): Response {
         if (typeof data === 'string' && data.length > 1024) {
           res.setHeader('Content-Encoding', 'gzip');
           // In a real implementation, you'd use a compression library here
@@ -211,7 +218,7 @@ export class ApiGateway {
       path: config.path,
       requiresAuth: config.requiresAuth,
       hasRateLimit: !!config.rateLimit,
-      hasValidation: !!config.validation
+      hasValidation: !!config.validation,
     });
   }
 
@@ -243,7 +250,7 @@ export class ApiGateway {
         res.status(429).json({
           error: 'Too Many Requests',
           message: `Rate limit exceeded. Max ${config.maxRequests} requests per ${config.windowMs}ms.`,
-          retryAfter: Math.ceil((current.resetTime - now) / 1000)
+          retryAfter: Math.ceil((current.resetTime - now) / 1000),
         });
         return;
       }
@@ -279,7 +286,7 @@ export class ApiGateway {
         res.status(400).json({
           error: 'Validation Error',
           message: 'Request validation failed',
-          details: errors
+          details: errors,
         });
         return;
       }
@@ -295,7 +302,7 @@ export class ApiGateway {
       if (!authHeader) {
         res.status(401).json({
           error: 'Unauthorized',
-          message: 'Missing Authorization header'
+          message: 'Missing Authorization header',
         });
         return;
       }
@@ -305,7 +312,7 @@ export class ApiGateway {
       if (!token || token.length < 10) {
         res.status(401).json({
           error: 'Unauthorized',
-          message: 'Invalid token'
+          message: 'Invalid token',
         });
         return;
       }
@@ -322,20 +329,20 @@ export class ApiGateway {
         await handler(req, res, next);
       } catch (error) {
         const context = (req as any).context as RequestContext;
-        
+
         this.logger.error('Route handler error', {
           requestId: context.requestId,
           method: req.method,
           path: req.path,
           error: error instanceof Error ? error.message : 'Unknown error',
-          stack: error instanceof Error ? error.stack : undefined
+          stack: error instanceof Error ? error.stack : undefined,
         });
 
         if (!res.headersSent) {
           res.status(500).json({
             error: 'Internal Server Error',
             message: 'An unexpected error occurred',
-            requestId: context.requestId
+            requestId: context.requestId,
           });
         }
       }
@@ -353,9 +360,9 @@ export class ApiGateway {
           timestamp: new Date().toISOString(),
           uptime: process.uptime(),
           memory: process.memoryUsage(),
-          version: process.version
+          version: process.version,
         });
-      }
+      },
     });
 
     this.addRoute({
@@ -363,7 +370,7 @@ export class ApiGateway {
       method: 'GET',
       handler: async (req: Request, res: Response): Promise<void> => {
         res.status(200).send('OK');
-      }
+      },
     });
 
     this.addRoute({
@@ -372,21 +379,22 @@ export class ApiGateway {
       handler: async (req: Request, res: Response): Promise<void> => {
         // Check if all dependencies are ready
         res.json({ status: 'ready', timestamp: new Date().toISOString() });
-      }
+      },
     });
   }
 
   // Start the server
   listen(port?: number): Promise<void> {
     const serverPort = port || this.config.port;
-    
-    return new Promise((resolve) => {
+
+    return new Promise(resolve => {
       this.app.listen(serverPort, () => {
         this.logger.info(`API Gateway listening on port ${serverPort}`, {
           port: serverPort,
-          environment: process.env.NODE_ENV || 'development',
+          // Prefer a provided environment field or gracefully fallback
+          environment: (this.config as any).environment || 'development',
           corsOrigins: this.config.corsOrigins,
-          routeCount: this.routes.size
+          routeCount: this.routes.size,
         });
         resolve();
       });
@@ -475,7 +483,7 @@ export class RouteBuilder {
     if (!this.config.path || !this.config.method || !this.config.handler) {
       throw new Error('Route must have path, method, and handler');
     }
-    
+
     return this.config as RouteConfig;
   }
 }
@@ -483,10 +491,11 @@ export class RouteBuilder {
 // Export common middleware functions
 export const CommonMiddleware = {
   // CORS middleware factory
-  cors: (origins: string[]) => cors({
-    origin: origins,
-    credentials: true
-  }),
+  cors: (origins: string[]) =>
+    cors({
+      origin: origins,
+      credentials: true,
+    }),
 
   // JSON parser with size limit
   json: (limit = '10mb') => express.json({ limit }),
@@ -500,7 +509,7 @@ export const CommonMiddleware = {
       const start = Date.now();
       const originalSend = res.send;
 
-      res.send = function(data: any): Response {
+      res.send = function (data: any): Response {
         const duration = Date.now() - start;
         const context = (req as any).context as RequestContext;
 
@@ -511,7 +520,7 @@ export const CommonMiddleware = {
           statusCode: res.statusCode,
           duration,
           contentLength: res.get('content-length'),
-          userAgent: req.headers['user-agent']
+          userAgent: req.headers['user-agent'],
         });
 
         return originalSend.call(this, data);
@@ -531,16 +540,16 @@ export const CommonMiddleware = {
         method: req.method,
         path: req.path,
         error: error.message,
-        stack: error.stack
+        stack: error.stack,
       });
 
       if (!res.headersSent) {
         res.status(500).json({
           error: 'Internal Server Error',
           message: 'An unexpected error occurred',
-          requestId: context?.requestId
+          requestId: context?.requestId,
         });
       }
     };
-  }
+  },
 };

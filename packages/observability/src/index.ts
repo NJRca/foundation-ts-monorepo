@@ -493,3 +493,12 @@ export function createObservabilitySetup(serviceName: string) {
 }
 
 export { ConsoleLogOutput, StructuredLogOutput };
+
+// Export new middleware functionality
+export {
+  createCompleteObservabilitySetup,
+  createObservabilityMiddleware,
+  ObservabilityMiddleware,
+} from './middleware';
+
+export type { ObservabilityConfig, ObservableRequest } from './middleware';
