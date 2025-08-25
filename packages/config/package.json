@@ -13,7 +13,7 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "@foundation/contracts": "*"
+    "dotenv": "^16.3.0"
   },
   "devDependencies": {},
   "files": [

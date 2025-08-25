@@ -1,10 +1,9 @@
 import express, { Request, Response } from 'express';
+import { loadConfig, getTypedConfig } from '@foundation/config';
 
-// Simple configuration
-const config = {
-  port: parseInt(process.env.PORT || '3001'),
-  nodeEnv: process.env.NODE_ENV || 'development'
-};
+// Load configuration with validation
+const configManager = loadConfig();
+const config = getTypedConfig(configManager);
 
 // Create Express application
 const app = express();

@@ -26,6 +26,7 @@
     "@foundation/events": "*",
     "@foundation/observability": "*",
     "@foundation/contracts": "*",
+    "@foundation/config": "*",
     "bcrypt": "^5.1.0",
     "jsonwebtoken": "^9.0.0",
     "@types/bcrypt": "^5.0.0",

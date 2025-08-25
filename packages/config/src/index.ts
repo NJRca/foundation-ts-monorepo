@@ -1,4 +1,17 @@
-import { Config } from '@foundation/contracts';
+import * as dotenv from 'dotenv';
+import * as path from 'path';
+
+// Load environment variables from .env file if present
+dotenv.config({ path: path.join(process.cwd(), '.env') });
+
+// Local Config interface to avoid circular dependency
+interface Config {
+  get<T>(key: string): T | undefined;
+  get<T>(key: string, defaultValue: T): T;
+  has(key: string): boolean;
+  getRequired?<T>(key: string): T;
+  validate?(): void;
+}
 
 interface ConfigSource {
   get(key: string): string | undefined;
@@ -206,20 +219,30 @@ export const validators = {
 };
 
 // Factory function to create a config manager with common sources and validation
-export function loadConfig(additionalConfig?: Record<string, string>): Config {
-  const sources: ConfigSource[] = [new EnvironmentConfigSource(process.env)];
-
-  if (additionalConfig) {
-    sources.push(new MemoryConfigSource(additionalConfig));
+export function loadConfig(additionalConfig?: Record<string, string>): ConfigManager {
+  const config = createValidatedConfig(additionalConfig);
+  
+  // Validate configuration on load
+  try {
+    config.validate();
+    return config;
+  } catch (error) {
+    if (error instanceof ConfigValidationError) {
+      console.error('Configuration validation failed:');
+      console.error(error.message);
+      if (error.missingKeys.length > 0) {
+        console.error('Missing required keys:', error.missingKeys.join(', '));
+      }
+      process.exit(1);
+    }
+    throw error;
   }
-
-  return new ConfigManager(sources);
 }
 
 /**
  * Create a validated config with common production-ready rules
  */
-export function loadValidatedConfig(additionalConfig?: Record<string, string>): ConfigManager {
+export function createValidatedConfig(additionalConfig?: Record<string, string>): ConfigManager {
   const config = new ConfigManager([
     new EnvironmentConfigSource(process.env),
     ...(additionalConfig ? [new MemoryConfigSource(additionalConfig)] : []),
@@ -271,6 +294,71 @@ export function loadValidatedConfig(additionalConfig?: Record<string, string>): 
   });
 
   return config;
+}
+
+/**
+ * Configuration schema definition for TypeScript apps
+ */
+export interface AppConfig {
+  port: number;
+  nodeEnv: 'development' | 'test' | 'production';
+  database: {
+    host: string;
+    port: number;
+    name: string;
+    user: string;
+    password: string;
+  };
+  redis: {
+    host: string;
+    port: number;
+  };
+  jwt: {
+    secret: string;
+    expiresIn: string;
+  };
+  observability: {
+    tracing: boolean;
+    metrics: boolean;
+    logLevel: string;
+  };
+}
+
+/**
+ * Type-safe configuration getter with schema validation
+ */
+export function getTypedConfig(config: ConfigManager): AppConfig {
+  return {
+    port: config.getRequired<number>('PORT'),
+    nodeEnv: config.getRequired<'development' | 'test' | 'production'>('NODE_ENV'),
+    database: {
+      host: config.getRequired<string>('DB_HOST'),
+      port: config.get<number>('DB_PORT', 5432),
+      name: config.getRequired<string>('DB_NAME'),
+      user: config.getRequired<string>('DB_USER'),
+      password: config.getRequired<string>('DB_PASSWORD'),
+    },
+    redis: {
+      host: config.getRequired<string>('REDIS_HOST'),
+      port: config.get<number>('REDIS_PORT', 6379),
+    },
+    jwt: {
+      secret: config.getRequired<string>('JWT_SECRET'),
+      expiresIn: config.get<string>('JWT_EXPIRES_IN', '24h'),
+    },
+    observability: {
+      tracing: config.get<boolean>('ENABLE_TRACING', false),
+      metrics: config.get<boolean>('ENABLE_METRICS', true),
+      logLevel: config.get<string>('LOG_LEVEL', 'info'),
+    },
+  };
+}
+
+/**
+ * Legacy function name for backward compatibility
+ */
+export function loadValidatedConfig(envOverrides?: Record<string, string>): ConfigManager {
+  return loadConfig(envOverrides);
 }
 
 // Export config sources and error class for testing
