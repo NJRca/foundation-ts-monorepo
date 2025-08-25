@@ -1,12 +1,20 @@
 import { Logger } from '@foundation/contracts';
 import { randomUUID } from 'crypto';
 
+// Prometheus metrics support
+export interface MetricsCollector {
+  incrementCounter(name: string, labels?: Record<string, string>): void;
+  setGauge(name: string, value: number, labels?: Record<string, string>): void;
+  observeHistogram(name: string, value: number, labels?: Record<string, string>): void;
+  getMetrics(): string;
+}
+
 // Enhanced logging with tracing support
 export enum LogLevel {
   DEBUG = 0,
   INFO = 1,
   WARN = 2,
-  ERROR = 3
+  ERROR = 3,
 }
 
 interface LogEntry {
@@ -18,6 +26,7 @@ interface LogEntry {
   requestId?: string;
   traceId?: string;
   spanId?: string;
+  correlationId?: string;
 }
 
 interface LogOutput {
@@ -58,7 +67,7 @@ export class InMemoryTracer implements Tracer {
   startSpan(operationName: string, parentSpan?: Span): Span {
     const traceId = parentSpan?.traceId || randomUUID();
     const spanId = randomUUID();
-    
+
     const span: Span = {
       traceId,
       spanId,
@@ -68,16 +77,16 @@ export class InMemoryTracer implements Tracer {
       tags: {},
       logs: [],
       status: 'success',
-      baggage: parentSpan?.baggage || {}
+      baggage: parentSpan?.baggage || {},
     };
 
     this.spans.set(spanId, span);
-    
+
     this.logger.debug('Started span', {
       traceId,
       spanId,
       operationName,
-      parentSpanId: parentSpan?.spanId
+      parentSpanId: parentSpan?.spanId,
     });
 
     return span;
@@ -92,7 +101,7 @@ export class InMemoryTracer implements Tracer {
       spanId: span.spanId,
       operationName: span.operationName,
       duration: span.duration,
-      status: span.status
+      status: span.status,
     });
 
     // In a real implementation, you'd send this to a tracing backend
@@ -123,8 +132,8 @@ export class InMemoryTracer implements Tracer {
         duration: span.duration,
         tags: span.tags,
         logs: span.logs,
-        status: span.status
-      }
+        status: span.status,
+      },
     });
   }
 
@@ -148,7 +157,7 @@ class ConsoleLogOutput implements LogOutput {
     const meta = entry.meta ? ` ${JSON.stringify(entry.meta)}` : '';
     const service = entry.service ? ` [${entry.service}]` : '';
     const requestId = entry.requestId ? ` (${entry.requestId})` : '';
-    
+
     // eslint-disable-next-line no-console
     console.log(`${timestamp} ${level}${service}${requestId}: ${entry.message}${meta}`);
   }
@@ -162,9 +171,9 @@ class StructuredLogOutput implements LogOutput {
       message: entry.message,
       service: entry.service ?? undefined,
       requestId: entry.requestId ?? undefined,
-      ...(entry.meta ?? {})
+      ...(entry.meta ?? {}),
     };
-    
+
     // eslint-disable-next-line no-console
     console.log(JSON.stringify(logObject));
   }
@@ -221,7 +230,7 @@ export class AppLogger implements Logger {
       timestamp: new Date(),
       ...(meta ? { meta } : {}),
       ...(this.service ? { service: this.service } : {}),
-      ...(this.requestId ? { requestId: this.requestId } : {})
+      ...(this.requestId ? { requestId: this.requestId } : {}),
     };
 
     this.outputs.forEach(output => output.write(entry));
@@ -274,7 +283,7 @@ export class SimpleMetrics implements Metrics {
       inc: (value = 1) => {
         const current = this.counters.get(name) ?? 0;
         this.counters.set(name, current + value);
-      }
+      },
     };
   }
 
@@ -284,7 +293,7 @@ export class SimpleMetrics implements Metrics {
         const current = this.histograms.get(name) ?? [];
         current.push(value);
         this.histograms.set(name, current);
-      }
+      },
     };
   }
 
@@ -300,7 +309,7 @@ export class SimpleMetrics implements Metrics {
       dec: (value = 1) => {
         const current = this.gauges.get(name) ?? 0;
         this.gauges.set(name, current - value);
-      }
+      },
     };
   }
 
@@ -308,9 +317,179 @@ export class SimpleMetrics implements Metrics {
     return {
       counters: Object.fromEntries(this.counters),
       histograms: Object.fromEntries(this.histograms),
-      gauges: Object.fromEntries(this.gauges)
+      gauges: Object.fromEntries(this.gauges),
     };
   }
+
+  // Export metrics in Prometheus format
+  getMetricsString(): string {
+    const lines: string[] = [];
+
+    // Export counters
+    for (const [name, value] of this.counters.entries()) {
+      lines.push(`# TYPE ${name} counter`);
+      lines.push(`${name} ${value}`);
+    }
+
+    // Export gauges
+    for (const [name, value] of this.gauges.entries()) {
+      lines.push(`# TYPE ${name} gauge`);
+      lines.push(`${name} ${value}`);
+    }
+
+    // Export histograms (basic implementation)
+    for (const [name, values] of this.histograms.entries()) {
+      if (values.length > 0) {
+        lines.push(`# TYPE ${name} histogram`);
+        const sum = values.reduce((a, b) => a + b, 0);
+        const count = values.length;
+        lines.push(`${name}_sum ${sum}`);
+        lines.push(`${name}_count ${count}`);
+
+        // Basic bucketing
+        const buckets = [0.1, 0.5, 1, 2.5, 5, 10];
+        for (const bucket of buckets) {
+          const count = values.filter(v => v <= bucket).length;
+          lines.push(`${name}_bucket{le="${bucket}"} ${count}`);
+        }
+        lines.push(`${name}_bucket{le="+Inf"} ${count}`);
+      }
+    }
+
+    return lines.join('\n') + '\n';
+  }
+}
+
+// Prometheus-compatible metrics collector
+export class PrometheusMetricsCollector implements MetricsCollector {
+  private readonly metrics: SimpleMetrics;
+  private readonly httpRequestsTotal: Counter;
+  private readonly httpRequestDuration: Histogram;
+  private readonly activeConnections: Gauge;
+
+  constructor() {
+    this.metrics = new SimpleMetrics();
+    this.httpRequestsTotal = this.metrics.counter('http_requests_total');
+    this.httpRequestDuration = this.metrics.histogram('http_request_duration_seconds');
+    this.activeConnections = this.metrics.gauge('active_connections');
+  }
+
+  incrementCounter(name: string, labels?: Record<string, string>): void {
+    const counter = this.metrics.counter(name);
+    counter.inc(1, labels);
+  }
+
+  setGauge(name: string, value: number, labels?: Record<string, string>): void {
+    const gauge = this.metrics.gauge(name);
+    gauge.set(value, labels);
+  }
+
+  observeHistogram(name: string, value: number, labels?: Record<string, string>): void {
+    const histogram = this.metrics.histogram(name);
+    histogram.observe(value, labels);
+  }
+
+  getMetrics(): string {
+    return this.metrics.getMetricsString();
+  }
+
+  // Convenience methods for common metrics
+  recordHttpRequest(method: string, statusCode: number, duration: number): void {
+    this.httpRequestsTotal.inc(1, { method, status_code: statusCode.toString() });
+    this.httpRequestDuration.observe(duration / 1000); // Convert to seconds
+  }
+
+  setActiveConnections(count: number): void {
+    this.activeConnections.set(count);
+  }
+}
+
+// Correlation ID middleware
+export interface CorrelationConfig {
+  headerName?: string;
+  generateId?: () => string;
+  skipPaths?: string[];
+}
+
+export function correlationMiddleware(config: CorrelationConfig = {}) {
+  const {
+    headerName = 'x-correlation-id',
+    generateId = () => randomUUID(),
+    skipPaths = [],
+  } = config;
+
+  return (req: any, res: any, next: any) => {
+    // Skip middleware for certain paths
+    if (skipPaths.some(path => req.path.startsWith(path))) {
+      return next();
+    }
+
+    // Get or generate correlation ID
+    const correlationId = req.headers[headerName] || generateId();
+
+    // Set correlation ID in request and response headers
+    req.correlationId = correlationId;
+    res.setHeader(headerName, correlationId);
+
+    // Add to trace context if available
+    if (req.traceId) {
+      req.traceContext = {
+        traceId: req.traceId,
+        correlationId,
+      };
+    }
+
+    next();
+  };
+}
+
+// Metrics middleware for HTTP requests
+export function metricsMiddleware(collector: MetricsCollector) {
+  return (req: any, res: any, next: any) => {
+    const startTime = Date.now();
+
+    // Increment active connections
+    collector.setGauge('active_connections', 1);
+
+    // Track when response finishes
+    res.on('finish', () => {
+      const duration = Date.now() - startTime;
+      const method = req.method;
+      const statusCode = res.statusCode;
+
+      // Record HTTP request metrics
+      collector.incrementCounter('http_requests_total', {
+        method,
+        status_code: statusCode.toString(),
+        route: req.route?.path || req.path,
+      });
+
+      collector.observeHistogram('http_request_duration_seconds', duration / 1000, {
+        method,
+        status_code: statusCode.toString(),
+      });
+
+      // Decrement active connections
+      collector.setGauge('active_connections', -1);
+    });
+
+    next();
+  };
+}
+
+// Create default observability setup
+export function createObservabilitySetup(serviceName: string) {
+  const logger = createLogger(true, LogLevel.INFO, serviceName);
+  const metricsCollector = new PrometheusMetricsCollector();
+  const tracer = new InMemoryTracer();
+
+  return {
+    logger,
+    metricsCollector,
+    tracer,
+    correlationMiddleware: correlationMiddleware(),
+    metricsMiddleware: metricsMiddleware(metricsCollector),
+  };
 }
 
 export { ConsoleLogOutput, StructuredLogOutput };

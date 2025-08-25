@@ -66,6 +66,11 @@ else
     exit 1
 fi
 
+# Run database migrations
+echo ""
+echo "🗄️ Running database migrations..."
+pnpm run db:migrate
+
 docker-compose exec redis redis-cli ping
 if [ $? -eq 0 ]; then
     echo "✅ Redis is ready"

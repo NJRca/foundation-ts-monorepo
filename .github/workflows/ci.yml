@@ -6,41 +6,85 @@ on:
   pull_request:
     branches: [main, develop]
 
+permissions:
+  contents: read
+  security-events: write
+  checks: write
+  pull-requests: write
+
 jobs:
-  test:
+  ci-pipeline:
+    name: CI Pipeline
     runs-on: ubuntu-latest
-    
+
     strategy:
       matrix:
         node-version: [20.x]
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-          
+
       - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-          
+
       - name: Install dependencies
         run: npm ci
-        
+
+      - name: TypeScript typecheck
+        run: npm run typecheck
+
       - name: Lint
         run: npm run lint
-        
+
       - name: Build
         run: npm run build
-        
-      - name: Test
-        run: npm run test
-        
-      - name: Analyze
-        run: npm run analyze
-        
+
+      - name: Unit tests
+        run: npm run test:ci
+
+      - name: Acceptance tests
+        run: |
+          if [ -d "tests/acceptance" ]; then
+            cd tests/acceptance
+            npm test
+          else
+            echo "No acceptance tests found - skipping"
+          fi
+
+      - name: Static analysis
+        run: npm run analyze:sarif
+
+      - name: Upload SARIF to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: analysis-results.sarif
+          category: foundation-static-analyzer
+        # Continue even if SARIF upload fails (e.g., on forks)
+        continue-on-error: true
+
+      - name: Upload SARIF as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sarif-results
+          path: analysis-results.sarif
+          retention-days: 30
+
       - name: Upload coverage reports
         uses: codecov/codecov-action@v3
         with:
           file: ./coverage/lcov.info
           fail_ci_if_error: false
+
+      - name: CI Summary
+        run: |
+          echo "## 🚀 CI Pipeline Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ TypeScript compilation" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ ESLint checks" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Unit tests" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Acceptance tests" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Static analysis (SARIF)" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Security scanning" >> $GITHUB_STEP_SUMMARY

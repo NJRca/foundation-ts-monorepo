@@ -10,6 +10,8 @@ export interface Config {
   get<T>(key: string): T | undefined;
   get<T>(key: string, defaultValue: T): T;
   has(key: string): boolean;
+  getRequired?<T>(key: string): T;
+  validate?(): void;
 }
 
 export interface HealthCheck {

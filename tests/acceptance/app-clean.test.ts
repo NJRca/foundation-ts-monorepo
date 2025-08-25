@@ -181,14 +181,12 @@ describe('User Service - Acceptance Tests', () => {
             }),
           });
 
-          // Accept current mock behavior - may return 404 if not implemented
-          expect([200, 404]).toContain(response.status);
+          // Currently returns 200 regardless
+          expect(response.status).toBe(200);
 
-          if (response.status === 200) {
-            const data = (await response.json()) as any;
-            expect(data).toHaveProperty('token');
-            expect(data).toHaveProperty('refreshToken');
-          }
+          const data = (await response.json()) as any;
+          expect(data).toHaveProperty('token');
+          expect(data).toHaveProperty('refreshToken');
         },
         TEST_TIMEOUT
       );
@@ -206,13 +204,11 @@ describe('User Service - Acceptance Tests', () => {
             },
           });
 
-          // Accept current mock behavior - may return 404 if not implemented
-          expect([200, 404]).toContain(response.status);
+          // Currently returns 200
+          expect(response.status).toBe(200);
 
-          if (response.status === 200) {
-            const data = (await response.json()) as any;
-            expect(data).toHaveProperty('message');
-          }
+          const data = (await response.json()) as any;
+          expect(data).toHaveProperty('message');
         },
         TEST_TIMEOUT
       );
@@ -308,8 +304,8 @@ describe('User Service - Acceptance Tests', () => {
             }),
           });
 
-          // Accept current mock behavior - includes 404 for unimplemented endpoints
-          expect([200, 201, 400, 401, 404]).toContain(response.status);
+          // Accept current mock behavior
+          expect([200, 201, 400, 401]).toContain(response.status);
         },
         TEST_TIMEOUT
       );

@@ -1,39 +1,78 @@
 import { ApiGateway, RouteBuilder } from '@foundation/api-gateway';
-import { AuthenticationService, AuthorizationService } from '@foundation/security';
+import { ConfigManager, loadValidatedConfig } from '@foundation/config';
 import { PostgresConnection, UserRepository } from '@foundation/database';
+import { AuthenticationService, AuthorizationService } from '@foundation/security';
 
 import { InMemoryEventStore } from '@foundation/events';
+import { createObservabilitySetup } from '@foundation/observability';
 import { UserService } from './user-service';
-import { createLogger } from '@foundation/observability';
 
-// Load configuration
-const config = {
-  port: parseInt(process.env.PORT || '3001'),
-  corsOrigins: (process.env.CORS_ORIGINS || 'http://localhost:3000').split(','),
-  database: {
-    host: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT || '5432'),
-    database: process.env.DB_NAME || 'users',
-    username: process.env.DB_USER || 'postgres',
-    password: process.env.DB_PASSWORD || 'password'
-  },
-  jwt: {
-    jwtSecret: process.env.JWT_SECRET || 'your-secret-key',
-    jwtRefreshSecret: process.env.JWT_REFRESH_SECRET || 'your-refresh-secret'
+// Setup observability
+const observability = createObservabilitySetup('user-service');
+
+// Load and validate configuration at startup
+const configManager: ConfigManager = loadValidatedConfig();
+
+// Validate configuration immediately - fail fast if misconfigured
+try {
+  configManager.validate();
+} catch (error) {
+  console.error('❌ Configuration validation failed:');
+  if (error instanceof Error) {
+    console.error(error.message);
+  } else {
+    console.error('Unknown configuration error');
   }
+  console.error('');
+  console.error('💡 Please check your environment variables and .env file');
+  process.exit(1);
+}
+
+interface ServerConfig {
+  port: number;
+  corsOrigins: string[];
+  database: {
+    host: string;
+    port: number;
+    database: string;
+    username: string;
+    password: string;
+  };
+  auth: {
+    jwtSecret: string;
+    jwtRefreshSecret: string;
+  };
+}
+
+const config: ServerConfig = {
+  port: configManager.get('PORT') ? parseInt(configManager.get('PORT')!) : 3001,
+  corsOrigins: ((configManager.get('CORS_ORIGINS') as string) || 'http://localhost:3000').split(
+    ','
+  ),
+  database: {
+    host: configManager.getRequired<string>('DB_HOST'),
+    port: configManager.get('DB_PORT') ? parseInt(configManager.get('DB_PORT')!) : 5432,
+    database: (configManager.get('DB_NAME') as string) || 'users',
+    username: (configManager.get('DB_USER') as string) || 'postgres',
+    password: configManager.getRequired<string>('DB_PASSWORD'),
+  },
+  auth: {
+    jwtSecret: configManager.getRequired<string>('JWT_SECRET'),
+    jwtRefreshSecret: configManager.getRequired<string>('JWT_REFRESH_SECRET'),
+  },
 };
 
 async function startServer() {
-  const logger = createLogger(false, 0, 'UserService');
-  
+  const { logger, metricsCollector, correlationMiddleware, metricsMiddleware } = observability;
+
   try {
     // Initialize dependencies
     const database = new PostgresConnection(config.database, logger);
     const eventStore = new InMemoryEventStore(logger);
     const userRepository = new UserRepository(database, undefined, logger);
-    
+
     // Initialize services
-    const authService = new AuthenticationService(config.jwt, logger);
+    const authService = new AuthenticationService(config.auth, logger);
     const authzService = new AuthorizationService(logger);
     const userService = new UserService(userRepository, eventStore, logger);
 
@@ -42,8 +81,8 @@ async function startServer() {
       name: 'admin',
       permissions: [
         { resource: 'users', action: '*' },
-        { resource: 'users/*', action: '*' }
-      ]
+        { resource: 'users/*', action: '*' },
+      ],
     });
 
     authzService.addRole({
@@ -51,22 +90,39 @@ async function startServer() {
       permissions: [
         { resource: 'users', action: 'read' },
         { resource: 'users/*', action: 'read', conditions: { userId: '{userId}' } },
-        { resource: 'users/*', action: 'update', conditions: { userId: '{userId}' } }
-      ]
+        { resource: 'users/*', action: 'update', conditions: { userId: '{userId}' } },
+      ],
     });
 
     // Initialize API Gateway
-    const gateway = new ApiGateway({
-      port: config.port,
-      corsOrigins: config.corsOrigins,
-      rateLimiting: true,
-      compression: true,
-      security: {
-        helmet: true,
-        hidePoweredBy: true,
-        trustProxy: false
-      }
-    }, logger);
+    const gateway = new ApiGateway(
+      {
+        port: config.port,
+        corsOrigins: config.corsOrigins,
+        rateLimiting: true,
+        compression: true,
+        security: {
+          helmet: true,
+          hidePoweredBy: true,
+          trustProxy: false,
+        },
+      },
+      logger
+    );
+
+    // Add observability middleware
+    gateway.addMiddleware(correlationMiddleware);
+    gateway.addMiddleware(metricsMiddleware);
+
+    // Add metrics endpoint
+    gateway.addRoute({
+      path: '/metrics',
+      method: 'GET',
+      handler: async (req, res) => {
+        res.setHeader('Content-Type', 'text/plain; version=0.0.4; charset=utf-8');
+        res.send(metricsCollector.getMetrics());
+      },
+    });
 
     // Add health checks
     gateway.addHealthChecks();
@@ -77,11 +133,11 @@ async function startServer() {
         .post('/api/v1/users')
         .handler(async (req, res) => {
           const { name, email, password } = req.body;
-          
+
           if (!name || !email || !password) {
             res.status(400).json({
               error: 'Bad Request',
-              message: 'Name, email, and password are required'
+              message: 'Name, email, and password are required',
             });
             return;
           }
@@ -92,12 +148,12 @@ async function startServer() {
               id: user.id,
               name: user.name,
               email: user.email,
-              createdAt: user.createdAt
+              createdAt: user.createdAt,
             });
           } catch (error) {
             res.status(400).json({
               error: 'Bad Request',
-              message: error instanceof Error ? error.message : 'Failed to create user'
+              message: error instanceof Error ? error.message : 'Failed to create user',
             });
           }
         })
@@ -105,8 +161,8 @@ async function startServer() {
           body: {
             name: 'required',
             email: 'required',
-            password: 'required'
-          }
+            password: 'required',
+          },
         })
         .rateLimit(60000, 5) // 5 requests per minute
         .build()
@@ -117,13 +173,13 @@ async function startServer() {
         .get('/api/v1/users/:id')
         .handler(async (req, res) => {
           const { id } = req.params;
-          
+
           try {
             const user = await userService.getUserById(id);
             if (!user) {
               res.status(404).json({
                 error: 'Not Found',
-                message: 'User not found'
+                message: 'User not found',
               });
               return;
             }
@@ -133,15 +189,15 @@ async function startServer() {
               name: user.name,
               email: user.email,
               createdAt: user.createdAt,
-              updatedAt: user.updatedAt
+              updatedAt: user.updatedAt,
             });
           } catch (error) {
             logger.error('Failed to fetch user', {
-              error: error instanceof Error ? error.message : error
+              error: error instanceof Error ? error.message : error,
             });
             res.status(500).json({
               error: 'Internal Server Error',
-              message: 'Failed to fetch user'
+              message: 'Failed to fetch user',
             });
           }
         })
@@ -161,16 +217,16 @@ async function startServer() {
                 name: user.name,
                 email: user.email,
                 createdAt: user.createdAt,
-                updatedAt: user.updatedAt
-              }))
+                updatedAt: user.updatedAt,
+              })),
             });
           } catch (error) {
             logger.error('Failed to fetch users', {
-              error: error instanceof Error ? error.message : error
+              error: error instanceof Error ? error.message : error,
             });
             res.status(500).json({
               error: 'Internal Server Error',
-              message: 'Failed to fetch users'
+              message: 'Failed to fetch users',
             });
           }
         })
@@ -191,7 +247,7 @@ async function startServer() {
             if (!updatedUser) {
               res.status(404).json({
                 error: 'Not Found',
-                message: 'User not found'
+                message: 'User not found',
               });
               return;
             }
@@ -201,12 +257,12 @@ async function startServer() {
               name: updatedUser.name,
               email: updatedUser.email,
               createdAt: updatedUser.createdAt,
-              updatedAt: updatedUser.updatedAt
+              updatedAt: updatedUser.updatedAt,
             });
           } catch (error) {
             res.status(400).json({
               error: 'Bad Request',
-              message: error instanceof Error ? error.message : 'Failed to update user'
+              message: error instanceof Error ? error.message : 'Failed to update user',
             });
           }
         })
@@ -214,8 +270,8 @@ async function startServer() {
         .validate({
           body: {
             name: 'optional',
-            email: 'optional'
-          }
+            email: 'optional',
+          },
         })
         .build()
     );
@@ -231,11 +287,11 @@ async function startServer() {
             res.status(204).send();
           } catch (error) {
             logger.error('Failed to delete user', {
-              error: error instanceof Error ? error.message : error
+              error: error instanceof Error ? error.message : error,
             });
             res.status(500).json({
               error: 'Internal Server Error',
-              message: 'Failed to delete user'
+              message: 'Failed to delete user',
             });
           }
         })
@@ -255,7 +311,7 @@ async function startServer() {
             if (!user) {
               res.status(401).json({
                 error: 'Unauthorized',
-                message: 'Invalid credentials'
+                message: 'Invalid credentials',
               });
               return;
             }
@@ -264,19 +320,19 @@ async function startServer() {
             res.json(tokens);
           } catch (error) {
             logger.error('Authentication failed', {
-              error: error instanceof Error ? error.message : error
+              error: error instanceof Error ? error.message : error,
             });
             res.status(500).json({
               error: 'Internal Server Error',
-              message: 'Authentication failed'
+              message: 'Authentication failed',
             });
           }
         })
         .validate({
           body: {
             email: 'required',
-            password: 'required'
-          }
+            password: 'required',
+          },
         })
         .rateLimit(60000, 5) // 5 login attempts per minute
         .build()
@@ -293,7 +349,7 @@ async function startServer() {
             if (!tokens) {
               res.status(401).json({
                 error: 'Unauthorized',
-                message: 'Invalid refresh token'
+                message: 'Invalid refresh token',
               });
               return;
             }
@@ -301,18 +357,18 @@ async function startServer() {
             res.json(tokens);
           } catch (error) {
             logger.error('Token refresh failed', {
-              error: error instanceof Error ? error.message : error
+              error: error instanceof Error ? error.message : error,
             });
             res.status(500).json({
               error: 'Internal Server Error',
-              message: 'Token refresh failed'
+              message: 'Token refresh failed',
             });
           }
         })
         .validate({
           body: {
-            refreshToken: 'required'
-          }
+            refreshToken: 'required',
+          },
         })
         .build()
     );
@@ -335,10 +391,10 @@ async function startServer() {
 
     // Start server
     await gateway.listen();
-    
+
     logger.info('User service started successfully', {
       port: config.port,
-      environment: process.env.NODE_ENV || 'development'
+      environment: process.env.NODE_ENV || 'development',
     });
 
     // Graceful shutdown
@@ -353,10 +409,9 @@ async function startServer() {
       await database.close();
       process.exit(0);
     });
-
   } catch (error) {
     logger.error('Failed to start user service', {
-      error: error instanceof Error ? error.message : 'Unknown error'
+      error: error instanceof Error ? error.message : 'Unknown error',
     });
     process.exit(1);
   }

@@ -5,8 +5,25 @@ interface ConfigSource {
   has(key: string): boolean;
 }
 
+interface ConfigValidationRule {
+  key: string;
+  required?: boolean;
+  validator?: (value: string) => boolean;
+  errorMessage?: string;
+}
+
+class ConfigValidationError extends Error {
+  constructor(
+    message: string,
+    public readonly missingKeys: string[] = []
+  ) {
+    super(message);
+    this.name = 'ConfigValidationError';
+  }
+}
+
 class EnvironmentConfigSource implements ConfigSource {
-  private env: Record<string, string | undefined>;
+  private readonly env: Record<string, string | undefined>;
 
   constructor(environment: Record<string, string | undefined> = {}) {
     this.env = environment;
@@ -22,7 +39,7 @@ class EnvironmentConfigSource implements ConfigSource {
 }
 
 class MemoryConfigSource implements ConfigSource {
-  private config: Map<string, string>;
+  private readonly config: Map<string, string>;
 
   constructor(config: Record<string, string> = {}) {
     this.config = new Map(Object.entries(config));
@@ -42,12 +59,15 @@ class MemoryConfigSource implements ConfigSource {
 }
 
 export class ConfigManager implements Config {
-  private sources: ConfigSource[];
+  private readonly sources: ConfigSource[];
+  private readonly validationRules: ConfigValidationRule[] = [];
 
   constructor(sources: ConfigSource[] = []) {
     this.sources = sources;
   }
 
+  get<T>(key: string): T | undefined;
+  get<T>(key: string, defaultValue: T): T;
   get<T>(key: string, defaultValue?: T): T | undefined {
     for (const source of this.sources) {
       if (source.has(key)) {
@@ -62,6 +82,55 @@ export class ConfigManager implements Config {
 
   has(key: string): boolean {
     return this.sources.some(source => source.has(key));
+  }
+
+  /**
+   * Get a required configuration value with validation
+   */
+  getRequired<T>(key: string): T {
+    const value = this.get<T>(key);
+    if (value === undefined) {
+      throw new ConfigValidationError(
+        `Required configuration key '${key}' is missing or undefined`
+      );
+    }
+    return value;
+  }
+
+  /**
+   * Add validation rules for configuration keys
+   */
+  addValidationRule(rule: ConfigValidationRule): void {
+    this.validationRules.push(rule);
+  }
+
+  /**
+   * Validate all configuration according to defined rules
+   */
+  validate(): void {
+    const errors: string[] = [];
+    const missingKeys: string[] = [];
+
+    for (const rule of this.validationRules) {
+      const value = this.get<string>(rule.key);
+
+      if (rule.required && (value === undefined || value === '')) {
+        errors.push(`Required configuration '${rule.key}' is missing`);
+        missingKeys.push(rule.key);
+        continue;
+      }
+
+      if (value !== undefined && rule.validator && !rule.validator(value)) {
+        errors.push(rule.errorMessage || `Configuration '${rule.key}' has invalid value: ${value}`);
+      }
+    }
+
+    if (errors.length > 0) {
+      throw new ConfigValidationError(
+        `Configuration validation failed:\n${errors.join('\n')}`,
+        missingKeys
+      );
+    }
   }
 
   private parseValue<T>(value: string): T {
@@ -82,8 +151,10 @@ export class ConfigManager implements Config {
     }
 
     // Handle JSON values
-    if ((value.startsWith('{') && value.endsWith('}')) || 
-        (value.startsWith('[') && value.endsWith(']'))) {
+    if (
+      (value.startsWith('{') && value.endsWith('}')) ||
+      (value.startsWith('[') && value.endsWith(']'))
+    ) {
       try {
         return JSON.parse(value) as T;
       } catch {
@@ -95,11 +166,48 @@ export class ConfigManager implements Config {
   }
 }
 
-// Factory function to create a config manager with common sources
+// Common validation functions
+export const validators = {
+  isUrl: (value: string): boolean => {
+    try {
+      new URL(value);
+      return true;
+    } catch {
+      return false;
+    }
+  },
+
+  isPort: (value: string): boolean => {
+    const port = parseInt(value, 10);
+    return !isNaN(port) && port > 0 && port <= 65535;
+  },
+
+  isNotDangerousDefault: (value: string): boolean => {
+    const dangerousDefaults = [
+      'your-secret-key',
+      'your-refresh-secret',
+      'change-in-production',
+      'your_openai_api_key_here',
+    ];
+    return !dangerousDefaults.includes(value);
+  },
+
+  minLength:
+    (minLen: number) =>
+    (value: string): boolean => {
+      return value.length >= minLen;
+    },
+
+  isOneOf:
+    (validValues: string[]) =>
+    (value: string): boolean => {
+      return validValues.includes(value);
+    },
+};
+
+// Factory function to create a config manager with common sources and validation
 export function loadConfig(additionalConfig?: Record<string, string>): Config {
-  const sources: ConfigSource[] = [
-    new EnvironmentConfigSource(process.env),
-  ];
+  const sources: ConfigSource[] = [new EnvironmentConfigSource(process.env)];
 
   if (additionalConfig) {
     sources.push(new MemoryConfigSource(additionalConfig));
@@ -108,5 +216,62 @@ export function loadConfig(additionalConfig?: Record<string, string>): Config {
   return new ConfigManager(sources);
 }
 
-// Export config sources for testing
-export { EnvironmentConfigSource, MemoryConfigSource };
+/**
+ * Create a validated config with common production-ready rules
+ */
+export function loadValidatedConfig(additionalConfig?: Record<string, string>): ConfigManager {
+  const config = new ConfigManager([
+    new EnvironmentConfigSource(process.env),
+    ...(additionalConfig ? [new MemoryConfigSource(additionalConfig)] : []),
+  ]);
+
+  // Add common validation rules
+  config.addValidationRule({
+    key: 'JWT_SECRET',
+    required: true,
+    validator: value => validators.minLength(32)(value) && validators.isNotDangerousDefault(value),
+    errorMessage: 'JWT_SECRET must be at least 32 characters and not use default value',
+  });
+
+  config.addValidationRule({
+    key: 'JWT_REFRESH_SECRET',
+    required: true,
+    validator: value => validators.minLength(32)(value) && validators.isNotDangerousDefault(value),
+    errorMessage: 'JWT_REFRESH_SECRET must be at least 32 characters and not use default value',
+  });
+
+  config.addValidationRule({
+    key: 'DB_HOST',
+    required: true,
+    errorMessage: 'Database host is required',
+  });
+
+  config.addValidationRule({
+    key: 'DB_PASSWORD',
+    required: true,
+    errorMessage: 'Database password is required',
+  });
+
+  config.addValidationRule({
+    key: 'REDIS_HOST',
+    required: true,
+    errorMessage: 'Redis host is required',
+  });
+
+  config.addValidationRule({
+    key: 'PORT',
+    validator: validators.isPort,
+    errorMessage: 'PORT must be a valid port number (1-65535)',
+  });
+
+  config.addValidationRule({
+    key: 'NODE_ENV',
+    validator: validators.isOneOf(['development', 'test', 'production']),
+    errorMessage: 'NODE_ENV must be development, test, or production',
+  });
+
+  return config;
+}
+
+// Export config sources and error class for testing
+export { ConfigValidationError, EnvironmentConfigSource, MemoryConfigSource };
