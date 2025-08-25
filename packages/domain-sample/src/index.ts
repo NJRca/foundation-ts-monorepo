@@ -1,20 +1,25 @@
-// Sample domain implementation
+// Sample domain implementation (align with base User shape: include updatedAt)
+import { randomUUID } from 'crypto';
+
 export interface User {
   id: string;
   name: string;
   email: string;
   createdAt: Date;
+  updatedAt: Date;
 }
 
 export class UserService {
-  private users: Map<string, User> = new Map();
+  private readonly users: Map<string, User> = new Map();
 
   create(name: string, email: string): User {
+    const now = new Date();
     const user: User = {
-      id: crypto.randomUUID(),
+      id: randomUUID(),
       name,
       email,
-      createdAt: new Date()
+      createdAt: now,
+      updatedAt: now
     };
     
     this.users.set(user.id, user);

@@ -1,4 +1,5 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "target": "ES2022",
     "lib": ["ES2022"],
@@ -14,8 +15,19 @@
     "declaration": true,
     "sourceMap": true,
     "removeComments": false,
-    "types": ["node"]
+    "types": ["node"],
+  "composite": true,
+  "baseUrl": ".."
   },
   "include": ["src/**/*"],
-  "exclude": ["dist", "node_modules", "**/*.test.ts", "**/*.spec.ts"]
+  "exclude": ["dist", "node_modules", "**/*.test.ts", "**/*.spec.ts"],
+  "references": [
+    { "path": "../../packages/api-gateway" },
+    { "path": "../../packages/database" },
+    { "path": "../../packages/security" },
+    { "path": "../../packages/events" },
+    { "path": "../../packages/observability" },
+    { "path": "../../packages/config" },
+    { "path": "../../packages/contracts" }
+  ]
 }

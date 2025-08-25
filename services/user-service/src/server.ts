@@ -1,4 +1,5 @@
 import { ApiGateway, RouteBuilder } from '@foundation/api-gateway';
+import { Request, Response } from 'express';
 import { PostgresConnection, UserRepository } from '@foundation/database';
 import { AuthenticationService, AuthorizationService } from '@foundation/security';
 
@@ -63,7 +64,7 @@ const config: ServerConfig = {
   },
 };
 
-async function startServer() {
+async function startServer(): Promise<void> {
   const { logger, metricsCollector, correlationMiddleware, metricsMiddleware } = observability;
 
   try {
@@ -119,7 +120,7 @@ async function startServer() {
     gateway.addRoute({
       path: '/metrics',
       method: 'GET',
-      handler: async (req, res) => {
+  handler: async (req: Request, res: Response) => {
         res.setHeader('Content-Type', 'text/plain; version=0.0.4; charset=utf-8');
         res.send(metricsCollector.getMetrics());
       },
@@ -132,7 +133,7 @@ async function startServer() {
     gateway.addRoute(
       RouteBuilder.create()
         .post('/api/v1/users')
-        .handler(async (req, res) => {
+  .handler(async (req: Request, res: Response) => {
           const { name, email, password } = req.body;
 
           if (!name || !email || !password) {
@@ -172,7 +173,7 @@ async function startServer() {
     gateway.addRoute(
       RouteBuilder.create()
         .get('/api/v1/users/:id')
-        .handler(async (req, res) => {
+  .handler(async (req: Request, res: Response) => {
           const { id } = req.params;
 
           try {
@@ -209,7 +210,7 @@ async function startServer() {
     gateway.addRoute(
       RouteBuilder.create()
         .get('/api/v1/users')
-        .handler(async (req, res) => {
+  .handler(async (req: Request, res: Response) => {
           try {
             const users = await userService.getAllUsers();
             res.json({
@@ -239,7 +240,7 @@ async function startServer() {
     gateway.addRoute(
       RouteBuilder.create()
         .put('/api/v1/users/:id')
-        .handler(async (req, res) => {
+  .handler(async (req: Request, res: Response) => {
           const { id } = req.params;
           const { name, email } = req.body;
 
@@ -280,7 +281,7 @@ async function startServer() {
     gateway.addRoute(
       RouteBuilder.create()
         .delete('/api/v1/users/:id')
-        .handler(async (req, res) => {
+  .handler(async (req: Request, res: Response) => {
           const { id } = req.params;
 
           try {
@@ -304,7 +305,7 @@ async function startServer() {
     gateway.addRoute(
       RouteBuilder.create()
         .post('/api/v1/auth/login')
-        .handler(async (req, res) => {
+  .handler(async (req: Request, res: Response) => {
           const { email, password } = req.body;
 
           try {
@@ -342,7 +343,7 @@ async function startServer() {
     gateway.addRoute(
       RouteBuilder.create()
         .post('/api/v1/auth/refresh')
-        .handler(async (req, res) => {
+  .handler(async (req: Request, res: Response) => {
           const { refreshToken } = req.body;
 
           try {
@@ -377,7 +378,7 @@ async function startServer() {
     gateway.addRoute(
       RouteBuilder.create()
         .post('/api/v1/auth/logout')
-        .handler(async (req, res) => {
+  .handler(async (req: Request, res: Response) => {
           const authHeader = req.headers.authorization;
           if (authHeader?.startsWith('Bearer ')) {
             const token = authHeader.substring(7);
