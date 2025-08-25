@@ -9,12 +9,12 @@ services:
       POSTGRES_USER: foundation_user
       POSTGRES_PASSWORD: foundation_password
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U foundation_user -d foundation_db"]
+      test: ['CMD-SHELL', 'pg_isready -U foundation_user -d foundation_db']
       interval: 30s
       timeout: 10s
       retries: 3
@@ -25,12 +25,12 @@ services:
   redis:
     image: redis:7-alpine
     ports:
-      - "6379:6379"
+      - '6379:6379'
     command: redis-server --appendonly yes
     volumes:
       - redis_data:/data
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: ['CMD', 'redis-cli', 'ping']
       interval: 30s
       timeout: 10s
       retries: 3
@@ -48,7 +48,7 @@ services:
       - '--storage.tsdb.retention.time=200h'
       - '--web.enable-lifecycle'
     ports:
-      - "9090:9090"
+      - '9090:9090'
     volumes:
       - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - prometheus_data:/prometheus
@@ -62,15 +62,44 @@ services:
     environment:
       GF_SECURITY_ADMIN_PASSWORD: admin
     ports:
-      - "3000:3000"
+      - '3000:3000'
     volumes:
       - grafana_data:/var/lib/grafana
       - ./monitoring/grafana-dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./monitoring/grafana-dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yml:ro
       - ./monitoring/grafana-datasources:/etc/grafana/provisioning/datasources:ro
     networks:
       - foundation-network
     depends_on:
       - prometheus
+
+  # Log Aggregation with Loki
+  loki:
+    image: grafana/loki:2.9.0
+    ports:
+      - '3100:3100'
+    command: -config.file=/etc/loki/loki-config.yaml
+    volumes:
+      - ./monitoring/loki-config.yaml:/etc/loki/loki-config.yaml:ro
+      - loki_data:/loki
+    networks:
+      - foundation-network
+    restart: unless-stopped
+
+  # Log shipper (Promtail)
+  promtail:
+    image: grafana/promtail:2.9.0
+    volumes:
+      - ./logs:/var/log/app:ro
+      - ./monitoring/promtail-config.yaml:/etc/promtail/config.yml:ro
+      - /var/log:/var/log:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - foundation-network
+    depends_on:
+      - loki
+    restart: unless-stopped
 
   # Application Services
   user-service:
@@ -92,12 +121,12 @@ services:
       LOG_LEVEL: info
       PROMETHEUS_PORT: 9464
     ports:
-      - "3001:3001"
-      - "9464:9464"  # Prometheus metrics
+      - '3001:3001'
+      - '9464:9464' # Prometheus metrics
     volumes:
       - ./logs:/app/logs
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      test: ['CMD', 'curl', '-f', 'http://localhost:3001/health']
       interval: 30s
       timeout: 10s
       retries: 3
@@ -124,14 +153,14 @@ services:
       NOTIFICATION_SERVICE_URL: http://notification-service:3003
       JWT_SECRET: your-super-secret-jwt-key-change-in-production
       LOG_LEVEL: info
-      RATE_LIMIT_WINDOW_MS: 900000  # 15 minutes
+      RATE_LIMIT_WINDOW_MS: 900000 # 15 minutes
       RATE_LIMIT_MAX_REQUESTS: 100
     ports:
-      - "3000:3000"
+      - '3000:3000'
     volumes:
       - ./logs:/app/logs
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      test: ['CMD', 'curl', '-f', 'http://localhost:3000/health']
       interval: 30s
       timeout: 10s
       retries: 3
@@ -142,7 +171,7 @@ services:
       - foundation-network
     restart: unless-stopped
     profiles:
-      - full-stack  # Only start with --profile full-stack
+      - full-stack # Only start with --profile full-stack
 
   # Future Services (disabled by default)
   auth-service:
@@ -163,7 +192,7 @@ services:
       JWT_REFRESH_SECRET: your-super-secret-refresh-key-change-in-production
       LOG_LEVEL: info
     ports:
-      - "3002:3002"
+      - '3002:3002'
     depends_on:
       postgres:
         condition: service_healthy
@@ -195,7 +224,7 @@ services:
       EMAIL_SMTP_SECURE: false
       LOG_LEVEL: info
     ports:
-      - "3003:3003"
+      - '3003:3003'
     depends_on:
       postgres:
         condition: service_healthy
@@ -221,3 +250,5 @@ volumes:
     name: foundation_prometheus_data
   grafana_data:
     name: foundation_grafana_data
+  loki_data:
+    name: foundation_loki_data

@@ -1,7 +1,26 @@
+import { ConfigManager, loadValidatedConfig } from '@foundation/config';
 import { LogLevel, createLogger } from '@foundation/observability';
 import express, { Request, Response } from 'express';
 
-// Configuration with proper typing
+// Load and validate configuration at startup
+const configManager: ConfigManager = loadValidatedConfig();
+
+// Validate configuration immediately - fail fast if misconfigured
+try {
+  configManager.validate();
+} catch (error) {
+  console.error('❌ Configuration validation failed:');
+  if (error instanceof Error) {
+    console.error(error.message);
+  } else {
+    console.error('Unknown configuration error');
+  }
+  console.error('');
+  console.error('💡 Please check your environment variables and .env file');
+  process.exit(1);
+}
+
+// Configuration with proper typing and validation
 interface ServiceConfig {
   port: number;
   corsOrigins: string[];
@@ -19,19 +38,21 @@ interface ServiceConfig {
 }
 
 const config: ServiceConfig = {
-  port: parseInt(process.env.PORT || '3001'),
-  corsOrigins: (process.env.CORS_ORIGINS || 'http://localhost:3000').split(','),
+  port: configManager.get('PORT') ? parseInt(configManager.get('PORT')!) : 3001,
+  corsOrigins: ((configManager.get('CORS_ORIGINS') as string) || 'http://localhost:3000').split(
+    ','
+  ),
   database: {
-    host: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT || '5432'),
-    database: process.env.DB_NAME || 'foundation_db',
-    username: process.env.DB_USER || 'foundation_user',
-    password: process.env.DB_PASSWORD || 'foundation_password'
+    host: configManager.getRequired<string>('DB_HOST'),
+    port: configManager.get('DB_PORT') ? parseInt(configManager.get('DB_PORT')!) : 5432,
+    database: (configManager.get('DB_NAME') as string) || 'foundation_db',
+    username: (configManager.get('DB_USER') as string) || 'foundation_user',
+    password: configManager.getRequired<string>('DB_PASSWORD'),
   },
   jwt: {
-    secret: process.env.JWT_SECRET || 'your-secret-key',
-    refreshSecret: process.env.JWT_REFRESH_SECRET || 'your-refresh-secret'
-  }
+    secret: configManager.getRequired<string>('JWT_SECRET'),
+    refreshSecret: configManager.getRequired<string>('JWT_REFRESH_SECRET'),
+  },
 };
 
 // Initialize logger
@@ -50,7 +71,7 @@ app.get('/health', (req: Request, res: Response) => {
     status: 'healthy',
     service: 'user-service',
     timestamp: new Date().toISOString(),
-    version: '1.0.0'
+    version: '1.0.0',
   });
 });
 
@@ -58,28 +79,28 @@ app.get('/health', (req: Request, res: Response) => {
 app.get('/api/v1/users', (req: Request, res: Response) => {
   res.status(200).json({
     users: [],
-    message: 'User service is running'
+    message: 'User service is running',
   });
 });
 
 app.post('/api/v1/auth/login', (req: Request, res: Response) => {
   const { email, password } = req.body;
-  
+
   if (!email || !password) {
     return res.status(400).json({
       error: 'Bad Request',
-      message: 'Email and password are required'
+      message: 'Email and password are required',
     });
   }
 
   // Simplified response for now
-  res.status(200).json({
+  return res.status(200).json({
     token: 'dummy-token',
     refreshToken: 'dummy-refresh-token',
     user: {
       email,
-      name: 'Test User'
-    }
+      name: 'Test User',
+    },
   });
 });
 
@@ -88,7 +109,7 @@ app.use((err: Error, req: Request, res: Response, next: express.NextFunction) =>
   logger.error('Unhandled error', { error: err.message, stack: err.stack });
   res.status(500).json({
     error: 'Internal Server Error',
-    message: 'Something went wrong'
+    message: 'Something went wrong',
   });
 });
 
@@ -100,7 +121,7 @@ async function startServer(): Promise<void> {
     const server = app.listen(config.port, () => {
       logger.info('User service started successfully', {
         port: config.port,
-        environment: process.env.NODE_ENV || 'development'
+        environment: process.env.NODE_ENV || 'development',
       });
     });
 
@@ -118,17 +139,18 @@ async function startServer(): Promise<void> {
         process.exit(0);
       });
     });
-
   } catch (error) {
-    logger.error('Failed to start user service', { 
-      error: error instanceof Error ? error.message : 'Unknown error' 
+    logger.error('Failed to start user service', {
+      error: error instanceof Error ? error.message : 'Unknown error',
     });
     process.exit(1);
   }
 }
 
 // Start the server
-startServer().catch((error) => {
-  logger.error('Startup error', { error: error instanceof Error ? error.message : 'Unknown error' });
+startServer().catch(error => {
+  logger.error('Startup error', {
+    error: error instanceof Error ? error.message : 'Unknown error',
+  });
   process.exit(1);
 });

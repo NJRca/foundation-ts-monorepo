@@ -15,7 +15,11 @@
   "dependencies": {
     "@foundation/contracts": "*",
     "@foundation/utils": "*",
-    "@foundation/config": "*"
+    "@foundation/config": "*",
+    "@foundation/observability": "*",
+    "@types/node": "^20.0.0",
+    "openai": "^4.0.0",
+    "axios": "^1.6.0"
   },
   "devDependencies": {},
   "files": [

@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": ".",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "types": ["jest", "node"]
+  },
+  "include": ["**/*.ts", "**/*.test.ts"],
+  "exclude": ["node_modules", "dist"]
+}

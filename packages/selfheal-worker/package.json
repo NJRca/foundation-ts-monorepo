@@ -1,0 +1,30 @@
+{
+  "name": "@foundation/selfheal-worker",
+  "version": "1.0.0",
+  "description": "Self-healing worker for issue detection and healing orchestration",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "lint": "cd ../.. && npx eslint packages/selfheal-worker/src/**/*.ts",
+    "clean": "rm -rf dist",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@foundation/contracts": "*",
+    "@foundation/observability": "*",
+    "@foundation/database": "*",
+    "@foundation/events": "*",
+    "@foundation/selfheal-ingest": "*",
+    "@foundation/selfheal-llm": "*",
+    "@types/node": "^20.0.0",
+    "node-cron": "^3.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "jest": "^29.0.0",
+    "@types/jest": "^29.0.0",
+    "@types/node-cron": "^3.0.0"
+  }
+}

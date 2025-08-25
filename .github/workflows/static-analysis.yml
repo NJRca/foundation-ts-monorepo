@@ -1,0 +1,93 @@
+name: Static Analysis
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  static-analysis:
+    name: Static Analysis with SARIF
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build packages
+        run: npm run build
+
+      - name: Run static analysis
+        run: npm run analyze:sarif
+
+      - name: Upload SARIF to GitHub
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: analysis-results.sarif
+          category: foundation-static-analyzer
+        # Continue even if SARIF upload fails (e.g., on forks)
+        continue-on-error: true
+
+      - name: Upload SARIF as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sarif-results
+          path: analysis-results.sarif
+          retention-days: 30
+
+      - name: Display analysis summary
+        run: |
+          echo "## Static Analysis Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ -f analysis-results.sarif ]; then
+            # Extract summary from SARIF
+            TOTAL_ISSUES=$(jq '.runs[0].results | length' analysis-results.sarif)
+            ERRORS=$(jq '.runs[0].results | map(select(.level == "error")) | length' analysis-results.sarif)
+            WARNINGS=$(jq '.runs[0].results | map(select(.level == "warning")) | length' analysis-results.sarif)
+            NOTES=$(jq '.runs[0].results | map(select(.level == "note")) | length' analysis-results.sarif)
+
+            echo "📊 **Summary:**" >> $GITHUB_STEP_SUMMARY
+            echo "- Total Issues: $TOTAL_ISSUES" >> $GITHUB_STEP_SUMMARY
+            echo "- Errors: $ERRORS" >> $GITHUB_STEP_SUMMARY
+            echo "- Warnings: $WARNINGS" >> $GITHUB_STEP_SUMMARY
+            echo "- Notes: $NOTES" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+
+            if [ "$ERRORS" -gt 0 ]; then
+              echo "❌ **Found $ERRORS error(s) that should be addressed.**" >> $GITHUB_STEP_SUMMARY
+            elif [ "$WARNINGS" -gt 0 ]; then
+              echo "⚠️ **Found $WARNINGS warning(s) to review.**" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "✅ **No errors or warnings found.**" >> $GITHUB_STEP_SUMMARY
+            fi
+
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "📋 **SARIF report uploaded to GitHub Code Scanning.**" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **SARIF file not found.**" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Fail on errors
+        run: |
+          if [ -f analysis-results.sarif ]; then
+            ERRORS=$(jq '.runs[0].results | map(select(.level == "error")) | length' analysis-results.sarif)
+            if [ "$ERRORS" -gt 0 ]; then
+              echo "❌ Static analysis found $ERRORS error(s). Please fix them before merging."
+              exit 1
+            fi
+          fi
