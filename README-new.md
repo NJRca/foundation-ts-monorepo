@@ -22,9 +22,9 @@ This monorepo implements a sophisticated microservices architecture with the fol
 ### Microservices (`services/`)
 
 - **`user-service`** - User management with authentication
-- **`api-gateway`** - (Planned) Central API gateway
-- **`auth-service`** - (Planned) Dedicated authentication service
-- **`notification-service`** - (Planned) Notification and messaging service
+- **`api-gateway`** - Central API gateway
+- **`auth-service`** - Dedicated authentication service
+- **`notification-service`** - Notification and messaging service
 
 ### Infrastructure
 
@@ -58,7 +58,7 @@ This monorepo implements a sophisticated microservices architecture with the fol
    ```bash
    # Automated setup (recommended)
    pnpm run dev:setup
-   
+
    # Or manual setup
    pnpm run build
    pnpm run dev:start
@@ -72,13 +72,13 @@ This monorepo implements a sophisticated microservices architecture with the fol
 
 ### Available Services
 
-| Service | URL | Description |
-|---------|-----|-------------|
-| User Service | <http://localhost:3001> | User management API |
-| Grafana | <http://localhost:3000> | Observability dashboard (admin/admin) |
-| Prometheus | <http://localhost:9090> | Metrics collection |
-| PostgreSQL | localhost:5432 | Primary database |
-| Redis | localhost:6379 | Cache and sessions |
+| Service      | URL                     | Description                           |
+| ------------ | ----------------------- | ------------------------------------- |
+| User Service | <http://localhost:3001> | User management API                   |
+| Grafana      | <http://localhost:3000> | Observability dashboard (admin/admin) |
+| Prometheus   | <http://localhost:9090> | Metrics collection                    |
+| PostgreSQL   | localhost:5432          | Primary database                      |
+| Redis        | localhost:6379          | Cache and sessions                    |
 
 ## 📚 API Documentation
 
@@ -216,7 +216,7 @@ pnpm --filter @foundation/analyzer run analyze
 ```text
 services/user-service
 ├── @foundation/database
-├── @foundation/security  
+├── @foundation/security
 ├── @foundation/events
 ├── @foundation/observability
 └── @foundation/contracts

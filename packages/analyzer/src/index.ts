@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-interface SarifResult {
+export interface SarifResult {
   ruleId: string;
   level: 'note' | 'warning' | 'error';
   message: {
@@ -22,7 +22,7 @@ interface SarifResult {
   }>;
 }
 
-interface SarifReport {
+export interface SarifReport {
   version: string;
   $schema: string;
   runs: Array<{

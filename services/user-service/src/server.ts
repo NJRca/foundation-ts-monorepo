@@ -1,5 +1,5 @@
 import { ApiGateway, RouteBuilder } from '@foundation/api-gateway';
-import { ConfigManager, loadValidatedConfig } from '@foundation/config';
+import { loadValidatedConfig } from '@foundation/config';
 import { PostgresConnection, UserRepository } from '@foundation/database';
 import { AuthenticationService, AuthorizationService } from '@foundation/security';
 
@@ -11,7 +11,8 @@ import { UserService } from './user-service';
 const observability = createObservabilitySetup('user-service');
 
 // Load and validate configuration at startup
-const configManager: ConfigManager = loadValidatedConfig();
+const configManager = loadValidatedConfig();
+// (Optional typed config view intentionally omitted until used to avoid lint unused var)
 
 // Validate configuration immediately - fail fast if misconfigured
 try {
@@ -394,7 +395,7 @@ async function startServer() {
 
     logger.info('User service started successfully', {
       port: config.port,
-      environment: process.env.NODE_ENV || 'development',
+      environment: configManager.get('NODE_ENV') || 'development',
     });
 
     // Graceful shutdown

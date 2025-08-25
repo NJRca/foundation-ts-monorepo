@@ -2,7 +2,7 @@
 
 import * as fs from 'fs';
 
-import { generateSarifReport } from './index.js';
+import { generateSarifReport, SarifResult } from './index.js';
 
 interface CliOptions {
   directory: string;
@@ -22,11 +22,12 @@ function parseArgs(): CliOptions {
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
 
-    switch (arg) {
+  switch (arg) {
       case '--help':
-      case '-h':
+      case '-h': {
         printHelp();
         process.exit(0);
+      }
       case '--output':
       case '-o': {
         options.output = args[++i];
@@ -187,17 +188,14 @@ function main(): void {
   }
 }
 
-function printSummary(results: any[]): void {
+function printSummary(results: SarifResult[]): void {
   console.log(`📊 Found ${results.length} issues`);
 
   if (results.length > 0) {
-    const summary = results.reduce(
-      (acc, result) => {
-        acc[result.level] = (acc[result.level] || 0) + 1;
-        return acc;
-      },
-      {} as Record<string, number>
-    );
+    const summary = results.reduce<Record<string, number>>((acc, result) => {
+      acc[result.level] = (acc[result.level] || 0) + 1;
+      return acc;
+    }, {});
 
     console.log('\n📋 Summary:');
     for (const [level, count] of Object.entries(summary)) {
@@ -207,7 +205,7 @@ function printSummary(results: any[]): void {
   }
 }
 
-function printConsoleResults(results: any[], quiet: boolean): void {
+function printConsoleResults(results: SarifResult[], quiet: boolean): void {
   if (!quiet) {
     console.log(`\n🔍 Static Analysis Results`);
     console.log('==========================');
@@ -218,7 +216,7 @@ function printConsoleResults(results: any[], quiet: boolean): void {
     return;
   }
 
-  const groupedResults = results.reduce((acc: Record<string, any[]>, result: any) => {
+  const groupedResults = results.reduce<Record<string, SarifResult[]>>((acc, result) => {
     if (!acc[result.level]) acc[result.level] = [];
     acc[result.level].push(result);
     return acc;
@@ -234,7 +232,7 @@ function printConsoleResults(results: any[], quiet: boolean): void {
     const icon = getLevelIcon(level);
     console.log(`\n${icon} ${level.toUpperCase()} (${levelResults.length}):`);
 
-    levelResults.forEach((result: any, index: number) => {
+  levelResults.forEach((result, index) => {
       const location = result.locations[0]?.physicalLocation;
       const file = location?.artifactLocation?.uri || 'unknown';
       const line = location?.region?.startLine || 0;

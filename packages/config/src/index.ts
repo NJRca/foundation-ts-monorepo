@@ -66,8 +66,7 @@ export class ConfigManager implements Config {
     this.sources = sources;
   }
 
-  get<T>(key: string): T | undefined;
-  get<T>(key: string, defaultValue: T): T;
+  // Single signature (was previously expressed with overloads that triggered no-dupe-class-members)
   get<T>(key: string, defaultValue?: T): T | undefined {
     for (const source of this.sources) {
       if (source.has(key)) {
