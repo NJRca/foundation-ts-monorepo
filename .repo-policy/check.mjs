@@ -99,7 +99,10 @@ function checkR1() {
     const files = result
       .trim()
       .split('\n')
-      .filter(f => f.trim() && !f.includes('test') && !f.includes('spec'));
+      .filter(f => f.trim() && !f.includes('test') && !f.includes('spec'))
+      // Exclude vendored or bundled files under .ignored directories which are
+      // not part of the repository source and can trigger false positives.
+      .filter(f => !f.includes('.ignored'));
 
     let contractViolations = 0;
     for (const file of files.slice(0, 5)) {

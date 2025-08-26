@@ -1,4 +1,5 @@
 import { Logger, assertNonNull } from '@foundation/contracts';
+
 import { randomUUID } from 'crypto';
 
 // ALLOW_COMPLEXITY_DELTA: Observability implementation includes multiple
@@ -65,7 +66,7 @@ export class InMemoryTracer implements Tracer {
   private readonly logger: Logger;
 
   constructor(logger?: Logger) {
-  this.logger = logger || createLogger(false, LogLevel.INFO, 'Tracer');
+    this.logger = logger || createLogger(false, LogLevel.INFO, 'Tracer');
   }
 
   startSpan(operationName: string, parentSpan?: Span): Span {
@@ -142,8 +143,8 @@ export class InMemoryTracer implements Tracer {
   }
 
   getSpan(spanId: string): Span | undefined {
-  assertNonNull(spanId, 'spanId');
-  return this.spans.get(spanId);
+    assertNonNull(spanId, 'spanId');
+    return this.spans.get(spanId);
   }
 
   getAllSpans(): Span[] {
@@ -501,9 +502,9 @@ export { ConsoleLogOutput, StructuredLogOutput };
 
 // Export new middleware functionality
 export {
+  ObservabilityMiddleware,
   createCompleteObservabilitySetup,
   createObservabilityMiddleware,
-  ObservabilityMiddleware,
 } from './middleware';
 
 export type { ObservabilityConfig, ObservableRequest } from './middleware';

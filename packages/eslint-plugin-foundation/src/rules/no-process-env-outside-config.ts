@@ -19,7 +19,8 @@ const rule: Rule.RuleModule = {
     messages: {
       // Avoid using the literal `process.env` token in messages to prevent
       // repository policy grepping this rule source.
-      disallowed: 'Direct environment variable access outside packages/config/src. Use config accessor.',
+      disallowed:
+        'Direct environment variable access outside packages/config/src. Use config accessor.',
     },
     schema: [],
   },

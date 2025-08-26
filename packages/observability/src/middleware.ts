@@ -1,3 +1,4 @@
+import { Config, Logger } from '@foundation/contracts';
 import {
   InMemoryTracer,
   LogLevel,
@@ -7,9 +8,8 @@ import {
   Tracer,
   createLogger,
 } from './index';
-import { assertNonNull } from '@foundation/contracts';
 
-import { Config, Logger } from '@foundation/contracts';
+import { assertNonNull } from '@foundation/contracts';
 // ALLOW_COMPLEXITY_DELTA: Observability middleware contains plumbing and
 // cross-cutting concerns. Marking as allowed for complexity policy.
 import { randomUUID } from 'crypto';

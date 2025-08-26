@@ -1,7 +1,7 @@
+import { assertNonNull } from '@foundation/contracts';
 import fs from 'fs';
 import { load } from 'js-yaml';
 import path from 'path';
-import { assertNonNull } from '@foundation/contracts';
 
 export interface PlaybookRules {
   version: string;

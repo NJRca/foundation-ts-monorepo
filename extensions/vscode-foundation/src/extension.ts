@@ -1,9 +1,8 @@
 import * as vscode from 'vscode';
 
-import { runRefactorCommand } from './commands/runRefactor';
-import { registerRefactorChatParticipant } from './participant/refactor.chat';
-
 import { assertNonNull } from '@foundation/contracts';
+import { registerRefactorChatParticipant } from './participant/refactor.chat';
+import { runRefactorCommand } from './commands/runRefactor';
 
 export function activate(context: vscode.ExtensionContext) {
   assertNonNull(context, 'context');

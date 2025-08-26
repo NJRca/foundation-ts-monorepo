@@ -39,7 +39,7 @@ export function retry<T>(
 ): Promise<T> {
   return new Promise((resolve, reject) => {
     let attempts = 0;
-    
+
     const attempt = async (): Promise<void> => {
       try {
         const result = await fn();
@@ -53,7 +53,7 @@ export function retry<T>(
         }
       }
     };
-    
+
     void attempt();
   });
 }

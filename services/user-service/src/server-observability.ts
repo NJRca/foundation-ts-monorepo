@@ -3,8 +3,8 @@
 const express = require('express');
 const { randomUUID } = require('crypto');
 
-import { TypedConfig, loadTypedConfig } from '@foundation/config';
 import { NextFunction, Request, Response } from 'express';
+import { TypedConfig, loadTypedConfig } from '@foundation/config';
 
 // Load typed configuration
 const config: TypedConfig = loadTypedConfig();

@@ -4,6 +4,8 @@ import * as fs from 'fs';
 
 import { SarifResult, generateSarifReport } from './index.js';
 
+import { assertNonNull } from '@foundation/contracts';
+
 interface CliOptions {
   directory: string;
   output?: string;
@@ -118,7 +120,6 @@ function getLevelIcon(level: string): string {
   return '📝';
 }
 
-import { assertNonNull } from '@foundation/contracts';
 
 // ALLOW_COMPLEXITY_DELTA: CLI glue includes argument parsing and output formatting;
 // considered an allowed complexity exception.

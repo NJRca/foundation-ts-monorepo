@@ -1,14 +1,14 @@
 // ALLOW_COMPLEXITY_DELTA: Server entrypoint includes bootstrapping logic and
 // middleware registration; considered an allowed complexity exception.
 import { ApiGateway, RouteBuilder } from '@foundation/api-gateway';
-import { PostgresConnection, UserRepository } from '@foundation/database';
 import { AuthenticationService, AuthorizationService } from '@foundation/security';
+import { PostgresConnection, UserRepository } from '@foundation/database';
 import { Request, Response } from 'express';
 
-import { loadValidatedConfig } from '@foundation/config';
 import { InMemoryEventStore } from '@foundation/events';
-import { createObservabilitySetup } from '@foundation/observability';
 import { UserService } from './user-service';
+import { createObservabilitySetup } from '@foundation/observability';
+import { loadValidatedConfig } from '@foundation/config';
 
 // Setup observability
 const observability = createObservabilitySetup('user-service');

@@ -3,8 +3,8 @@
 import { DomainEvent, Logger } from '@foundation/contracts';
 
 import { EventBus } from '@foundation/events';
-import { createLogger } from '@foundation/observability';
 import { createHash } from 'crypto';
+import { createLogger } from '@foundation/observability';
 
 export interface LogEntry {
   timestamp: Date;

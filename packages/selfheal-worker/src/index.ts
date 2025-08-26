@@ -3,9 +3,9 @@ import * as cron from 'node-cron';
 
 import { DomainEvent, Logger } from '@foundation/contracts';
 import { ErrorFingerprint, SelfHealIngest } from '@foundation/selfheal-ingest';
-import { LLMClient } from '@foundation/selfheal-llm';
 
 import { EventBus } from '@foundation/events';
+import { LLMClient } from '@foundation/selfheal-llm';
 import { createLogger } from '@foundation/observability';
 
 export interface HealingStrategy {

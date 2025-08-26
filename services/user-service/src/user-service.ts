@@ -1,6 +1,6 @@
+import { AuthenticationService, User } from '@foundation/security';
 // ALLOW_COMPLEXITY_DELTA: User service wiring contains many handlers and
 // auth helpers; mark as allowed complexity for repository policy.
-import { AuthenticationService, User } from '@foundation/security';
 import { User as BaseUser, UserRepository } from '@foundation/database';
 import { DomainEventFactory, InMemoryEventStore } from '@foundation/events';
 
