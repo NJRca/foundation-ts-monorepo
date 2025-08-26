@@ -44,6 +44,15 @@ export interface HealingAction {
 }
 
 /**
+ * @intent: selfheal-worker
+ * Purpose: Orchestrate healing workflows by consuming events, invoking LLMs,
+ *          and executing strategies. Keep worker logic resilient: avoid crashing
+ *          on individual failures and prefer publishing results to EventBus.
+ * Constraints: Do not mutate external state directly; use injectable strategy
+ *              implementations for side-effects (restart, apply patch, scale).
+ */
+
+/**
  * Self-Healing Worker
  *
  * Orchestrates the self-healing process by:

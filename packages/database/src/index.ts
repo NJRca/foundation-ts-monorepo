@@ -7,6 +7,9 @@ import { UserAdapter } from './repositories/user-adapter';
 import { createLogger } from '@foundation/observability';
 
 // Database connection interfaces
+// @intent: database
+// Purpose: define adapters, repositories, and migration runner responsibilities.
+// Constraints: adapters must implement `DatabaseConnection` and `CacheConnection` for portability.
 export interface DatabaseConnection {
   query<T extends QueryResultRow = QueryResultRow>(
     text: string,
@@ -162,11 +165,15 @@ export interface User {
   updatedAt: Date;
 }
 
-
 export class UserRepository extends BaseRepository<User, string> {
   private readonly adapter: UserAdapter;
 
-  constructor(db: DatabaseConnection, cache: CacheConnection | undefined, logger: Logger | undefined, adapter: UserAdapter) {
+  constructor(
+    db: DatabaseConnection,
+    cache: CacheConnection | undefined,
+    logger: Logger | undefined,
+    adapter: UserAdapter
+  ) {
     super('users', db, cache, logger);
     if (!adapter) throw new Error('UserRepository requires a UserAdapter');
     this.adapter = adapter;

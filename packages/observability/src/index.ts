@@ -7,6 +7,9 @@ import { randomUUID } from 'crypto';
 // intended complexity exception for repository policy.
 
 // Prometheus metrics support
+// @intent: MetricsCollector
+// Purpose: abstract metrics collection for lightweight in-memory or Prometheus backends.
+// Constraints: implementations should expose a synchronous snapshot suitable for scraping.
 export interface MetricsCollector {
   incrementCounter(name: string, labels?: Record<string, string>): void;
   setGauge(name: string, value: number, labels?: Record<string, string>): void;
@@ -15,6 +18,8 @@ export interface MetricsCollector {
 }
 
 // Enhanced logging with tracing support
+// @intent: LogLevel
+// Purpose: severity levels for logging. Keep numeric ordering stable.
 export enum LogLevel {
   DEBUG = 0,
   INFO = 1,
@@ -61,6 +66,8 @@ export interface Tracer {
 }
 
 // In-memory distributed tracer
+// @intent: InMemoryTracer
+// Purpose: in-memory span collection for local debugging and tests. Not for production-scale traces.
 export class InMemoryTracer implements Tracer {
   private readonly spans: Map<string, Span> = new Map();
   private readonly logger: Logger;
@@ -185,6 +192,8 @@ class StructuredLogOutput implements LogOutput {
   }
 }
 
+// @intent: AppLogger
+// Purpose: simple multi-output logger with optional structured output. Designed for app-level logging.
 export class AppLogger implements Logger {
   private readonly outputs: LogOutput[];
   private readonly minLevel: LogLevel;
@@ -248,6 +257,8 @@ export class AppLogger implements Logger {
 }
 
 // Factory function to create logger with common configurations
+// @intent: createLogger
+// Purpose: factory for AppLogger instances with common defaults.
 export function createLogger(
   structured: boolean = false,
   level: LogLevel = LogLevel.INFO,

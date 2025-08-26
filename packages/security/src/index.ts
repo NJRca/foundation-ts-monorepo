@@ -11,6 +11,8 @@ import { User as BaseUser } from '@foundation/database';
 import { Logger } from '@foundation/contracts';
 import { createLogger } from '@foundation/observability';
 
+// @intent: User (security)
+// Purpose: extend base user with authentication fields used by security services.
 export interface User extends BaseUser {
   passwordHash: string;
   roles: string[];
@@ -55,6 +57,9 @@ export interface Role {
 }
 
 // Authentication service
+// @intent: AuthenticationService
+// Purpose: manage password hashing, token generation/verification, sessions.
+// Constraints: in-memory session store used for simplicity; production should use durable stores.
 export class AuthenticationService {
   private readonly logger: Logger;
   private readonly jwtSecret: string;
@@ -337,6 +342,8 @@ export class AuthenticationService {
 }
 
 // Authorization service
+// @intent: AuthorizationService
+// Purpose: role/permission management and checks for authorization decisions.
 export class AuthorizationService {
   private readonly logger: Logger;
   private readonly roles: Map<string, Role> = new Map();
@@ -444,6 +451,8 @@ export class AuthorizationService {
 }
 
 // Security utilities
+// @intent: SecurityUtils
+// Purpose: collection of helper functions for tokens, API keys, validation, and sanitization.
 export class SecurityUtils {
   private static readonly logger = createLogger(false, 0, 'SecurityUtils');
 

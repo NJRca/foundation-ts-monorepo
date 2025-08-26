@@ -86,45 +86,184 @@ export class PostgresConnection {
       rollback: () => Promise<void>;
     }) => Promise<T>
   ): Promise<T> {
-    const client: PoolClient = await this.pool.connect();
+    let client: PoolClient | undefined;
 
     try {
-      await client.query('BEGIN');
+      client = await this.acquireClient();
+      await this.beginTransaction(client);
+      return await this.runTransactionClient(client, callback);
+    } finally {
+      if (client) await this.safeRelease(client);
+    }
+  }
 
-      const transactionClient = {
-        query: async <U extends QueryResultRow = QueryResultRow>(
-          text: string,
-          params?: unknown[]
-        ) => {
-          return client.query<U>(text, params);
-        },
-        commit: async (): Promise<void> => {
-          await client.query('COMMIT');
-        },
-        rollback: async (): Promise<void> => {
-          await client.query('ROLLBACK');
-        },
-      };
+  private async runTransactionClient<T>(
+    client: PoolClient,
+    callback: (client: {
+      query: <U extends QueryResultRow = QueryResultRow>(
+        text: string,
+        params?: unknown[]
+      ) => Promise<QueryResult<U>>;
+      commit: () => Promise<void>;
+      rollback: () => Promise<void>;
+    }) => Promise<T>
+  ): Promise<T> {
+    const transactionClient = this.createTransactionClient(client);
 
-      const result = await callback(transactionClient);
-      await client.query('COMMIT');
-
-      this.logger.debug('Transaction completed successfully');
-      return result;
+    try {
+      return await this.executeCallbackAndCommit(client, transactionClient, callback);
     } catch (error) {
-      await client.query('ROLLBACK');
-      this.logger.error('Transaction failed, rolled back', {
+      await this.handleTransactionError(client, error);
+    }
+    // TypeScript: this line is unreachable but required for typing
+    throw new Error('Unreachable');
+  }
+
+  private async executeCallbackAndCommit<T>(
+    client: PoolClient,
+    transactionClient: {
+      query: <U extends QueryResultRow = QueryResultRow>(
+        text: string,
+        params?: unknown[]
+      ) => Promise<QueryResult<U>>;
+      commit: () => Promise<void>;
+      rollback: () => Promise<void>;
+    },
+    callback: (client: {
+      query: <U extends QueryResultRow = QueryResultRow>(
+        text: string,
+        params?: unknown[]
+      ) => Promise<QueryResult<U>>;
+      commit: () => Promise<void>;
+      rollback: () => Promise<void>;
+    }) => Promise<T>
+  ): Promise<T> {
+    const result = await callback(transactionClient);
+    await this.safeCommit(client);
+    this.logger.debug('Transaction completed successfully');
+    return result;
+  }
+
+  private async handleTransactionError(client: PoolClient, error: unknown): Promise<never> {
+    try {
+      await this.safeRollback(client);
+    } catch (rbErr) {
+      this.logger.error('Rollback failed', {
+        error: rbErr instanceof Error ? rbErr.message : rbErr,
+      });
+    }
+    this.logger.error('Transaction failed, rolled back', {
+      error: error instanceof Error ? error.message : 'Unknown error',
+    });
+    if (error instanceof Error) throw error;
+    throw new Error(String(error));
+  }
+
+  private async acquireClient(): Promise<PoolClient> {
+    try {
+      return await this.pool.connect();
+    } catch (error) {
+      this.logger.error('Failed to acquire connection from pool', {
         error: error instanceof Error ? error.message : 'Unknown error',
       });
       throw error;
-    } finally {
+    }
+  }
+
+  private async beginTransaction(client: PoolClient): Promise<void> {
+    try {
+      await client.query('BEGIN');
+    } catch (error) {
+      this.logger.error('Failed to begin transaction', {
+        error: error instanceof Error ? error.message : error,
+      });
+      throw error;
+    }
+  }
+
+  private createTransactionClient(client: PoolClient) {
+    return {
+      query: async <U extends QueryResultRow = QueryResultRow>(
+        text: string,
+        params?: unknown[]
+      ) => {
+        return this.safeQuery<U>(client, text, params);
+      },
+      commit: async (): Promise<void> => {
+        return this.safeCommit(client);
+      },
+      rollback: async (): Promise<void> => {
+        return this.safeRollback(client);
+      },
+    };
+  }
+
+  private async safeQuery<U extends QueryResultRow = QueryResultRow>(
+    client: PoolClient,
+    text: string,
+    params?: unknown[]
+  ): Promise<QueryResult<U>> {
+    try {
+      return await client.query<U>(text, params);
+    } catch (err) {
+      this.logger.error('Transaction client query failed', {
+        query: text,
+        error: err instanceof Error ? err.message : err,
+      });
+      throw err;
+    }
+  }
+
+  private async safeCommit(client: PoolClient): Promise<void> {
+    try {
+      await client.query('COMMIT');
+    } catch (err) {
+      this.logger.error('Transaction commit failed', {
+        error: err instanceof Error ? err.message : err,
+      });
+      // Attempt rollback if commit fails
+      try {
+        await client.query('ROLLBACK');
+      } catch (rbErr) {
+        this.logger.error('Rollback failed after commit failure', {
+          error: rbErr instanceof Error ? rbErr.message : rbErr,
+        });
+      }
+      throw err;
+    }
+  }
+
+  private async safeRollback(client: PoolClient): Promise<void> {
+    try {
+      await client.query('ROLLBACK');
+    } catch (err) {
+      this.logger.error('Transaction rollback failed', {
+        error: err instanceof Error ? err.message : err,
+      });
+      throw err;
+    }
+  }
+
+  private async safeRelease(client: PoolClient): Promise<void> {
+    try {
       client.release();
+    } catch (releaseErr) {
+      this.logger.error('Failed to release client back to pool', {
+        error: releaseErr instanceof Error ? releaseErr.message : releaseErr,
+      });
     }
   }
 
   async close(): Promise<void> {
-    await this.pool.end();
-    this.logger.info('PostgreSQL connection pool closed');
+    try {
+      await this.pool.end();
+      this.logger.info('PostgreSQL connection pool closed');
+    } catch (error) {
+      this.logger.error('Failed to close PostgreSQL pool', {
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
+      throw error;
+    }
   }
 }
 
@@ -163,8 +302,15 @@ export class RedisCache {
   }
 
   async connect(): Promise<void> {
-    await this.client.connect();
-    this.logger.info('Connected to Redis');
+    try {
+      await this.client.connect();
+      this.logger.info('Connected to Redis');
+    } catch (error) {
+      this.logger.error('Failed to connect to Redis', {
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
+      throw error;
+    }
   }
 
   async get(key: string): Promise<string | null> {
@@ -227,7 +373,14 @@ export class RedisCache {
   }
 
   async close(): Promise<void> {
-    await this.client.quit();
-    this.logger.info('Redis connection closed');
+    try {
+      await this.client.quit();
+      this.logger.info('Redis connection closed');
+    } catch (error) {
+      this.logger.error('Failed to close Redis client', {
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
+      throw error;
+    }
   }
 }

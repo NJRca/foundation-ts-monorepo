@@ -64,6 +64,10 @@ export interface RequestContext {
 }
 
 // API Gateway class
+// @intent: ApiGateway
+// Purpose: central Express-based gateway to register routes, middleware, and health checks.
+// Constraints: keeps routing, request-context creation, and lightweight rate/validation middleware.
+// Behaviour: non-destructive; does not change handler signatures or response shapes.
 export class ApiGateway {
   private readonly app: Application;
   private readonly logger: Logger;
@@ -415,6 +419,8 @@ export class ApiGateway {
 }
 
 // Route builder for fluent API
+// @intent: RouteBuilder
+// Purpose: fluent builder for RouteConfig to encourage consistent route registration.
 export class RouteBuilder {
   private readonly config: Partial<RouteConfig> = {};
 
@@ -491,6 +497,8 @@ export class RouteBuilder {
 }
 
 // Export common middleware functions
+// @intent: CommonMiddleware
+// Purpose: collection of reusable middleware factories (CORS, parsers, logging, error handling).
 export const CommonMiddleware = {
   // CORS middleware factory
   cors: (origins: string[]) =>

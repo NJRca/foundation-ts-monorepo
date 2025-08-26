@@ -6,6 +6,9 @@ import * as path from 'path';
 // complexity exception for repository policy.
 import { assertNonNull } from '@foundation/contracts';
 
+// @intent: StaticAnalyzer
+// Purpose: static code analysis with project-specific heuristic rules producing SARIF reports.
+// Constraints: best-effort analysis; avoid changing source files. Rules are heuristic and documented here.
 export interface SarifResult {
   ruleId: string;
   level: 'note' | 'warning' | 'error';

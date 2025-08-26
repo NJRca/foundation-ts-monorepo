@@ -20,6 +20,8 @@ interface HealthResponse {
   uptime: number;
 }
 
+// @intent: AppHealthCheck
+// Purpose: basic application health check used by the lightweight HTTP server.
 class AppHealthCheck implements HealthCheck {
   name = 'app';
 
@@ -32,6 +34,8 @@ class AppHealthCheck implements HealthCheck {
   }
 }
 
+// @intent: HttpServer
+// Purpose: minimal HTTP server wrapper providing health checks and graceful shutdown.
 class HttpServer {
   private server: http.Server;
   private logger: Logger;

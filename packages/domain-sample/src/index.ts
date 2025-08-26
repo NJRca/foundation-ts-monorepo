@@ -1,6 +1,8 @@
 // Sample domain implementation (align with base User shape: include updatedAt)
 import { randomUUID } from 'crypto';
 
+// @intent: domain-sample
+// Purpose: small example domain model used for demos and documentation. Keep minimal and stable.
 export interface User {
   id: string;
   name: string;
@@ -9,6 +11,8 @@ export interface User {
   updatedAt: Date;
 }
 
+// @intent: UserService
+// Purpose: in-memory user service for examples and tests; not for production use.
 export class UserService {
   private readonly users: Map<string, User> = new Map();
 

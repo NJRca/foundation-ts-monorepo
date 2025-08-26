@@ -3,6 +3,12 @@ import express, { Express, Request, Response } from 'express';
 import { loadConfig } from '@foundation/config';
 
 // Simple configuration (use central config sources)
+/**
+ * @intent: user-service-server-minimal
+ * Purpose: Minimal HTTP server for demo and local development. Keeps endpoints
+ *          intentionally simple and self-contained. Not intended for production.
+ * Constraints: Avoid heavyweight middleware and external integrations in this file.
+ */
 const cfgManager = loadConfig();
 const config = {
   port: Number(cfgManager.get<number>('PORT') as unknown as number) || 3001,

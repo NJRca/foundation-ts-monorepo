@@ -1,7 +1,8 @@
 // ALLOW_COMPLEXITY_DELTA: Performance module aggregates monitoring helpers; large but intentionally structured.
 // Future: refactor into smaller modules.
 
-import { Logger } from '@foundation/contracts';
+import { Logger, assertNumberFinite } from '@foundation/contracts';
+
 import { createLogger } from '@foundation/observability';
 
 // Cache interfaces
@@ -30,6 +31,11 @@ export interface CacheStats {
 }
 
 // In-memory cache with configurable strategies
+// @intent: MemoryCache
+// Purpose: provide a simple in-memory cache with pluggable eviction strategies.
+// Constraints: stores values in-process; not suitable for multi-process sharing.
+// I/O: pure in-memory operations. All public methods are defensive and should
+// return undefined for missing/expired entries rather than throwing.
 export class MemoryCache<T> {
   private readonly cache = new Map<string, CacheEntry<T>>();
   private readonly logger: Logger;
@@ -209,6 +215,10 @@ export class MemoryCache<T> {
 
 // Cache strategies
 export class LRUStrategy implements CacheStrategy {
+  // @intent: LRUStrategy
+  // Purpose: prefer evicting least-recently-used entries; uses timestamps.
+  // Constraints: relies on entry.lastAccessed being maintained by callers.
+  // I/O: pure logic, no side effects besides updating entry metadata.
   shouldEvict(entry: CacheEntry<any>, now: number): boolean {
     return now > entry.timestamp + entry.ttl;
   }
@@ -223,6 +233,10 @@ export class LRUStrategy implements CacheStrategy {
 }
 
 export class LFUStrategy implements CacheStrategy {
+  // @intent: LFUStrategy
+  // Purpose: prefer evicting least-frequently-used entries by hitCount.
+  // Constraints: accuracy depends on hitCount being incremented on access.
+  // I/O: pure logic, updates frequency metadata on access.
   shouldEvict(entry: CacheEntry<any>, now: number): boolean {
     return now > entry.timestamp + entry.ttl;
   }
@@ -238,10 +252,17 @@ export class LFUStrategy implements CacheStrategy {
 }
 
 // Memoization decorator
+// @intent: memoize
+// Purpose: decorator factory to memoize method results in-process.
+// Constraints: serializes arguments via JSON.stringify for cache keys; avoid for non-serializable args.
+// I/O: pure caching behavior; preserves returned value shapes. Adds minimal runtime guards.
 export function memoize<T extends (...args: any[]) => any>(
   ttl: number = 3600,
   maxSize: number = 100
 ) {
+  // Defensive guards for decorator configuration
+  assertNumberFinite(ttl, 'ttl');
+  assertNumberFinite(maxSize, 'maxSize');
   return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
     const cache = new MemoryCache<any>({ maxSize, defaultTtl: ttl });

@@ -5,6 +5,13 @@
  * using Large Language Models to create self-healing software systems.
  */
 
+/**
+ * @intent: selfheal-llm
+ * Purpose: Provide LLM clients, engines, and utilities for generating repair
+ * strategies and patch proposals. Keep hardware/network concerns in the client
+ * implementations and keep higher-level orchestration side-effect free.
+ */
+
 export * from './llm-client';
 export * from './patch-validator';
 export * from './prompt-manager';
@@ -27,4 +34,4 @@ export type { LLMClient, LLMModel, LLMRequest, LLMResponse } from './llm-client'
 export { SelfHealEngine as default } from './selfheal-engine';
 
 // LLM client factory and implementations
-export { createLLMClient, MockLLMClient, OpenAIClient, SUPPORTED_MODELS } from './llm-client';
+export { MockLLMClient, OpenAIClient, SUPPORTED_MODELS, createLLMClient } from './llm-client';

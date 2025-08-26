@@ -38,7 +38,17 @@ export class PostgresUserAdapter implements UserAdapter {
         [id]
       );
       const row = result.rows[0] as QueryResultRow | undefined;
-      return row ? this.transformFromDb(row) : undefined;
+      if (!row) return undefined;
+
+      try {
+        return this.transformFromDb(row);
+      } catch (tErr) {
+        this.logger.error('Failed to transform DB row in findById', {
+          id,
+          error: tErr instanceof Error ? tErr.message : tErr,
+        });
+        throw tErr;
+      }
     } catch (error) {
       this.logger.error('PostgresUserAdapter.findById failed', {
         id,
@@ -55,7 +65,17 @@ export class PostgresUserAdapter implements UserAdapter {
         [email]
       );
       const row = result.rows[0] as QueryResultRow | undefined;
-      return row ? this.transformFromDb(row) : undefined;
+      if (!row) return undefined;
+
+      try {
+        return this.transformFromDb(row);
+      } catch (tErr) {
+        this.logger.error('Failed to transform DB row in findByEmail', {
+          email,
+          error: tErr instanceof Error ? tErr.message : tErr,
+        });
+        throw tErr;
+      }
     } catch (error) {
       this.logger.error('PostgresUserAdapter.findByEmail failed', {
         email,
@@ -75,14 +95,30 @@ export class PostgresUserAdapter implements UserAdapter {
           [user.id, user.name, user.email, now]
         );
 
-        return this.transformFromDb(result.rows[0]);
+        try {
+          return this.transformFromDb(result.rows[0]);
+        } catch (tErr) {
+          this.logger.error('Failed to transform DB row in save (update)', {
+            userId: user.id,
+            error: tErr instanceof Error ? tErr.message : tErr,
+          });
+          throw tErr;
+        }
       } else {
         const result = await this.db.query(
           'INSERT INTO users (id, name, email, created_at, updated_at) VALUES ($1, $2, $3, $4, $5) RETURNING id, name, email, created_at, updated_at',
           [user.id, user.name, user.email, now, now]
         );
 
-        return this.transformFromDb(result.rows[0]);
+        try {
+          return this.transformFromDb(result.rows[0]);
+        } catch (tErr) {
+          this.logger.error('Failed to transform DB row in save (insert)', {
+            userId: user.id,
+            error: tErr instanceof Error ? tErr.message : tErr,
+          });
+          throw tErr;
+        }
       }
     } catch (error) {
       this.logger.error('PostgresUserAdapter.save failed', {
@@ -110,7 +146,14 @@ export class PostgresUserAdapter implements UserAdapter {
       const result = await this.db.query(
         'SELECT id, name, email, created_at, updated_at FROM users ORDER BY created_at DESC'
       );
-      return result.rows.map(r => this.transformFromDb(r));
+      try {
+        return result.rows.map(r => this.transformFromDb(r));
+      } catch (tErr) {
+        this.logger.error('Failed to transform DB rows in findAll', {
+          error: tErr instanceof Error ? tErr.message : tErr,
+        });
+        throw tErr;
+      }
     } catch (error) {
       this.logger.error('PostgresUserAdapter.findAll failed', {
         error: error instanceof Error ? error.message : 'Unknown',

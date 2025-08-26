@@ -33,6 +33,9 @@ export interface EventStoreSnapshot {
 }
 
 // In-memory event store implementation
+// @intent: InMemoryEventStore
+// Purpose: in-memory event persistence for local development and tests.
+// Constraints: not durable across process restarts; synchronous-ish API using in-process maps.
 export class InMemoryEventStore implements EventStore {
   private readonly events: Map<string, StoredEvent[]> = new Map();
   private readonly snapshots: Map<string, EventStoreSnapshot> = new Map();
@@ -187,6 +190,9 @@ export class InMemoryEventStore implements EventStore {
 }
 
 // Base aggregate root class
+// @intent: AggregateRoot
+// Purpose: base class for domain aggregates to manage event application and versioning.
+// Constraints: subclasses must implement `handle` to apply domain events.
 export abstract class AggregateRoot {
   protected id: string;
   protected version: number = 0;
@@ -248,6 +254,9 @@ export abstract class AggregateRoot {
 }
 
 // Event bus for cross-aggregate communication
+// @intent: EventBus
+// Purpose: simple in-process event bus for cross-component communication.
+// Constraints: handlers run in-process; failures bubble by design unless caught by handlers.
 export class EventBus {
   private readonly logger: Logger;
   private readonly subscribers: Map<string, ((event: DomainEvent) => Promise<void>)[]> = new Map();
@@ -291,6 +300,8 @@ export class EventBus {
 }
 
 // Domain event factory
+// @intent: DomainEventFactory
+// Purpose: deterministic factory for DomainEvent objects with timestamp.
 export class DomainEventFactory {
   static create(
     aggregateId: string,

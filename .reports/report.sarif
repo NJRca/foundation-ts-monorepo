@@ -1432,9 +1432,9 @@
                   "uri": "packages/database/src/adapters.ts"
                 },
                 "region": {
-                  "startLine": 79,
+                  "startLine": 136,
                   "startColumn": 13,
-                  "endLine": 79,
+                  "endLine": 136,
                   "endColumn": 25
                 }
               }
@@ -1454,10 +1454,10 @@
                   "uri": "packages/database/src/adapters.ts"
                 },
                 "region": {
-                  "startLine": 83,
-                  "startColumn": 18,
-                  "endLine": 83,
-                  "endColumn": 30
+                  "startLine": 168,
+                  "startColumn": 20,
+                  "endLine": 168,
+                  "endColumn": 32
                 }
               }
             }
@@ -1476,53 +1476,9 @@
                   "uri": "packages/database/src/adapters.ts"
                 },
                 "region": {
-                  "startLine": 86,
-                  "startColumn": 17,
-                  "endLine": 86,
-                  "endColumn": 29
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "direct-db-access",
-          "level": "warning",
-          "message": {
-            "text": "Direct database access detected: client.query"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/adapters.ts"
-                },
-                "region": {
-                  "startLine": 89,
-                  "startColumn": 17,
-                  "endLine": 89,
-                  "endColumn": 29
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "direct-db-access",
-          "level": "warning",
-          "message": {
-            "text": "Direct database access detected: client.query"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/adapters.ts"
-                },
-                "region": {
-                  "startLine": 94,
+                  "startLine": 180,
                   "startColumn": 13,
-                  "endLine": 94,
+                  "endLine": 180,
                   "endColumn": 25
                 }
               }
@@ -1542,9 +1498,31 @@
                   "uri": "packages/database/src/adapters.ts"
                 },
                 "region": {
-                  "startLine": 99,
+                  "startLine": 187,
+                  "startColumn": 15,
+                  "endLine": 187,
+                  "endColumn": 27
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "direct-db-access",
+          "level": "warning",
+          "message": {
+            "text": "Direct database access detected: client.query"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "packages/database/src/adapters.ts"
+                },
+                "region": {
+                  "startLine": 199,
                   "startColumn": 13,
-                  "endLine": 99,
+                  "endLine": 199,
                   "endColumn": 25
                 }
               }
@@ -1564,119 +1542,9 @@
                   "uri": "packages/database/src/adapters.ts"
                 },
                 "region": {
-                  "startLine": 53,
-                  "startColumn": 18,
-                  "endLine": 53,
-                  "endColumn": 22
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/adapters.ts"
-                },
-                "region": {
-                  "startLine": 76,
-                  "startColumn": 32,
-                  "endLine": 76,
-                  "endColumn": 36
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/adapters.ts"
-                },
-                "region": {
-                  "startLine": 79,
-                  "startColumn": 7,
-                  "endLine": 79,
-                  "endColumn": 11
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/adapters.ts"
-                },
-                "region": {
-                  "startLine": 86,
-                  "startColumn": 11,
-                  "endLine": 86,
-                  "endColumn": 15
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/adapters.ts"
-                },
-                "region": {
-                  "startLine": 89,
-                  "startColumn": 11,
-                  "endLine": 89,
-                  "endColumn": 15
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/adapters.ts"
-                },
-                "region": {
-                  "startLine": 93,
+                  "startLine": 57,
                   "startColumn": 22,
-                  "endLine": 93,
+                  "endLine": 57,
                   "endColumn": 26
                 }
               }
@@ -1696,10 +1564,54 @@
                   "uri": "packages/database/src/adapters.ts"
                 },
                 "region": {
+                  "startLine": 92,
+                  "startColumn": 16,
+                  "endLine": 92,
+                  "endColumn": 20
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "missing-error-handling",
+          "level": "warning",
+          "message": {
+            "text": "Async operation without proper error handling"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "packages/database/src/adapters.ts"
+                },
+                "region": {
+                  "startLine": 93,
+                  "startColumn": 7,
+                  "endLine": 93,
+                  "endColumn": 11
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "missing-error-handling",
+          "level": "warning",
+          "message": {
+            "text": "Async operation without proper error handling"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "packages/database/src/adapters.ts"
+                },
+                "region": {
                   "startLine": 94,
-                  "startColumn": 7,
+                  "startColumn": 14,
                   "endLine": 94,
-                  "endColumn": 11
+                  "endColumn": 18
                 }
               }
             }
@@ -1718,76 +1630,10 @@
                   "uri": "packages/database/src/adapters.ts"
                 },
                 "region": {
-                  "startLine": 99,
-                  "startColumn": 7,
-                  "endLine": 99,
-                  "endColumn": 11
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/adapters.ts"
-                },
-                "region": {
-                  "startLine": 110,
-                  "startColumn": 5,
-                  "endLine": 110,
-                  "endColumn": 9
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/adapters.ts"
-                },
-                "region": {
-                  "startLine": 150,
-                  "startColumn": 5,
-                  "endLine": 150,
-                  "endColumn": 9
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/adapters.ts"
-                },
-                "region": {
-                  "startLine": 214,
-                  "startColumn": 5,
-                  "endLine": 214,
-                  "endColumn": 9
+                  "startLine": 96,
+                  "startColumn": 19,
+                  "endLine": 96,
+                  "endColumn": 23
                 }
               }
             }
@@ -2224,9 +2070,9 @@
                   "uri": "packages/database/src/index.ts"
                 },
                 "region": {
-                  "startLine": 60,
+                  "startLine": 61,
                   "startColumn": 33,
-                  "endLine": 60,
+                  "endLine": 61,
                   "endColumn": 41
                 }
               }
@@ -2246,9 +2092,9 @@
                   "uri": "packages/database/src/index.ts"
                 },
                 "region": {
-                  "startLine": 74,
+                  "startLine": 75,
                   "startColumn": 33,
-                  "endLine": 74,
+                  "endLine": 75,
                   "endColumn": 41
                 }
               }
@@ -2268,9 +2114,9 @@
                   "uri": "packages/database/src/index.ts"
                 },
                 "region": {
-                  "startLine": 88,
+                  "startLine": 89,
                   "startColumn": 25,
-                  "endLine": 88,
+                  "endLine": 89,
                   "endColumn": 33
                 }
               }
@@ -2281,7 +2127,7 @@
           "ruleId": "direct-db-access",
           "level": "warning",
           "message": {
-            "text": "Direct database access detected: .findOne("
+            "text": "Direct database access detected: .save("
           },
           "locations": [
             {
@@ -2290,10 +2136,10 @@
                   "uri": "packages/database/src/index.ts"
                 },
                 "region": {
-                  "startLine": 176,
-                  "startColumn": 30,
-                  "endLine": 176,
-                  "endColumn": 39
+                  "startLine": 210,
+                  "startColumn": 39,
+                  "endLine": 210,
+                  "endColumn": 45
                 }
               }
             }
@@ -2303,7 +2149,7 @@
           "ruleId": "direct-db-access",
           "level": "warning",
           "message": {
-            "text": "Direct database access detected: .findOne("
+            "text": "Direct database access detected: .delete("
           },
           "locations": [
             {
@@ -2312,76 +2158,10 @@
                   "uri": "packages/database/src/index.ts"
                 },
                 "region": {
-                  "startLine": 200,
-                  "startColumn": 30,
-                  "endLine": 200,
-                  "endColumn": 39
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "direct-db-access",
-          "level": "warning",
-          "message": {
-            "text": "Direct database access detected: .execute("
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/index.ts"
-                },
-                "region": {
-                  "startLine": 221,
-                  "startColumn": 34,
-                  "endLine": 221,
-                  "endColumn": 43
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "direct-db-access",
-          "level": "warning",
-          "message": {
-            "text": "Direct database access detected: .execute("
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/index.ts"
-                },
-                "region": {
-                  "startLine": 234,
-                  "startColumn": 34,
-                  "endLine": 234,
-                  "endColumn": 43
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "direct-db-access",
-          "level": "warning",
-          "message": {
-            "text": "Direct database access detected: .execute("
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/index.ts"
-                },
-                "region": {
-                  "startLine": 256,
-                  "startColumn": 17,
-                  "endLine": 256,
-                  "endColumn": 26
+                  "startLine": 224,
+                  "startColumn": 25,
+                  "endLine": 224,
+                  "endColumn": 33
                 }
               }
             }
@@ -2400,9 +2180,9 @@
                   "uri": "packages/database/src/index.ts"
                 },
                 "region": {
-                  "startLine": 316,
+                  "startLine": 270,
                   "startColumn": 16,
-                  "endLine": 316,
+                  "endLine": 270,
                   "endColumn": 24
                 }
               }
@@ -2422,9 +2202,9 @@
                   "uri": "packages/database/src/index.ts"
                 },
                 "region": {
-                  "startLine": 326,
+                  "startLine": 280,
                   "startColumn": 31,
-                  "endLine": 326,
+                  "endLine": 280,
                   "endColumn": 39
                 }
               }
@@ -2444,9 +2224,9 @@
                   "uri": "packages/database/src/index.ts"
                 },
                 "region": {
-                  "startLine": 393,
+                  "startLine": 347,
                   "startColumn": 13,
-                  "endLine": 393,
+                  "endLine": 347,
                   "endColumn": 25
                 }
               }
@@ -2466,9 +2246,9 @@
                   "uri": "packages/database/src/index.ts"
                 },
                 "region": {
-                  "startLine": 408,
+                  "startLine": 362,
                   "startColumn": 13,
-                  "endLine": 408,
+                  "endLine": 362,
                   "endColumn": 25
                 }
               }
@@ -2488,9 +2268,9 @@
                   "uri": "packages/database/src/index.ts"
                 },
                 "region": {
-                  "startLine": 427,
+                  "startLine": 381,
                   "startColumn": 18,
-                  "endLine": 427,
+                  "endLine": 381,
                   "endColumn": 26
                 }
               }
@@ -2510,185 +2290,9 @@
                   "uri": "packages/database/src/index.ts"
                 },
                 "region": {
-                  "startLine": 172,
-                  "startColumn": 22,
-                  "endLine": 172,
-                  "endColumn": 26
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/index.ts"
-                },
-                "region": {
-                  "startLine": 176,
-                  "startColumn": 20,
-                  "endLine": 176,
-                  "endColumn": 24
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/index.ts"
-                },
-                "region": {
-                  "startLine": 184,
-                  "startColumn": 9,
-                  "endLine": 184,
-                  "endColumn": 13
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/index.ts"
-                },
-                "region": {
-                  "startLine": 219,
-                  "startColumn": 11,
-                  "endLine": 219,
-                  "endColumn": 15
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/index.ts"
-                },
-                "region": {
-                  "startLine": 221,
-                  "startColumn": 24,
-                  "endLine": 221,
-                  "endColumn": 28
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/index.ts"
-                },
-                "region": {
-                  "startLine": 230,
-                  "startColumn": 9,
-                  "endLine": 230,
-                  "endColumn": 13
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/index.ts"
-                },
-                "region": {
-                  "startLine": 234,
-                  "startColumn": 24,
-                  "endLine": 234,
-                  "endColumn": 28
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/index.ts"
-                },
-                "region": {
-                  "startLine": 242,
-                  "startColumn": 9,
-                  "endLine": 242,
-                  "endColumn": 13
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/index.ts"
-                },
-                "region": {
-                  "startLine": 316,
+                  "startLine": 270,
                   "startColumn": 5,
-                  "endLine": 316,
+                  "endLine": 270,
                   "endColumn": 9
                 }
               }
@@ -2708,9 +2312,9 @@
                   "uri": "packages/database/src/index.ts"
                 },
                 "region": {
-                  "startLine": 326,
+                  "startLine": 280,
                   "startColumn": 20,
-                  "endLine": 326,
+                  "endLine": 280,
                   "endColumn": 24
                 }
               }
@@ -2730,9 +2334,9 @@
                   "uri": "packages/database/src/index.ts"
                 },
                 "region": {
-                  "startLine": 332,
+                  "startLine": 286,
                   "startColumn": 7,
-                  "endLine": 332,
+                  "endLine": 286,
                   "endColumn": 11
                 }
               }
@@ -2752,9 +2356,9 @@
                   "uri": "packages/database/src/index.ts"
                 },
                 "region": {
-                  "startLine": 334,
+                  "startLine": 288,
                   "startColumn": 30,
-                  "endLine": 334,
+                  "endLine": 288,
                   "endColumn": 34
                 }
               }
@@ -2774,10 +2378,164 @@
                   "uri": "packages/database/src/index.ts"
                 },
                 "region": {
-                  "startLine": 350,
+                  "startLine": 304,
                   "startColumn": 9,
-                  "endLine": 350,
+                  "endLine": 304,
                   "endColumn": 13
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "missing-error-handling",
+          "level": "warning",
+          "message": {
+            "text": "Async operation without proper error handling"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "packages/database/src/index.ts"
+                },
+                "region": {
+                  "startLine": 316,
+                  "startColumn": 30,
+                  "endLine": 316,
+                  "endColumn": 34
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "missing-error-handling",
+          "level": "warning",
+          "message": {
+            "text": "Async operation without proper error handling"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "packages/database/src/index.ts"
+                },
+                "region": {
+                  "startLine": 331,
+                  "startColumn": 9,
+                  "endLine": 331,
+                  "endColumn": 13
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "missing-error-handling",
+          "level": "warning",
+          "message": {
+            "text": "Async operation without proper error handling"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "packages/database/src/index.ts"
+                },
+                "region": {
+                  "startLine": 345,
+                  "startColumn": 5,
+                  "endLine": 345,
+                  "endColumn": 9
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "missing-error-handling",
+          "level": "warning",
+          "message": {
+            "text": "Async operation without proper error handling"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "packages/database/src/index.ts"
+                },
+                "region": {
+                  "startLine": 346,
+                  "startColumn": 7,
+                  "endLine": 346,
+                  "endColumn": 11
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "missing-error-handling",
+          "level": "warning",
+          "message": {
+            "text": "Async operation without proper error handling"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "packages/database/src/index.ts"
+                },
+                "region": {
+                  "startLine": 347,
+                  "startColumn": 7,
+                  "endLine": 347,
+                  "endColumn": 11
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "missing-error-handling",
+          "level": "warning",
+          "message": {
+            "text": "Async operation without proper error handling"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "packages/database/src/index.ts"
+                },
+                "region": {
+                  "startLine": 360,
+                  "startColumn": 5,
+                  "endLine": 360,
+                  "endColumn": 9
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "missing-error-handling",
+          "level": "warning",
+          "message": {
+            "text": "Async operation without proper error handling"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "packages/database/src/index.ts"
+                },
+                "region": {
+                  "startLine": 361,
+                  "startColumn": 7,
+                  "endLine": 361,
+                  "endColumn": 11
                 }
               }
             }
@@ -2797,74 +2555,8 @@
                 },
                 "region": {
                   "startLine": 362,
-                  "startColumn": 30,
+                  "startColumn": 7,
                   "endLine": 362,
-                  "endColumn": 34
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/index.ts"
-                },
-                "region": {
-                  "startLine": 377,
-                  "startColumn": 9,
-                  "endLine": 377,
-                  "endColumn": 13
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/index.ts"
-                },
-                "region": {
-                  "startLine": 391,
-                  "startColumn": 5,
-                  "endLine": 391,
-                  "endColumn": 9
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "packages/database/src/index.ts"
-                },
-                "region": {
-                  "startLine": 392,
-                  "startColumn": 7,
-                  "endLine": 392,
                   "endColumn": 11
                 }
               }
@@ -2872,88 +2564,132 @@
           ]
         },
         {
-          "ruleId": "missing-error-handling",
+          "ruleId": "direct-db-access",
           "level": "warning",
           "message": {
-            "text": "Async operation without proper error handling"
+            "text": "Direct database access detected: db.query"
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "packages/database/src/index.ts"
+                  "uri": "packages/database/src/repositories/user-adapter.ts"
                 },
                 "region": {
-                  "startLine": 393,
-                  "startColumn": 7,
-                  "endLine": 393,
-                  "endColumn": 11
+                  "startLine": 36,
+                  "startColumn": 33,
+                  "endLine": 36,
+                  "endColumn": 41
                 }
               }
             }
           ]
         },
         {
-          "ruleId": "missing-error-handling",
+          "ruleId": "direct-db-access",
           "level": "warning",
           "message": {
-            "text": "Async operation without proper error handling"
+            "text": "Direct database access detected: db.query"
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "packages/database/src/index.ts"
+                  "uri": "packages/database/src/repositories/user-adapter.ts"
                 },
                 "region": {
-                  "startLine": 406,
-                  "startColumn": 5,
-                  "endLine": 406,
-                  "endColumn": 9
+                  "startLine": 63,
+                  "startColumn": 33,
+                  "endLine": 63,
+                  "endColumn": 41
                 }
               }
             }
           ]
         },
         {
-          "ruleId": "missing-error-handling",
+          "ruleId": "direct-db-access",
           "level": "warning",
           "message": {
-            "text": "Async operation without proper error handling"
+            "text": "Direct database access detected: db.query"
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "packages/database/src/index.ts"
+                  "uri": "packages/database/src/repositories/user-adapter.ts"
                 },
                 "region": {
-                  "startLine": 407,
-                  "startColumn": 7,
-                  "endLine": 407,
-                  "endColumn": 11
+                  "startLine": 93,
+                  "startColumn": 35,
+                  "endLine": 93,
+                  "endColumn": 43
                 }
               }
             }
           ]
         },
         {
-          "ruleId": "missing-error-handling",
+          "ruleId": "direct-db-access",
           "level": "warning",
           "message": {
-            "text": "Async operation without proper error handling"
+            "text": "Direct database access detected: db.query"
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "packages/database/src/index.ts"
+                  "uri": "packages/database/src/repositories/user-adapter.ts"
                 },
                 "region": {
-                  "startLine": 408,
-                  "startColumn": 7,
-                  "endLine": 408,
-                  "endColumn": 11
+                  "startLine": 108,
+                  "startColumn": 35,
+                  "endLine": 108,
+                  "endColumn": 43
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "direct-db-access",
+          "level": "warning",
+          "message": {
+            "text": "Direct database access detected: db.query"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "packages/database/src/repositories/user-adapter.ts"
+                },
+                "region": {
+                  "startLine": 134,
+                  "startColumn": 18,
+                  "endLine": 134,
+                  "endColumn": 26
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "direct-db-access",
+          "level": "warning",
+          "message": {
+            "text": "Direct database access detected: db.query"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "packages/database/src/repositories/user-adapter.ts"
+                },
+                "region": {
+                  "startLine": 146,
+                  "startColumn": 33,
+                  "endLine": 146,
+                  "endColumn": 41
                 }
               }
             }
@@ -5864,6 +5600,182 @@
           ]
         },
         {
+          "ruleId": "console-usage",
+          "level": "warning",
+          "message": {
+            "text": "Direct console usage found: console.error"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/summarize-sarif.js"
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 3,
+                  "endLine": 5,
+                  "endColumn": 16
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "console-usage",
+          "level": "warning",
+          "message": {
+            "text": "Direct console usage found: console.log"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/summarize-sarif.js"
+                },
+                "region": {
+                  "startLine": 45,
+                  "startColumn": 1,
+                  "endLine": 45,
+                  "endColumn": 12
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "console-usage",
+          "level": "warning",
+          "message": {
+            "text": "Direct console usage found: console.log"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/summarize-sarif.js"
+                },
+                "region": {
+                  "startLine": 48,
+                  "startColumn": 3,
+                  "endLine": 48,
+                  "endColumn": 14
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "console-usage",
+          "level": "warning",
+          "message": {
+            "text": "Direct console usage found: console.log"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/summarize-sarif.js"
+                },
+                "region": {
+                  "startLine": 51,
+                  "startColumn": 1,
+                  "endLine": 51,
+                  "endColumn": 12
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "console-usage",
+          "level": "warning",
+          "message": {
+            "text": "Direct console usage found: console.log"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/summarize-sarif.js"
+                },
+                "region": {
+                  "startLine": 54,
+                  "startColumn": 3,
+                  "endLine": 54,
+                  "endColumn": 14
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "console-usage",
+          "level": "warning",
+          "message": {
+            "text": "Direct console usage found: console.log"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/summarize-sarif.js"
+                },
+                "region": {
+                  "startLine": 57,
+                  "startColumn": 1,
+                  "endLine": 57,
+                  "endColumn": 12
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "console-usage",
+          "level": "warning",
+          "message": {
+            "text": "Direct console usage found: console.log"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/summarize-sarif.js"
+                },
+                "region": {
+                  "startLine": 59,
+                  "startColumn": 3,
+                  "endLine": 59,
+                  "endColumn": 14
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "console-usage",
+          "level": "warning",
+          "message": {
+            "text": "Direct console usage found: console.log"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/summarize-sarif.js"
+                },
+                "region": {
+                  "startLine": 65,
+                  "startColumn": 38,
+                  "endLine": 65,
+                  "endColumn": 49
+                }
+              }
+            }
+          ]
+        },
+        {
           "ruleId": "hardcoded-secrets",
           "level": "error",
           "message": {
@@ -6954,9 +6866,9 @@
                   "uri": "services/user-service/src/server.ts"
                 },
                 "region": {
-                  "startLine": 285,
+                  "startLine": 287,
                   "startColumn": 9,
-                  "endLine": 285,
+                  "endLine": 287,
                   "endColumn": 17
                 }
               }
@@ -6976,9 +6888,9 @@
                   "uri": "services/user-service/src/server.ts"
                 },
                 "region": {
-                  "startLine": 182,
+                  "startLine": 184,
                   "startColumn": 26,
-                  "endLine": 182,
+                  "endLine": 184,
                   "endColumn": 30
                 }
               }
@@ -6998,9 +6910,9 @@
                   "uri": "services/user-service/src/server.ts"
                 },
                 "region": {
-                  "startLine": 217,
+                  "startLine": 219,
                   "startColumn": 27,
-                  "endLine": 217,
+                  "endLine": 219,
                   "endColumn": 31
                 }
               }
@@ -7020,9 +6932,9 @@
                   "uri": "services/user-service/src/server.ts"
                 },
                 "region": {
-                  "startLine": 250,
+                  "startLine": 252,
                   "startColumn": 33,
-                  "endLine": 250,
+                  "endLine": 252,
                   "endColumn": 37
                 }
               }
@@ -7042,9 +6954,9 @@
                   "uri": "services/user-service/src/server.ts"
                 },
                 "region": {
-                  "startLine": 314,
+                  "startLine": 316,
                   "startColumn": 26,
-                  "endLine": 314,
+                  "endLine": 316,
                   "endColumn": 30
                 }
               }
@@ -7064,9 +6976,9 @@
                   "uri": "services/user-service/src/server.ts"
                 },
                 "region": {
-                  "startLine": 352,
+                  "startLine": 354,
                   "startColumn": 28,
-                  "endLine": 352,
+                  "endLine": 354,
                   "endColumn": 32
                 }
               }
@@ -7086,9 +6998,9 @@
                   "uri": "services/user-service/src/server.ts"
                 },
                 "region": {
-                  "startLine": 387,
+                  "startLine": 389,
                   "startColumn": 13,
-                  "endLine": 387,
+                  "endLine": 389,
                   "endColumn": 17
                 }
               }
@@ -7108,9 +7020,9 @@
                   "uri": "services/user-service/src/server.ts"
                 },
                 "region": {
-                  "startLine": 397,
+                  "startLine": 399,
                   "startColumn": 5,
-                  "endLine": 397,
+                  "endLine": 399,
                   "endColumn": 9
                 }
               }
@@ -7130,9 +7042,9 @@
                   "uri": "services/user-service/src/server.ts"
                 },
                 "region": {
-                  "startLine": 407,
+                  "startLine": 409,
                   "startColumn": 7,
-                  "endLine": 407,
+                  "endLine": 409,
                   "endColumn": 11
                 }
               }
@@ -7152,9 +7064,9 @@
                   "uri": "services/user-service/src/server.ts"
                 },
                 "region": {
-                  "startLine": 413,
+                  "startLine": 415,
                   "startColumn": 7,
-                  "endLine": 413,
+                  "endLine": 415,
                   "endColumn": 11
                 }
               }
@@ -7174,9 +7086,9 @@
                   "uri": "services/user-service/src/server.ts"
                 },
                 "region": {
-                  "startLine": 168,
+                  "startLine": 170,
                   "startColumn": 13,
-                  "endLine": 168,
+                  "endLine": 170,
                   "endColumn": 33
                 }
               }
@@ -7196,9 +7108,9 @@
                   "uri": "services/user-service/src/server.ts"
                 },
                 "region": {
-                  "startLine": 338,
+                  "startLine": 340,
                   "startColumn": 13,
-                  "endLine": 338,
+                  "endLine": 340,
                   "endColumn": 33
                 }
               }
@@ -7218,9 +7130,9 @@
                   "uri": "services/user-service/src/server.ts"
                 },
                 "region": {
-                  "startLine": 374,
+                  "startLine": 376,
                   "startColumn": 20,
-                  "endLine": 374,
+                  "endLine": 376,
                   "endColumn": 37
                 }
               }
@@ -7438,119 +7350,9 @@
                   "uri": "services/user-service/src/user-service.ts"
                 },
                 "region": {
-                  "startLine": 105,
-                  "startColumn": 26,
-                  "endLine": 105,
-                  "endColumn": 30
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "services/user-service/src/user-service.ts"
-                },
-                "region": {
-                  "startLine": 111,
-                  "startColumn": 26,
-                  "endLine": 111,
-                  "endColumn": 30
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "services/user-service/src/user-service.ts"
-                },
-                "region": {
-                  "startLine": 126,
-                  "startColumn": 23,
-                  "endLine": 126,
-                  "endColumn": 27
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "services/user-service/src/user-service.ts"
-                },
-                "region": {
-                  "startLine": 144,
-                  "startColumn": 5,
-                  "endLine": 144,
-                  "endColumn": 9
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "services/user-service/src/user-service.ts"
-                },
-                "region": {
-                  "startLine": 172,
-                  "startColumn": 18,
-                  "endLine": 172,
-                  "endColumn": 22
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "missing-error-handling",
-          "level": "warning",
-          "message": {
-            "text": "Async operation without proper error handling"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "services/user-service/src/user-service.ts"
-                },
-                "region": {
-                  "startLine": 179,
+                  "startLine": 106,
                   "startColumn": 28,
-                  "endLine": 179,
+                  "endLine": 106,
                   "endColumn": 32
                 }
               }
@@ -7570,10 +7372,10 @@
                   "uri": "services/user-service/src/user-service.ts"
                 },
                 "region": {
-                  "startLine": 193,
-                  "startColumn": 23,
-                  "endLine": 193,
-                  "endColumn": 27
+                  "startLine": 112,
+                  "startColumn": 28,
+                  "endLine": 112,
+                  "endColumn": 32
                 }
               }
             }
@@ -7592,10 +7394,10 @@
                   "uri": "services/user-service/src/user-service.ts"
                 },
                 "region": {
-                  "startLine": 210,
-                  "startColumn": 5,
-                  "endLine": 210,
-                  "endColumn": 9
+                  "startLine": 127,
+                  "startColumn": 25,
+                  "endLine": 127,
+                  "endColumn": 29
                 }
               }
             }
@@ -7614,9 +7416,119 @@
                   "uri": "services/user-service/src/user-service.ts"
                 },
                 "region": {
-                  "startLine": 223,
+                  "startLine": 145,
+                  "startColumn": 7,
+                  "endLine": 145,
+                  "endColumn": 11
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "missing-error-handling",
+          "level": "warning",
+          "message": {
+            "text": "Async operation without proper error handling"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "services/user-service/src/user-service.ts"
+                },
+                "region": {
+                  "startLine": 204,
+                  "startColumn": 20,
+                  "endLine": 204,
+                  "endColumn": 24
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "missing-error-handling",
+          "level": "warning",
+          "message": {
+            "text": "Async operation without proper error handling"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "services/user-service/src/user-service.ts"
+                },
+                "region": {
+                  "startLine": 211,
+                  "startColumn": 30,
+                  "endLine": 211,
+                  "endColumn": 34
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "missing-error-handling",
+          "level": "warning",
+          "message": {
+            "text": "Async operation without proper error handling"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "services/user-service/src/user-service.ts"
+                },
+                "region": {
+                  "startLine": 225,
+                  "startColumn": 25,
+                  "endLine": 225,
+                  "endColumn": 29
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "missing-error-handling",
+          "level": "warning",
+          "message": {
+            "text": "Async operation without proper error handling"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "services/user-service/src/user-service.ts"
+                },
+                "region": {
+                  "startLine": 242,
+                  "startColumn": 7,
+                  "endLine": 242,
+                  "endColumn": 11
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "missing-error-handling",
+          "level": "warning",
+          "message": {
+            "text": "Async operation without proper error handling"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "services/user-service/src/user-service.ts"
+                },
+                "region": {
+                  "startLine": 262,
                   "startColumn": 18,
-                  "endLine": 223,
+                  "endLine": 262,
                   "endColumn": 22
                 }
               }
@@ -7636,9 +7548,9 @@
                   "uri": "services/user-service/src/user-service.ts"
                 },
                 "region": {
-                  "startLine": 228,
+                  "startLine": 267,
                   "startColumn": 5,
-                  "endLine": 228,
+                  "endLine": 267,
                   "endColumn": 9
                 }
               }
@@ -7658,9 +7570,9 @@
                   "uri": "services/user-service/src/user-service.ts"
                 },
                 "region": {
-                  "startLine": 245,
+                  "startLine": 284,
                   "startColumn": 5,
-                  "endLine": 245,
+                  "endLine": 284,
                   "endColumn": 9
                 }
               }
@@ -7680,9 +7592,9 @@
                   "uri": "services/user-service/src/user-service.ts"
                 },
                 "region": {
-                  "startLine": 253,
+                  "startLine": 292,
                   "startColumn": 18,
-                  "endLine": 253,
+                  "endLine": 292,
                   "endColumn": 22
                 }
               }
@@ -7702,9 +7614,9 @@
                   "uri": "services/user-service/src/user-service.ts"
                 },
                 "region": {
-                  "startLine": 264,
+                  "startLine": 303,
                   "startColumn": 29,
-                  "endLine": 264,
+                  "endLine": 303,
                   "endColumn": 33
                 }
               }
@@ -7724,9 +7636,9 @@
                   "uri": "services/user-service/src/user-service.ts"
                 },
                 "region": {
-                  "startLine": 277,
+                  "startLine": 316,
                   "startColumn": 5,
-                  "endLine": 277,
+                  "endLine": 316,
                   "endColumn": 9
                 }
               }
@@ -7746,9 +7658,9 @@
                   "uri": "services/user-service/src/user-service.ts"
                 },
                 "region": {
-                  "startLine": 294,
+                  "startLine": 333,
                   "startColumn": 5,
-                  "endLine": 294,
+                  "endLine": 333,
                   "endColumn": 9
                 }
               }
@@ -7768,9 +7680,9 @@
                   "uri": "services/user-service/src/user-service.ts"
                 },
                 "region": {
-                  "startLine": 307,
+                  "startLine": 346,
                   "startColumn": 18,
-                  "endLine": 307,
+                  "endLine": 346,
                   "endColumn": 22
                 }
               }
@@ -7790,9 +7702,9 @@
                   "uri": "services/user-service/src/user-service.ts"
                 },
                 "region": {
-                  "startLine": 318,
+                  "startLine": 357,
                   "startColumn": 23,
-                  "endLine": 318,
+                  "endLine": 357,
                   "endColumn": 27
                 }
               }
@@ -7812,9 +7724,9 @@
                   "uri": "services/user-service/src/user-service.ts"
                 },
                 "region": {
-                  "startLine": 335,
+                  "startLine": 374,
                   "startColumn": 5,
-                  "endLine": 335,
+                  "endLine": 374,
                   "endColumn": 9
                 }
               }
@@ -7834,9 +7746,9 @@
                   "uri": "services/user-service/src/user-service.ts"
                 },
                 "region": {
-                  "startLine": 345,
+                  "startLine": 384,
                   "startColumn": 18,
-                  "endLine": 345,
+                  "endLine": 384,
                   "endColumn": 22
                 }
               }
@@ -7856,9 +7768,9 @@
                   "uri": "services/user-service/src/user-service.ts"
                 },
                 "region": {
-                  "startLine": 356,
+                  "startLine": 395,
                   "startColumn": 23,
-                  "endLine": 356,
+                  "endLine": 395,
                   "endColumn": 27
                 }
               }
@@ -7878,9 +7790,9 @@
                   "uri": "services/user-service/src/user-service.ts"
                 },
                 "region": {
-                  "startLine": 373,
+                  "startLine": 412,
                   "startColumn": 5,
-                  "endLine": 373,
+                  "endLine": 412,
                   "endColumn": 9
                 }
               }
@@ -7900,9 +7812,9 @@
                   "uri": "services/user-service/src/user-service.ts"
                 },
                 "region": {
-                  "startLine": 383,
+                  "startLine": 422,
                   "startColumn": 18,
-                  "endLine": 383,
+                  "endLine": 422,
                   "endColumn": 22
                 }
               }
@@ -7922,9 +7834,9 @@
                   "uri": "services/user-service/src/user-service.ts"
                 },
                 "region": {
-                  "startLine": 389,
+                  "startLine": 428,
                   "startColumn": 32,
-                  "endLine": 389,
+                  "endLine": 428,
                   "endColumn": 36
                 }
               }
@@ -7944,9 +7856,9 @@
                   "uri": "services/user-service/src/user-service.ts"
                 },
                 "region": {
-                  "startLine": 399,
+                  "startLine": 438,
                   "startColumn": 29,
-                  "endLine": 399,
+                  "endLine": 438,
                   "endColumn": 33
                 }
               }
@@ -7966,9 +7878,9 @@
                   "uri": "services/user-service/src/user-service.ts"
                 },
                 "region": {
-                  "startLine": 408,
+                  "startLine": 447,
                   "startColumn": 5,
-                  "endLine": 408,
+                  "endLine": 447,
                   "endColumn": 9
                 }
               }
@@ -7988,9 +7900,9 @@
                   "uri": "services/user-service/src/user-service.ts"
                 },
                 "region": {
-                  "startLine": 424,
+                  "startLine": 463,
                   "startColumn": 5,
-                  "endLine": 424,
+                  "endLine": 463,
                   "endColumn": 9
                 }
               }

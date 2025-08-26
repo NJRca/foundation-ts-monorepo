@@ -1,5 +1,10 @@
 // ALLOW_COMPLEXITY_DELTA: Observability helper for the user-service is
 // intentionally comprehensive; marking as allowed for repository policy.
+/**
+ * @intent: user-service-observability
+ * Purpose: lightweight observability helpers (correlation ID, structured logs, metrics)
+ * Constraints: keep observability logic isolated from business logic and safe for local/demo use.
+ */
 const express = require('express');
 const { randomUUID } = require('crypto');
 

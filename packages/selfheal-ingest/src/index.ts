@@ -41,6 +41,14 @@ export interface SelfHealEvent {
 }
 
 /**
+ * @intent: selfheal-ingest
+ * Purpose: Ingest logs, produce error fingerprints, and trigger self-healing events.
+ * Constraints: Keep processing idempotent and resilient to malformed input. Do not
+ *             perform blocking I/O on the main thread; publish events via EventBus
+ *             for persistence and downstream processing. Keep internal state private.
+ */
+
+/**
  * Log Ingestion and Fingerprinting Service
  *
  * Processes logs from various sources, creates fingerprints for errors,

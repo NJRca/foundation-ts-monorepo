@@ -60,6 +60,9 @@ class MemoryConfigSource implements ConfigSource {
   }
 }
 
+// @intent: ConfigManager
+// Purpose: central configuration aggregation and validation across multiple sources (env, memory).
+// Constraints: resilient parsing with safe defaults; validation rules are pluggable.
 export class ConfigManager implements Config {
   private readonly sources: ConfigSource[];
   private readonly validationRules: ConfigValidationRule[] = [];
@@ -207,6 +210,8 @@ export const validators = {
 };
 
 // Factory function to create a config manager with common sources and validation
+// @intent: loadConfig
+// Purpose: convenience factory to build a ConfigManager with common sources (env + optional memory overrides).
 export function loadConfig(additionalConfig?: Record<string, string>): Config {
   const sources: ConfigSource[] = [new EnvironmentConfigSource(process.env)];
 

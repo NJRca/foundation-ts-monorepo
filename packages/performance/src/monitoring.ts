@@ -1,6 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 
 import { assertNonNull } from '@foundation/contracts';
+// @intent: PerformanceMonitoringMiddleware
+// Purpose: collect in-process request timing and basic system metrics for observability.
+// Constraints: lightweight, in-memory; not a replacement for dedicated APM. All exported
+// interfaces are read-only snapshots to avoid leaking internal mutable state.
 import { performance } from 'perf_hooks';
 
 // ALLOW_COMPLEXITY_DELTA: Performance monitoring contains detailed timing

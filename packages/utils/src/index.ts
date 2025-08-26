@@ -1,5 +1,9 @@
 import { assertNonNull } from '@foundation/contracts';
 
+// @intent: utils
+// Purpose: small, reusable utility functions used across the monorepo. Keep functions
+// simple, well-documented, and side-effect free where possible.
+// NOTE: avoid changing semantics; keep signatures stable.
 // Re-exported utility functions used across the monorepo
 export function ensureString(v: unknown, name = 'value'): string {
   assertNonNull(v, name);
