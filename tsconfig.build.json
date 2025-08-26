@@ -8,6 +8,10 @@
     { "path": "packages/database" },
     { "path": "packages/security" },
     { "path": "packages/api-gateway" },
+    { "path": "packages/eslint-plugin-foundation" },
+    { "path": "packages/ts-codemods" },
+    { "path": "./extensions/vscode-foundation" },
+    { "path": "packages/refactor-cli" },
     { "path": "services/user-service" }
   ]
 }

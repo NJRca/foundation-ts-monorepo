@@ -1,0 +1,12 @@
+id: strangler
+summary: Incremental replacement of legacy module using strangler fig pattern
+triggers:
+  - pattern: '// TODO: replace'
+steps:
+  - map: identify legacy boundary
+  - facade: create adapter delegating to old impl
+  - replace: implement new piece by piece
+  - retire: remove legacy when coverage parity achieved
+successCriteria:
+  - Adapter ensures backward compatibility
+  - Tests pass during transition

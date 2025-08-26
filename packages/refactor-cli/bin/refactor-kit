@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+import('../dist/index.js').catch(async () => {
+  // Fallback to ts-node style dynamic import during local dev if dist missing
+  try {
+    await import('ts-node/register');
+    await import('../src/index.ts');
+  } catch (e) {
+    console.error('Failed to launch refactor-kit CLI:', e);
+    process.exit(1);
+  }
+});

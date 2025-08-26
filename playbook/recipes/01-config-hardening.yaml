@@ -1,0 +1,14 @@
+id: config-hardening
+summary: Enforce config centralization and prevent scattered process.env usage
+triggers:
+  - pattern: 'process.env'
+    excludePaths:
+      - packages/config/src
+steps:
+  - check: envAccess
+    action: propose centralizing variable in packages/config
+  - check: tests
+    action: ensure config accessor unit test exists
+successCriteria:
+  - No disallowed process.env usages
+  - Tests reference config module only

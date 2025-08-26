@@ -1,0 +1,13 @@
+id: functional-core
+summary: Extract pure logic from impure shells for testability
+triggers:
+  - pattern: 'fs.' # heavy IO inline
+  - pattern: 'Date.now()'
+steps:
+  - identify: mixed purity function
+  - refactor: extract pure core
+  - wrap: leave IO in thin shell
+  - test: add pure unit tests
+successCriteria:
+  - Core logic independent of IO
+  - New tests cover pure core

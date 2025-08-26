@@ -1,0 +1,124 @@
+name: foundation-pipeline
+
+on:
+  workflow_call:
+    inputs:
+      run-analyzer:
+        type: boolean
+        default: true
+      fail-on-high:
+        type: boolean
+        default: true
+      run-acceptance:
+        type: boolean
+        default: true
+      self-heal:
+        type: boolean
+        default: false
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Use Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.0
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Build
+        run: pnpm run build
+      - name: Unit Tests
+        run: pnpm run test:ci
+      - name: Acceptance Tests
+        if: inputs.run-acceptance == true
+        run: pnpm run test:acceptance:ci
+      - name: Policy Gate
+        run: node scripts/policy-gate.js
+      - name: Complexity Diff
+        run: node scripts/complexity-diff.js --summary complexity-diff.md
+      - name: Upload Complexity Diff Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: complexity-diff
+          path: complexity-diff.md
+      - name: Comment Complexity Diff on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('complexity-diff.md','utf8');
+            const marker = '<!-- complexity-diff -->';
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+            const existing = comments.find(c => c.body.includes(marker));
+            const newBody = marker + '\n' + body;
+            if (existing) {
+              await github.rest.issues.updateComment({ owner: context.repo.owner, repo: context.repo.repo, comment_id: existing.id, body: newBody });
+            } else {
+              await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, body: newBody });
+            }
+
+  analyze:
+    needs: build-test
+    if: inputs.run-analyzer == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.0
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Build (ensure analyzer built)
+        run: pnpm run build
+      - name: Run Analyzer
+        run: pnpm run analyze
+      - name: Upload SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: analysis-results.sarif
+      - name: Fail on High Severity (placeholder)
+        if: inputs.fail-on-high == true
+        run: |
+          if grep -q '"level": "error"' analysis-results.sarif; then
+            echo "High severity findings found" >&2; exit 1; fi
+
+  self-heal:
+    needs: build-test
+    if: inputs.self-heal == true && github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.0
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Generate Self-Heal Draft (placeholder)
+        run: echo "Self-heal step would run here."

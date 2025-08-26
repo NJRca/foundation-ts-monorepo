@@ -29,22 +29,27 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: 'pnpm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.0
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: TypeScript typecheck
-        run: npm run typecheck
+        run: pnpm run typecheck
 
       - name: Lint
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
 
       - name: Unit tests
-        run: npm run test:ci
+        run: pnpm run test:ci
 
       - name: Policy gate
         run: node scripts/policy-gate.js
@@ -53,14 +58,14 @@ jobs:
         run: |
           if [ -d "tests/acceptance" ]; then
             cd tests/acceptance
-            npm test
+            pnpm test
           else
             echo "No acceptance tests found - skipping"
           fi
 
       - name: Static analysis (SARIF)
         run: |
-          npm run analyze:sarif || true
+          pnpm run analyze:sarif || true
           # analyzer should produce analysis-results.sarif or results.sarif
           if [ -f analysis-results.sarif ]; then mv analysis-results.sarif analysis-results.sarif; fi
           if [ -f results.sarif ]; then mv results.sarif analysis-results.sarif; fi

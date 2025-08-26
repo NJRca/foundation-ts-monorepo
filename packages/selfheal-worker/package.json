@@ -12,12 +12,12 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "@foundation/contracts": "*",
-    "@foundation/observability": "*",
-    "@foundation/database": "*",
-    "@foundation/events": "*",
-    "@foundation/selfheal-ingest": "*",
-    "@foundation/selfheal-llm": "*",
+    "@foundation/contracts": "workspace:*",
+    "@foundation/observability": "workspace:*",
+    "@foundation/database": "workspace:*",
+    "@foundation/events": "workspace:*",
+    "@foundation/selfheal-ingest": "workspace:*",
+    "@foundation/selfheal-llm": "workspace:*",
     "@types/node": "^20.0.0",
     "node-cron": "^3.0.0"
   },

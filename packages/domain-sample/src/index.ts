@@ -19,9 +19,9 @@ export class UserService {
       name,
       email,
       createdAt: now,
-      updatedAt: now
+      updatedAt: now,
     };
-    
+
     this.users.set(user.id, user);
     return user;
   }

@@ -9,7 +9,7 @@
   },
   "packageManager": "pnpm@10.15.0",
   "scripts": {
-    "build": "npm run build --workspaces",
+    "build": "tsc -b tsconfig.build.json",
     "build:watch": "npm run build --workspaces -- --watch",
     "build:clean": "npm run clean && npm run build",
     "typecheck": "tsc --noEmit --project tsconfig.json",
@@ -29,6 +29,7 @@
     "analyze:sarif": "node packages/analyzer/dist/cli.js .",
     "analyze:examples": "node packages/analyzer/dist/cli.js examples",
     "clean": "npm run clean --workspaces",
+    "clean:all": "find packages -name dist -prune -exec rm -rf {} + && find services -name dist -prune -exec rm -rf {} + && find packages -name tsconfig.tsbuildinfo -delete && find services -name tsconfig.tsbuildinfo -delete",
     "dev": "npm run dev --workspaces",
     "dev:setup": "./scripts/dev-setup.sh",
     "dev:start": "docker-compose up -d",
@@ -71,6 +72,7 @@
     "@types/cors": "^2.8.0",
     "@types/express": "^5.0.3",
     "@types/jest": "^29.5.0",
+    "@types/js-yaml": "^4.0.9",
     "@types/jsonwebtoken": "^9.0.0",
     "@types/node": "^20.0.0",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
@@ -104,6 +106,7 @@
   "workspaces": [
     "packages/*",
     "services/*",
+    "extensions/*",
     "tests/acceptance"
   ]
 }

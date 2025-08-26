@@ -1,0 +1,11 @@
+id: analyzer-integration
+summary: Ensure static analyzer findings integrated into gating
+triggers:
+  - pattern: '// ANALYZER-TODO'
+steps:
+  - run: packages/analyzer to get latest SARIF
+  - parse: identify new > severityGate
+  - patch: reduce severity or justify suppression
+successCriteria:
+  - No new findings above severityGate
+  - Documented rationale for any suppression

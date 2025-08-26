@@ -1,5 +1,6 @@
 packages:
   - packages/*
   - services/*
+  - extensions/*
   # Note: tests/, scripts/, docs/, examples/ are intentionally excluded
   # as they are not npm packages but workspace utilities
