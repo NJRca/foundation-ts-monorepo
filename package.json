@@ -105,6 +105,7 @@
   "workspaces": [
     "packages/*",
     "services/*",
+    "extensions/*",
     "tests/acceptance"
   ]
 }
