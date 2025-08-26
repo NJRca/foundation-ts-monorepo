@@ -1,0 +1,11 @@
+id: acceptance-tests
+summary: Add missing acceptance test scaffolding for critical path
+triggers:
+  - pattern: '// ACCEPTANCE-MISSING'
+steps:
+  - identify: critical user journey
+  - script: compose test scenario under tests/acceptance
+  - assert: success and key invariants
+successCriteria:
+  - New acceptance test file present
+  - Fails without feature, passes with

@@ -1,0 +1,30 @@
+# LLM Playbook Rules
+version: v1
+
+contracts:
+  enforced: true
+  allowedAssertions:
+    - assertNonNull
+    - assertNumberFinite
+    - assertIndexInRange
+    - fail
+  patchScope: function-range-only
+
+envAccess:
+  allowedPaths:
+    - packages/config/src
+  disallowedPattern: 'process.env'
+  policy: fail
+
+complexityBudget:
+  maxAddedLines: 40 # discourage large patches
+  maxFunctionLength: 120 # soft guidance for refactors
+  maxCyclomatic: 12 # suggest extraction above this
+
+analyzer:
+  severityGate: high # no new High severity issues
+  failOnNew: true
+
+testing:
+  requireNewTest: true
+  acceptancePattern: tests/acceptance/**/*.test.ts

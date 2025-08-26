@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://foundation.local/playbook/rules.schema.json",
+  "title": "LLM Playbook Rules",
+  "type": "object",
+  "required": ["version", "contracts", "envAccess", "complexityBudget", "analyzer"],
+  "properties": {
+    "version": { "type": "string", "pattern": "^v[0-9]+$" },
+    "contracts": {
+      "type": "object",
+      "description": "Design by Contract guardrail settings",
+      "properties": {
+        "enforced": { "type": "boolean" },
+        "allowedAssertions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["assertNonNull", "assertNumberFinite", "assertIndexInRange", "fail"]
+          }
+        },
+        "patchScope": {
+          "type": "string",
+          "enum": ["function-range-only", "file-local", "multi-file"]
+        }
+      },
+      "required": ["enforced", "allowedAssertions", "patchScope"],
+      "additionalProperties": false
+    },
+    "envAccess": {
+      "type": "object",
+      "properties": {
+        "allowedPaths": { "type": "array", "items": { "type": "string" } },
+        "disallowedPattern": { "type": "string", "default": "process\\.env" },
+        "policy": { "type": "string", "enum": ["fail", "warn"] }
+      },
+      "required": ["allowedPaths", "disallowedPattern", "policy"],
+      "additionalProperties": false
+    },
+    "complexityBudget": {
+      "type": "object",
+      "properties": {
+        "maxAddedLines": { "type": "integer", "minimum": 0 },
+        "maxFunctionLength": { "type": "integer", "minimum": 1 },
+        "maxCyclomatic": { "type": "integer", "minimum": 1 }
+      },
+      "required": ["maxAddedLines"],
+      "additionalProperties": false
+    },
+    "analyzer": {
+      "type": "object",
+      "properties": {
+        "severityGate": {
+          "type": "string",
+          "enum": ["none", "low", "moderate", "high", "critical"]
+        },
+        "failOnNew": { "type": "boolean" }
+      },
+      "required": ["severityGate", "failOnNew"],
+      "additionalProperties": false
+    },
+    "testing": {
+      "type": "object",
+      "properties": {
+        "requireNewTest": { "type": "boolean" },
+        "acceptancePattern": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

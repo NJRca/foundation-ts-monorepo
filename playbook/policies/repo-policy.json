@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "policies": [
+    {
+      "id": "env-access",
+      "description": "Disallow direct process.env outside config package",
+      "pattern": "process\\.env",
+      "allowedPaths": ["packages/config/src"],
+      "action": "fail"
+    },
+    {
+      "id": "contracts-runtime-exports",
+      "description": "Warn on runtime exported functions in contracts",
+      "target": "packages/contracts/src/**/*.ts",
+      "patterns": ["export function ", "export const "],
+      "action": "warn"
+    }
+  ]
+}

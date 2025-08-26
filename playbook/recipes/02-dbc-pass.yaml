@@ -1,0 +1,12 @@
+id: dbc-pass
+summary: Apply minimal DbC guard to prevent runtime failure
+triggers:
+  - pattern: 'TypeError'
+  - pattern: 'cannot read property'
+steps:
+  - analyze: identify function and failing input
+  - patch: add assertion at start of function
+  - test: synthesize failing then passing test
+successCriteria:
+  - Assertion added using allowedAssertions
+  - New test demonstrates guard

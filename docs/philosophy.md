@@ -2,32 +2,36 @@
 
 This monorepo follows several key architectural and development philosophies to ensure maintainable, reliable, and scalable software.
 
-## Design by Contract (DbC)
+## P1. Design by Contract (DbC)
 
 We implement Design by Contract principles by:
+
 - Defining clear preconditions, postconditions, and invariants
 - Using explicit input validation and error handling
 - Implementing comprehensive contract testing
 - Documenting expected behavior and constraints
 
-## Functional Core, Imperative Shell
+## P2. Functional Core, Imperative Shell
 
 Our architecture separates:
+
 - **Functional Core**: Pure functions with no side effects, easy to test and reason about
 - **Imperative Shell**: Thin layer handling I/O, infrastructure, and side effects
 - **Benefits**: Improved testability, reduced complexity, better error handling
 
-## Strangler Fig Pattern
+## P3. Strangler Fig Pattern
 
 For legacy system modernization:
+
 - Gradually replace legacy components with modern implementations
 - Maintain parallel systems during transition periods
 - Route traffic incrementally to new implementations
 - Ensure backward compatibility during migration
 
-## 12-Factor App Methodology
+## P4. 12-Factor App Methodology
 
 We adhere to 12-factor principles:
+
 1. **Codebase**: One codebase tracked in revision control
 2. **Dependencies**: Explicitly declare and isolate dependencies
 3. **Config**: Store config in the environment
@@ -41,31 +45,37 @@ We adhere to 12-factor principles:
 11. **Logs**: Treat logs as event streams
 12. **Admin processes**: Run admin/management tasks as one-off processes
 
-## Outside-In Development (ODD)
+## P5. Outside-In Development (ODD)
 
 Our development approach:
+
 - Start with user acceptance criteria and external interfaces
 - Work inward from the outside APIs to internal implementation
 - Focus on user value and system behavior first
 - Implement infrastructure and details last
 
-## Behavior-Driven Development (BDD)
+## P6. Behavior-Driven Development (BDD)
 
 We practice BDD through:
+
 - Writing acceptance tests in business language
 - Collaborative specification development
 - Living documentation that stays current
 - Continuous validation of business requirements
 
-## Mikado Method
+## P7. Mikado Method
 
 For large refactoring and architectural changes:
+
 - Visualize dependencies and prerequisites
 - Make small, safe changes iteratively
 - Maintain system functionality throughout changes
 - Use dependency graphs to plan complex transformations
 
+## P8. Cohesion & Outcomes
+
 These philosophies work together to create software that is:
+
 - Maintainable and extensible
 - Reliable and well-tested
 - Aligned with business needs

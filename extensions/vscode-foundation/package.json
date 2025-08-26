@@ -1,0 +1,45 @@
+{
+  "name": "vscode-foundation",
+  "displayName": "Foundation Toolkit Bridge",
+  "description": "Lightweight bridge to run @foundation/refactor-kit recipes and chat commands (@foundation refactor <recipe>).",
+  "version": "0.0.1",
+  "publisher": "foundation",
+  "license": "MIT",
+  "engines": {
+    "vscode": ">=1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:foundation.runRefactorRecipe"
+  ],
+  "main": "dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "foundation.runRefactorRecipe",
+        "title": "Foundation: Run Refactor Recipe"
+      }
+    ],
+    "configuration": {
+      "properties": {
+        "foundation.refactor.cliPath": {
+          "type": "string",
+          "default": "",
+          "description": "Optional explicit path to refactor-kit binary (defaults to workspace node_modules/.bin/refactor-kit)"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "watch": "tsc -p . -w"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.4.0",
+    "@types/vscode": "^1.90.0"
+  },
+  "dependencies": {}
+}
