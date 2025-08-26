@@ -3,6 +3,7 @@
 import { Logger, Repository } from '@foundation/contracts';
 import { QueryResult, QueryResultRow } from 'pg';
 
+import { UserAdapter } from './repositories/user-adapter';
 import { createLogger } from '@foundation/observability';
 
 // Database connection interfaces
@@ -161,31 +162,24 @@ export interface User {
   updatedAt: Date;
 }
 
+
 export class UserRepository extends BaseRepository<User, string> {
-  constructor(db: DatabaseConnection, cache?: CacheConnection, logger?: Logger) {
+  private readonly adapter: UserAdapter;
+
+  constructor(db: DatabaseConnection, cache: CacheConnection | undefined, logger: Logger | undefined, adapter: UserAdapter) {
     super('users', db, cache, logger);
+    if (!adapter) throw new Error('UserRepository requires a UserAdapter');
+    this.adapter = adapter;
   }
 
   async findById(id: string): Promise<User | undefined> {
     try {
-      // Try cache first
       const cached = await this.getFromCache(id);
       if (cached) return cached;
 
-      // Query database
-      const user = await this.findOne(
-        'SELECT id, name, email, created_at, updated_at FROM users WHERE id = $1',
-        [id]
-      );
-
-      if (user) {
-        // Transform database result
-        const transformedUser = this.transformFromDb(user as QueryResultRow);
-        await this.setInCache(id, transformedUser);
-        return transformedUser;
-      }
-
-      return undefined;
+      const user = await this.adapter.findById(id);
+      if (user) await this.setInCache(id, user);
+      return user;
     } catch (error) {
       this.logger.error('findById failed', {
         id,
@@ -197,12 +191,7 @@ export class UserRepository extends BaseRepository<User, string> {
 
   async findByEmail(email: string): Promise<User | undefined> {
     try {
-      const user = await this.findOne(
-        'SELECT id, name, email, created_at, updated_at FROM users WHERE email = $1',
-        [email]
-      );
-
-      return user ? this.transformFromDb(user as QueryResultRow) : undefined;
+      return this.adapter.findByEmail(email);
     } catch (error) {
       this.logger.error('findByEmail failed', {
         email,
@@ -213,35 +202,10 @@ export class UserRepository extends BaseRepository<User, string> {
   }
 
   async save(user: User): Promise<User> {
-    const now = new Date();
-
     try {
-      if (await this.findById(user.id)) {
-        // Update existing user
-        const result = await this.execute(
-          `UPDATE users
-           SET name = $2, email = $3, updated_at = $4
-           WHERE id = $1
-           RETURNING id, name, email, created_at, updated_at`,
-          [user.id, user.name, user.email, now]
-        );
-
-        const updatedUser = this.transformFromDb(result.rows[0]);
-        await this.setInCache(user.id, updatedUser);
-        return updatedUser;
-      } else {
-        // Insert new user
-        const result = await this.execute(
-          `INSERT INTO users (id, name, email, created_at, updated_at)
-           VALUES ($1, $2, $3, $4, $5)
-           RETURNING id, name, email, created_at, updated_at`,
-          [user.id, user.name, user.email, now, now]
-        );
-
-        const newUser = this.transformFromDb(result.rows[0]);
-        await this.setInCache(user.id, newUser);
-        return newUser;
-      }
+      const saved = await this.adapter.save(user);
+      await this.setInCache(user.id, saved);
+      return saved;
     } catch (error) {
       this.logger.error('save failed', {
         userId: user.id,
@@ -253,7 +217,7 @@ export class UserRepository extends BaseRepository<User, string> {
 
   async delete(id: string): Promise<void> {
     try {
-      await this.execute('DELETE FROM users WHERE id = $1', [id]);
+      await this.adapter.delete(id);
       await this.invalidateCache(id);
     } catch (error) {
       this.logger.error('delete failed', {
@@ -266,27 +230,13 @@ export class UserRepository extends BaseRepository<User, string> {
 
   async findAll(): Promise<User[]> {
     try {
-      const users = await this.findMany(
-        'SELECT id, name, email, created_at, updated_at FROM users ORDER BY created_at DESC'
-      );
-
-      return users.map(user => this.transformFromDb(user));
+      return this.adapter.findAll();
     } catch (error) {
       this.logger.error('findAll failed', {
         error: error instanceof Error ? error.message : 'Unknown error',
       });
       throw error;
     }
-  }
-
-  private transformFromDb(dbUser: QueryResultRow): User {
-    return {
-      id: String(dbUser.id),
-      name: String(dbUser.name),
-      email: String(dbUser.email),
-      createdAt: new Date(dbUser.created_at as string | number),
-      updatedAt: new Date(dbUser.updated_at as string | number),
-    };
   }
 }
 
@@ -463,3 +413,7 @@ export class CacheHealthCheck {
     }
   }
 }
+
+// Re-export repository adapters
+export { PostgresUserAdapter } from './repositories/user-adapter';
+export type { UserAdapter } from './repositories/user-adapter';

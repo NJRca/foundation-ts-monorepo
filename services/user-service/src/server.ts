@@ -73,7 +73,9 @@ async function startServer(): Promise<void> {
     // Initialize dependencies
     const database = new PostgresConnection(config.database, logger);
     const eventStore = new InMemoryEventStore(logger);
-    const userRepository = new UserRepository(database, undefined, logger);
+    // Use adapter-backed repository to centralize SQL in PostgresUserAdapter
+    const userAdapter = new (require('@foundation/database').PostgresUserAdapter)(database, logger);
+    const userRepository = new UserRepository(database, undefined, logger, userAdapter);
 
     // Initialize services
     const authService = new AuthenticationService(config.auth, logger);
