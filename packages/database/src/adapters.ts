@@ -1,8 +1,9 @@
 // Adapter implementations for database package (Postgres & Redis)
 
-import { Logger } from '@foundation/contracts';
-import { Pool, QueryResult, QueryResultRow, PoolClient } from 'pg';
+import { Pool, PoolClient, QueryResult, QueryResultRow } from 'pg';
 import { RedisClientType, createClient } from 'redis';
+
+import { Logger } from '@foundation/contracts';
 import { createLogger } from '@foundation/observability';
 
 // PostgreSQL connection implementation (adapter)
@@ -45,18 +46,21 @@ export class PostgresConnection {
     });
   }
 
-  async query<T extends QueryResultRow = QueryResultRow>(text: string, params?: unknown[]): Promise<QueryResult<T>> {
+  async query<T extends QueryResultRow = QueryResultRow>(
+    text: string,
+    params?: unknown[]
+  ): Promise<QueryResult<T>> {
     const start = Date.now();
 
     try {
       this.logger.debug('Executing query', { query: text, params });
-  const result = await this.pool.query<T>(text, params);
+      const result = await this.pool.query<T>(text, params);
       const duration = Date.now() - start;
 
       this.logger.debug('Query completed', {
         query: text,
         duration,
-  rowCount: result.rowCount,
+        rowCount: result.rowCount,
       });
 
       return result;
@@ -72,14 +76,26 @@ export class PostgresConnection {
     }
   }
 
-  async transaction<T>(callback: (client: { query: <U extends QueryResultRow = QueryResultRow>(text: string, params?: unknown[]) => Promise<QueryResult<U>>; commit: () => Promise<void>; rollback: () => Promise<void>; }) => Promise<T>): Promise<T> {
+  async transaction<T>(
+    callback: (client: {
+      query: <U extends QueryResultRow = QueryResultRow>(
+        text: string,
+        params?: unknown[]
+      ) => Promise<QueryResult<U>>;
+      commit: () => Promise<void>;
+      rollback: () => Promise<void>;
+    }) => Promise<T>
+  ): Promise<T> {
     const client: PoolClient = await this.pool.connect();
 
     try {
       await client.query('BEGIN');
 
       const transactionClient = {
-        query: async <U extends QueryResultRow = QueryResultRow>(text: string, params?: unknown[]) => {
+        query: async <U extends QueryResultRow = QueryResultRow>(
+          text: string,
+          params?: unknown[]
+        ) => {
           return client.query<U>(text, params);
         },
         commit: async (): Promise<void> => {
