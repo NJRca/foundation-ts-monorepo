@@ -11,22 +11,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-      
+
       - name: Install with npm
         run: npm install --legacy-peer-deps
-      
+
       - name: TypeScript check (core packages only)
         run: |
           cd packages/contracts && npm run build
           cd ../config && npm run build
           cd ../observability && npm run build
         continue-on-error: true
-      
+
       - name: Basic linting
         run: npm run lint || true

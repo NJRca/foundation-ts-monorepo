@@ -26,7 +26,7 @@ print_error() {
 echo "📍 Working directory: $(pwd)"
 echo ""
 
-# 1. Install dependencies  
+# 1. Install dependencies
 echo "1️⃣  Installing dependencies..."
 if command -v pnpm >/dev/null 2>&1; then
     print_status "Using pnpm (recommended for workspace)"
