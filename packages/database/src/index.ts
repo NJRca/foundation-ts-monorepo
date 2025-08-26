@@ -265,17 +265,44 @@ export abstract class BaseRepository<T, ID> implements Repository<T, ID> {
 
   // Helper methods for common operations
   protected async findOne(query: string, params: any[]): Promise<T | undefined> {
-    const result = await this.db.query<T & QueryResultRow>(query, params);
-    return result.rows[0];
+    try {
+      const result = await this.db.query<T & QueryResultRow>(query, params);
+      return result.rows[0];
+    } catch (error) {
+      this.logger.error('findOne failed', {
+        query,
+        params,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
+      throw error;
+    }
   }
 
   protected async findMany(query: string, params?: any[]): Promise<T[]> {
-    const result = await this.db.query<T & QueryResultRow>(query, params);
-    return result.rows;
+    try {
+      const result = await this.db.query<T & QueryResultRow>(query, params);
+      return result.rows;
+    } catch (error) {
+      this.logger.error('findMany failed', {
+        query,
+        params,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
+      throw error;
+    }
   }
 
   protected async execute(query: string, params?: any[]): Promise<QueryResult> {
-    return this.db.query(query, params);
+    try {
+      return await this.db.query(query, params);
+    } catch (error) {
+      this.logger.error('execute failed', {
+        query,
+        params,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
+      throw error;
+    }
   }
 
   // Cache helper methods
