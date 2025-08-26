@@ -408,45 +408,68 @@ export class UserRepository extends BaseRepository<User, string> {
   async save(user: User): Promise<User> {
     const now = new Date();
 
-    if (await this.findById(user.id)) {
-      // Update existing user
-      const result = await this.execute(
-        `UPDATE users
-         SET name = $2, email = $3, updated_at = $4
-         WHERE id = $1
-         RETURNING id, name, email, created_at, updated_at`,
-        [user.id, user.name, user.email, now]
-      );
+    try {
+      if (await this.findById(user.id)) {
+        // Update existing user
+        const result = await this.execute(
+          `UPDATE users
+           SET name = $2, email = $3, updated_at = $4
+           WHERE id = $1
+           RETURNING id, name, email, created_at, updated_at`,
+          [user.id, user.name, user.email, now]
+        );
 
-      const updatedUser = this.transformFromDb(result.rows[0]);
-      await this.setInCache(user.id, updatedUser);
-      return updatedUser;
-    } else {
-      // Insert new user
-      const result = await this.execute(
-        `INSERT INTO users (id, name, email, created_at, updated_at)
-         VALUES ($1, $2, $3, $4, $5)
-         RETURNING id, name, email, created_at, updated_at`,
-        [user.id, user.name, user.email, now, now]
-      );
+        const updatedUser = this.transformFromDb(result.rows[0]);
+        await this.setInCache(user.id, updatedUser);
+        return updatedUser;
+      } else {
+        // Insert new user
+        const result = await this.execute(
+          `INSERT INTO users (id, name, email, created_at, updated_at)
+           VALUES ($1, $2, $3, $4, $5)
+           RETURNING id, name, email, created_at, updated_at`,
+          [user.id, user.name, user.email, now, now]
+        );
 
-      const newUser = this.transformFromDb(result.rows[0]);
-      await this.setInCache(user.id, newUser);
-      return newUser;
+        const newUser = this.transformFromDb(result.rows[0]);
+        await this.setInCache(user.id, newUser);
+        return newUser;
+      }
+    } catch (error) {
+      this.logger.error('save failed', {
+        userId: user.id,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
+      throw error;
     }
   }
 
   async delete(id: string): Promise<void> {
-    await this.execute('DELETE FROM users WHERE id = $1', [id]);
-    await this.invalidateCache(id);
+    try {
+      await this.execute('DELETE FROM users WHERE id = $1', [id]);
+      await this.invalidateCache(id);
+    } catch (error) {
+      this.logger.error('delete failed', {
+        id,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
+      throw error;
+    }
   }
 
   async findAll(): Promise<User[]> {
-    const users = await this.findMany(
-      'SELECT id, name, email, created_at, updated_at FROM users ORDER BY created_at DESC'
-    );
+    try {
+      const users = await this.findMany(
+        'SELECT id, name, email, created_at, updated_at FROM users ORDER BY created_at DESC'
+      );
 
-    return users.map(user => this.transformFromDb(user));
+      return users.map(user => this.transformFromDb(user));
+    } catch (error) {
+      this.logger.error('findAll failed', {
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
+      throw error;
+    }
   }
 
   private transformFromDb(dbUser: any): User {
@@ -498,70 +521,84 @@ export class MigrationRunner {
   }
 
   async migrate(targetVersion?: number): Promise<void> {
-    await this.initializeMigrationTable();
+    try {
+      await this.initializeMigrationTable();
 
-    const currentVersion = await this.getCurrentVersion();
-    const target = targetVersion || Math.max(...Array.from(this.migrations.keys()));
+      const currentVersion = await this.getCurrentVersion();
+      const target = targetVersion || Math.max(...Array.from(this.migrations.keys()));
 
-    if (currentVersion >= target) {
-      this.logger.info('Database is already up to date', {
-        currentVersion,
-        targetVersion: target,
+      if (currentVersion >= target) {
+        this.logger.info('Database is already up to date', {
+          currentVersion,
+          targetVersion: target,
+        });
+        return;
+      }
+
+      const migrationsToRun = Array.from(this.migrations.values())
+        .filter(m => m.version > currentVersion && m.version <= target)
+        .sort((a, b) => a.version - b.version);
+
+      for (const migration of migrationsToRun) {
+        this.logger.info(`Running migration: ${migration.name}`, {
+          version: migration.version,
+        });
+
+        await this.db.transaction(async client => {
+          await migration.up(this.db);
+          await client.query('INSERT INTO schema_migrations (version, name) VALUES ($1, $2)', [
+            migration.version,
+            migration.name,
+          ]);
+        });
+
+        this.logger.info(`Migration completed: ${migration.name}`, {
+          version: migration.version,
+        });
+      }
+    } catch (error) {
+      this.logger.error('migrate failed', {
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
-      return;
-    }
-
-    const migrationsToRun = Array.from(this.migrations.values())
-      .filter(m => m.version > currentVersion && m.version <= target)
-      .sort((a, b) => a.version - b.version);
-
-    for (const migration of migrationsToRun) {
-      this.logger.info(`Running migration: ${migration.name}`, {
-        version: migration.version,
-      });
-
-      await this.db.transaction(async client => {
-        await migration.up(this.db);
-        await client.query('INSERT INTO schema_migrations (version, name) VALUES ($1, $2)', [
-          migration.version,
-          migration.name,
-        ]);
-      });
-
-      this.logger.info(`Migration completed: ${migration.name}`, {
-        version: migration.version,
-      });
+      throw error;
     }
   }
 
   async rollback(targetVersion: number): Promise<void> {
-    const currentVersion = await this.getCurrentVersion();
+    try {
+      const currentVersion = await this.getCurrentVersion();
 
-    if (currentVersion <= targetVersion) {
-      this.logger.info('No rollback needed', {
-        currentVersion,
-        targetVersion,
+      if (currentVersion <= targetVersion) {
+        this.logger.info('No rollback needed', {
+          currentVersion,
+          targetVersion,
+        });
+        return;
+      }
+
+      const migrationsToRollback = Array.from(this.migrations.values())
+        .filter(m => m.version > targetVersion && m.version <= currentVersion)
+        .sort((a, b) => b.version - a.version);
+
+      for (const migration of migrationsToRollback) {
+        this.logger.info(`Rolling back migration: ${migration.name}`, {
+          version: migration.version,
+        });
+
+        await this.db.transaction(async client => {
+          await migration.down(this.db);
+          await client.query('DELETE FROM schema_migrations WHERE version = $1', [migration.version]);
+        });
+
+        this.logger.info(`Rollback completed: ${migration.name}`, {
+          version: migration.version,
+        });
+      }
+    } catch (error) {
+      this.logger.error('rollback failed', {
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
-      return;
-    }
-
-    const migrationsToRollback = Array.from(this.migrations.values())
-      .filter(m => m.version > targetVersion && m.version <= currentVersion)
-      .sort((a, b) => b.version - a.version);
-
-    for (const migration of migrationsToRollback) {
-      this.logger.info(`Rolling back migration: ${migration.name}`, {
-        version: migration.version,
-      });
-
-      await this.db.transaction(async client => {
-        await migration.down(this.db);
-        await client.query('DELETE FROM schema_migrations WHERE version = $1', [migration.version]);
-      });
-
-      this.logger.info(`Rollback completed: ${migration.name}`, {
-        version: migration.version,
-      });
+      throw error;
     }
   }
 }
