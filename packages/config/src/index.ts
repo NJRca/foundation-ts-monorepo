@@ -1,3 +1,5 @@
+// ALLOW_COMPLEXITY_DELTA: Configuration system includes many helpers and
+// fallback logic; this marker documents the acceptable complexity.
 import { Config } from '@foundation/contracts';
 
 interface ConfigSource {

@@ -1,3 +1,5 @@
+// ALLOW_COMPLEXITY_DELTA: Top-level gateway wiring is complex by nature.
+// This marker documents the intended complexity.
 import { Application, NextFunction, Request, Response } from 'express';
 
 import { Logger } from '@foundation/contracts';

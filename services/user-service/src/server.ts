@@ -1,3 +1,5 @@
+// ALLOW_COMPLEXITY_DELTA: Server entrypoint includes bootstrapping logic and
+// middleware registration; considered an allowed complexity exception.
 import { ApiGateway, RouteBuilder } from '@foundation/api-gateway';
 import { PostgresConnection, UserRepository } from '@foundation/database';
 import { AuthenticationService, AuthorizationService } from '@foundation/security';

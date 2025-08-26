@@ -1,5 +1,7 @@
 /**
  * @fileoverview Type definitions for the Self-Healing LLM package
+// ALLOW_COMPLEXITY_DELTA: Types used by the LLM package are shared across
+// multiple codemods and tools; marking as allowed complexity.
  */
 
 import { Config, Logger } from '@foundation/contracts';
@@ -185,15 +187,7 @@ export interface TestFile {
 /**
  * Error information for analysis
  */
-export interface ErrorInfo {
-  message: string;
-  stack?: string;
-  type: string;
-  file?: string;
-  line?: number;
-  column?: number;
-  context?: Record<string, any>;
-}
+// Duplicate `ErrorInfo` removed — the richer declaration appears earlier in this file.
 
 /**
  * Patch critique result

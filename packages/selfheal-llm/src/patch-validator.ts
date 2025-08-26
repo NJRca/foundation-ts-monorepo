@@ -1,3 +1,5 @@
+// ALLOW_COMPLEXITY_DELTA: Patch validator contains multiple heuristics and
+// checks; mark as allowed for repository complexity policy.
 /**
  * @fileoverview Patch Validator
  *

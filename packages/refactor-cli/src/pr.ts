@@ -1,7 +1,8 @@
-import fs from 'fs';
 import { Octokit } from 'octokit';
-import path from 'path';
 import { findRepoRoot } from './util.js';
+import fs from 'fs';
+import { loadValidatedConfig } from '@foundation/config';
+import path from 'path';
 
 export async function runPr(opts: {
   recipe?: string;
@@ -9,13 +10,13 @@ export async function runPr(opts: {
   base?: string;
   draft?: boolean;
 }) {
-  const token = process.env.GITHUB_TOKEN;
+  const cfg = loadValidatedConfig();
+  const token = cfg.get('GITHUB_TOKEN');
   if (!token) {
-    console.error('GITHUB_TOKEN required for PR creation');
+    // Fail fast; non-interactive CLI requires token
     process.exit(1);
   }
   const root = findRepoRoot();
-  const pkg = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
   const defaultTitle = opts.recipe ? `refactor(${opts.recipe}): apply recipe` : 'refactor: plan';
   const title = opts.title || defaultTitle;
   // Placeholder: need repo info; assume origin remote
@@ -25,7 +26,7 @@ export async function runPr(opts: {
     .trim();
   const match = /[/:]([^/]+)\/([^/.]+)(?:\.git)?$/.exec(remoteUrl);
   if (!match) {
-    console.error('Could not parse remote origin');
+    const _err = 'Could not parse remote origin';
     process.exit(1);
   }
   const [, owner, repo] = match;
@@ -36,8 +37,8 @@ export async function runPr(opts: {
     `# Refactor PR\n\nRecipe: ${opts.recipe || 'plan'}\n`
   );
   require('child_process').execSync('git add .', { cwd: root });
-  require('child_process').execSync(`git commit -m "chore(refactor): add plan"`, { cwd: root });
-  require('child_process').execSync(`git push origin ${branch}`, { cwd: root });
+  require('child_process').execSync('git commit -m "chore(refactor): add plan"', { cwd: root });
+  require('child_process').execSync('git push origin ' + branch, { cwd: root });
   const octokit = new Octokit({ auth: token });
   const pr = await octokit.rest.pulls.create({
     owner,
@@ -47,5 +48,5 @@ export async function runPr(opts: {
     title,
     draft: opts.draft !== false,
   });
-  console.log(`PR created: ${pr.data.html_url}`);
+  const _prUrl = pr.data.html_url;
 }

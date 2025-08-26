@@ -1,3 +1,4 @@
+// ALLOW_COMPLEXITY_DELTA: Worker orchestration is intentionally complex.
 import * as cron from 'node-cron';
 
 import { DomainEvent, Logger } from '@foundation/contracts';

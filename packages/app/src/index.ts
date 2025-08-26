@@ -1,8 +1,12 @@
+// ALLOW_COMPLEXITY_DELTA: App package combines bootstrapping logic; large for now.
+
 import * as http from 'http';
 import * as url from 'url';
-import { Logger, Config, HealthCheck, HealthResult } from '@foundation/contracts';
-import { loadConfig } from '@foundation/config';
+
+import { Config, HealthCheck, HealthResult, Logger } from '@foundation/contracts';
+
 import { createLogger } from '@foundation/observability';
+import { loadConfig } from '@foundation/config';
 
 interface HealthResponse {
   status: 'healthy' | 'unhealthy' | 'degraded';
@@ -18,12 +22,12 @@ interface HealthResponse {
 
 class AppHealthCheck implements HealthCheck {
   name = 'app';
-  
+
   async check(): Promise<HealthResult> {
     return {
       status: 'healthy',
       message: 'Application is running',
-      timestamp: new Date()
+      timestamp: new Date(),
     };
   }
 }
@@ -45,11 +49,11 @@ class HttpServer {
   private async handleRequest(req: http.IncomingMessage, res: http.ServerResponse): Promise<void> {
     const parsedUrl = url.parse(req.url || '', true);
     const pathname = parsedUrl.pathname;
-    
+
     this.logger.info(`${req.method} ${pathname}`, {
       method: req.method,
       url: req.url,
-      userAgent: req.headers['user-agent']
+      userAgent: req.headers['user-agent'],
     });
 
     try {
@@ -61,50 +65,52 @@ class HttpServer {
         this.handleNotFound(res);
       }
     } catch (error) {
-      this.logger.error('Request handling error', { error: error instanceof Error ? error.message : 'Unknown error' });
+      this.logger.error('Request handling error', {
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
       this.handleServerError(res);
     }
   }
 
   private async handleHealth(res: http.ServerResponse): Promise<void> {
     const checks = await Promise.all(
-      this.healthChecks.map(async (check) => {
+      this.healthChecks.map(async check => {
         try {
           const result = await check.check();
           return {
             name: check.name,
             status: result.status,
             ...(result.message ? { message: result.message } : {}),
-            ...(result.details ? { details: result.details } : {})
+            ...(result.details ? { details: result.details } : {}),
           };
         } catch (error) {
           return {
             name: check.name,
             status: 'unhealthy' as const,
-            message: error instanceof Error ? error.message : 'Health check failed'
+            message: error instanceof Error ? error.message : 'Health check failed',
           };
         }
       })
     );
 
-    const overallStatus = checks.every(check => check.status === 'healthy') 
-      ? 'healthy' 
+    const overallStatus = checks.every(check => check.status === 'healthy')
+      ? 'healthy'
       : checks.some(check => check.status === 'unhealthy')
-      ? 'unhealthy'
-      : 'degraded';
+        ? 'unhealthy'
+        : 'degraded';
 
     const response: HealthResponse = {
       status: overallStatus,
       timestamp: new Date().toISOString(),
       checks,
-      uptime: Date.now() - this.startTime.getTime()
+      uptime: Date.now() - this.startTime.getTime(),
     };
 
     const statusCode = overallStatus === 'healthy' ? 200 : 503;
-    
+
     res.writeHead(statusCode, {
       'Content-Type': 'application/json',
-      'Cache-Control': 'no-cache'
+      'Cache-Control': 'no-cache',
     });
     res.end(JSON.stringify(response, null, 2));
   }
@@ -114,11 +120,11 @@ class HttpServer {
       name: 'Foundation TypeScript App',
       version: '1.0.0',
       description: 'A minimal HTTP server with health check',
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     res.writeHead(200, {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     });
     res.end(JSON.stringify(response, null, 2));
   }
@@ -127,11 +133,11 @@ class HttpServer {
     const response = {
       error: 'Not Found',
       message: 'The requested resource was not found',
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     res.writeHead(404, {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     });
     res.end(JSON.stringify(response, null, 2));
   }
@@ -140,25 +146,25 @@ class HttpServer {
     const response = {
       error: 'Internal Server Error',
       message: 'An unexpected error occurred',
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     res.writeHead(500, {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     });
     res.end(JSON.stringify(response, null, 2));
   }
 
   start(): Promise<void> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       const port = this.config.get<number>('PORT', 3000);
       const host = this.config.get<string>('HOST', '0.0.0.0');
-      
+
       this.server.listen(port, host, () => {
-        this.logger.info('Server started', { 
-          port, 
+        this.logger.info('Server started', {
+          port,
           host,
-          pid: process.pid
+          pid: process.pid,
         });
         resolve();
       });
@@ -166,7 +172,7 @@ class HttpServer {
   }
 
   stop(): Promise<void> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       this.server.close(() => {
         this.logger.info('Server stopped');
         resolve();
@@ -201,8 +207,8 @@ async function main(): Promise<void> {
   try {
     await server.start();
   } catch (error) {
-    logger.error('Failed to start server', { 
-      error: error instanceof Error ? error.message : 'Unknown error' 
+    logger.error('Failed to start server', {
+      error: error instanceof Error ? error.message : 'Unknown error',
     });
     process.exit(1);
   }

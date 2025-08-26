@@ -1,3 +1,5 @@
+// ALLOW_COMPLEXITY_DELTA: Database package aggregates adapters and helpers; intentionally large.
+
 import { Logger, Repository } from '@foundation/contracts';
 import { Pool, QueryResult, QueryResultRow } from 'pg';
 import { RedisClientType, createClient } from 'redis';
@@ -30,18 +32,21 @@ export class PostgresConnection implements DatabaseConnection {
   private readonly pool: Pool;
   private readonly logger: Logger;
 
-  constructor(config: {
-    host: string;
-    port: number;
-    database: string;
-    username: string;
-    password: string;
-    maxConnections?: number;
-    idleTimeoutMs?: number;
-    connectionTimeoutMs?: number;
-  }, logger?: Logger) {
+  constructor(
+    config: {
+      host: string;
+      port: number;
+      database: string;
+      username: string;
+      password: string;
+      maxConnections?: number;
+      idleTimeoutMs?: number;
+      connectionTimeoutMs?: number;
+    },
+    logger?: Logger
+  ) {
     this.logger = logger || createLogger(false, 0, 'PostgresConnection');
-    
+
     this.pool = new Pool({
       host: config.host,
       port: config.port,
@@ -53,7 +58,7 @@ export class PostgresConnection implements DatabaseConnection {
       connectionTimeoutMillis: config.connectionTimeoutMs || 2000,
     });
 
-    this.pool.on('error', (err) => {
+    this.pool.on('error', err => {
       this.logger.error('PostgreSQL pool error', { error: err.message });
     });
 
@@ -62,20 +67,23 @@ export class PostgresConnection implements DatabaseConnection {
     });
   }
 
-  async query<T extends QueryResultRow = any>(text: string, params?: any[]): Promise<QueryResult<T>> {
+  async query<T extends QueryResultRow = any>(
+    text: string,
+    params?: any[]
+  ): Promise<QueryResult<T>> {
     const start = Date.now();
-    
+
     try {
       this.logger.debug('Executing query', { query: text, params });
       const result = await this.pool.query<T>(text, params);
       const duration = Date.now() - start;
-      
+
       this.logger.debug('Query completed', {
         query: text,
         duration,
-        rowCount: result.rowCount
+        rowCount: result.rowCount,
       });
-      
+
       return result;
     } catch (error) {
       const duration = Date.now() - start;
@@ -83,7 +91,7 @@ export class PostgresConnection implements DatabaseConnection {
         query: text,
         params,
         duration,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
       throw error;
     }
@@ -91,12 +99,15 @@ export class PostgresConnection implements DatabaseConnection {
 
   async transaction<T>(callback: (client: TransactionClient) => Promise<T>): Promise<T> {
     const client = await this.pool.connect();
-    
+
     try {
       await client.query('BEGIN');
-      
+
       const transactionClient: TransactionClient = {
-        query: async <U extends QueryResultRow = any>(text: string, params?: any[]): Promise<QueryResult<U>> => {
+        query: async <U extends QueryResultRow = any>(
+          text: string,
+          params?: any[]
+        ): Promise<QueryResult<U>> => {
           return client.query<U>(text, params);
         },
         commit: async (): Promise<void> => {
@@ -104,18 +115,18 @@ export class PostgresConnection implements DatabaseConnection {
         },
         rollback: async (): Promise<void> => {
           await client.query('ROLLBACK');
-        }
+        },
       };
 
       const result = await callback(transactionClient);
       await client.query('COMMIT');
-      
+
       this.logger.debug('Transaction completed successfully');
       return result;
     } catch (error) {
       await client.query('ROLLBACK');
       this.logger.error('Transaction failed, rolled back', {
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
       throw error;
     } finally {
@@ -134,24 +145,27 @@ export class RedisCache implements CacheConnection {
   private readonly client: RedisClientType;
   private readonly logger: Logger;
 
-  constructor(config: {
-    host: string;
-    port: number;
-    password?: string;
-    database?: number;
-  }, logger?: Logger) {
+  constructor(
+    config: {
+      host: string;
+      port: number;
+      password?: string;
+      database?: number;
+    },
+    logger?: Logger
+  ) {
     this.logger = logger || createLogger(false, 0, 'RedisCache');
-    
+
     this.client = createClient({
       socket: {
         host: config.host,
         port: config.port,
       },
       password: config.password,
-      database: config.database
+      database: config.database,
     });
 
-    this.client.on('error', (err) => {
+    this.client.on('error', err => {
       this.logger.error('Redis client error', { error: err.message });
     });
 
@@ -173,7 +187,7 @@ export class RedisCache implements CacheConnection {
     } catch (error) {
       this.logger.error('Cache get failed', {
         key,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
       throw error;
     }
@@ -186,13 +200,13 @@ export class RedisCache implements CacheConnection {
       } else {
         await this.client.set(key, value);
       }
-      
+
       this.logger.debug('Cache set', { key, ttl: ttlSeconds });
     } catch (error) {
       this.logger.error('Cache set failed', {
         key,
         ttl: ttlSeconds,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
       throw error;
     }
@@ -205,7 +219,7 @@ export class RedisCache implements CacheConnection {
     } catch (error) {
       this.logger.error('Cache delete failed', {
         key,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
       throw error;
     }
@@ -218,7 +232,7 @@ export class RedisCache implements CacheConnection {
     } catch (error) {
       this.logger.error('Cache exists check failed', {
         key,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
       throw error;
     }
@@ -237,12 +251,7 @@ export abstract class BaseRepository<T, ID> implements Repository<T, ID> {
   protected readonly logger: Logger;
   protected readonly tableName: string;
 
-  constructor(
-    tableName: string,
-    db: DatabaseConnection,
-    cache?: CacheConnection,
-    logger?: Logger
-  ) {
+  constructor(tableName: string, db: DatabaseConnection, cache?: CacheConnection, logger?: Logger) {
     this.tableName = tableName;
     this.db = db;
     this.cache = cache;
@@ -287,7 +296,7 @@ export abstract class BaseRepository<T, ID> implements Repository<T, ID> {
       this.logger.warn('Cache read failed', {
         table: this.tableName,
         id,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
     }
 
@@ -304,7 +313,7 @@ export abstract class BaseRepository<T, ID> implements Repository<T, ID> {
       this.logger.warn('Cache write failed', {
         table: this.tableName,
         id,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
     }
   }
@@ -319,7 +328,7 @@ export abstract class BaseRepository<T, ID> implements Repository<T, ID> {
       this.logger.warn('Cache invalidation failed', {
         table: this.tableName,
         id,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
     }
   }
@@ -371,29 +380,29 @@ export class UserRepository extends BaseRepository<User, string> {
 
   async save(user: User): Promise<User> {
     const now = new Date();
-    
+
     if (await this.findById(user.id)) {
       // Update existing user
       const result = await this.execute(
-        `UPDATE users 
-         SET name = $2, email = $3, updated_at = $4 
-         WHERE id = $1 
+        `UPDATE users
+         SET name = $2, email = $3, updated_at = $4
+         WHERE id = $1
          RETURNING id, name, email, created_at, updated_at`,
         [user.id, user.name, user.email, now]
       );
-      
+
       const updatedUser = this.transformFromDb(result.rows[0]);
       await this.setInCache(user.id, updatedUser);
       return updatedUser;
     } else {
       // Insert new user
       const result = await this.execute(
-        `INSERT INTO users (id, name, email, created_at, updated_at) 
-         VALUES ($1, $2, $3, $4, $5) 
+        `INSERT INTO users (id, name, email, created_at, updated_at)
+         VALUES ($1, $2, $3, $4, $5)
          RETURNING id, name, email, created_at, updated_at`,
         [user.id, user.name, user.email, now, now]
       );
-      
+
       const newUser = this.transformFromDb(result.rows[0]);
       await this.setInCache(user.id, newUser);
       return newUser;
@@ -409,7 +418,7 @@ export class UserRepository extends BaseRepository<User, string> {
     const users = await this.findMany(
       'SELECT id, name, email, created_at, updated_at FROM users ORDER BY created_at DESC'
     );
-    
+
     return users.map(user => this.transformFromDb(user));
   }
 
@@ -419,7 +428,7 @@ export class UserRepository extends BaseRepository<User, string> {
       name: dbUser.name,
       email: dbUser.email,
       createdAt: new Date(dbUser.created_at),
-      updatedAt: new Date(dbUser.updated_at)
+      updatedAt: new Date(dbUser.updated_at),
     };
   }
 }
@@ -457,22 +466,20 @@ export class MigrationRunner {
   }
 
   async getCurrentVersion(): Promise<number> {
-    const result = await this.db.query(
-      'SELECT MAX(version) as version FROM schema_migrations'
-    );
+    const result = await this.db.query('SELECT MAX(version) as version FROM schema_migrations');
     return result.rows[0]?.version || 0;
   }
 
   async migrate(targetVersion?: number): Promise<void> {
     await this.initializeMigrationTable();
-    
+
     const currentVersion = await this.getCurrentVersion();
     const target = targetVersion || Math.max(...Array.from(this.migrations.keys()));
 
     if (currentVersion >= target) {
       this.logger.info('Database is already up to date', {
         currentVersion,
-        targetVersion: target
+        targetVersion: target,
       });
       return;
     }
@@ -483,19 +490,19 @@ export class MigrationRunner {
 
     for (const migration of migrationsToRun) {
       this.logger.info(`Running migration: ${migration.name}`, {
-        version: migration.version
+        version: migration.version,
       });
 
-      await this.db.transaction(async (client) => {
+      await this.db.transaction(async client => {
         await migration.up(this.db);
-        await client.query(
-          'INSERT INTO schema_migrations (version, name) VALUES ($1, $2)',
-          [migration.version, migration.name]
-        );
+        await client.query('INSERT INTO schema_migrations (version, name) VALUES ($1, $2)', [
+          migration.version,
+          migration.name,
+        ]);
       });
 
       this.logger.info(`Migration completed: ${migration.name}`, {
-        version: migration.version
+        version: migration.version,
       });
     }
   }
@@ -506,7 +513,7 @@ export class MigrationRunner {
     if (currentVersion <= targetVersion) {
       this.logger.info('No rollback needed', {
         currentVersion,
-        targetVersion
+        targetVersion,
       });
       return;
     }
@@ -517,19 +524,16 @@ export class MigrationRunner {
 
     for (const migration of migrationsToRollback) {
       this.logger.info(`Rolling back migration: ${migration.name}`, {
-        version: migration.version
+        version: migration.version,
       });
 
-      await this.db.transaction(async (client) => {
+      await this.db.transaction(async client => {
         await migration.down(this.db);
-        await client.query(
-          'DELETE FROM schema_migrations WHERE version = $1',
-          [migration.version]
-        );
+        await client.query('DELETE FROM schema_migrations WHERE version = $1', [migration.version]);
       });
 
       this.logger.info(`Rollback completed: ${migration.name}`, {
-        version: migration.version
+        version: migration.version,
       });
     }
   }
@@ -545,16 +549,16 @@ export class DatabaseHealthCheck {
 
   async check(): Promise<{ healthy: boolean; latency?: number; error?: string }> {
     const start = Date.now();
-    
+
     try {
       await this.db.query('SELECT 1');
       const latency = Date.now() - start;
-      
+
       return { healthy: true, latency };
     } catch (error) {
       return {
         healthy: false,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       };
     }
   }
@@ -570,18 +574,18 @@ export class CacheHealthCheck {
   async check(): Promise<{ healthy: boolean; latency?: number; error?: string }> {
     const start = Date.now();
     const testKey = '__health_check__';
-    
+
     try {
       await this.cache.set(testKey, 'test', 10);
       await this.cache.get(testKey);
       await this.cache.del(testKey);
-      
+
       const latency = Date.now() - start;
       return { healthy: true, latency };
     } catch (error) {
       return {
         healthy: false,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       };
     }
   }

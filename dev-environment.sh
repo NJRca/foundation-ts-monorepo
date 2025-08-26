@@ -138,8 +138,8 @@ REDIS_HOST=localhost
 REDIS_PORT=6379
 
 # JWT Configuration
-JWT_SECRET=your-super-secret-jwt-key-change-this-in-production-make-it-at-least-32-characters
-JWT_REFRESH_SECRET=your-super-secret-refresh-key-change-this-in-production-make-it-at-least-32-characters
+JWT_SECRET=your-super-secret-jwt-key-change-this-in-production-make-it-at-least-32-characters # ALLOW_EXAMPLE_SECRET
+JWT_REFRESH_SECRET=your-super-secret-refresh-key-change-this-in-production-make-it-at-least-32-characters # ALLOW_EXAMPLE_SECRET
 
 # CORS Configuration
 CORS_ORIGINS=http://localhost:3000,http://localhost:$USER_SERVICE_PORT

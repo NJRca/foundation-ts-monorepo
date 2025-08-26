@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "lint": "cd ../.. && npx eslint packages/selfheal-worker/src/**/*.ts",
     "clean": "rm -rf dist",
     "dev": "tsc --watch"

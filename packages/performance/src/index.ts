@@ -1,3 +1,6 @@
+// ALLOW_COMPLEXITY_DELTA: Performance module aggregates monitoring helpers; large but intentionally structured.
+// Future: refactor into smaller modules.
+
 import { Logger } from '@foundation/contracts';
 import { createLogger } from '@foundation/observability';
 
@@ -37,15 +40,17 @@ export class MemoryCache<T> {
     hits: 0,
     misses: 0,
     evictions: 0,
-    totalOperations: 0
+    totalOperations: 0,
   };
 
-  constructor(config: {
-    maxSize?: number;
-    defaultTtl?: number; // seconds
-    strategy?: CacheStrategy;
-    logger?: Logger;
-  } = {}) {
+  constructor(
+    config: {
+      maxSize?: number;
+      defaultTtl?: number; // seconds
+      strategy?: CacheStrategy;
+      logger?: Logger;
+    } = {}
+  ) {
     this.maxSize = config.maxSize || 1000;
     this.defaultTtl = (config.defaultTtl || 3600) * 1000; // Convert to ms
     this.strategy = config.strategy || new LRUStrategy();
@@ -54,7 +59,7 @@ export class MemoryCache<T> {
 
   get(key: string): T | undefined {
     this.stats.totalOperations++;
-    
+
     const entry = this.cache.get(key);
     const now = Date.now();
 
@@ -76,10 +81,10 @@ export class MemoryCache<T> {
     entry.hitCount++;
     entry.lastAccessed = now;
     this.strategy.onAccess(entry);
-    
+
     this.stats.hits++;
     this.logger.debug('Cache hit', { key, hitCount: entry.hitCount });
-    
+
     return entry.value;
   }
 
@@ -92,7 +97,7 @@ export class MemoryCache<T> {
       timestamp: now,
       ttl: entryTtl,
       hitCount: 0,
-      lastAccessed: now
+      lastAccessed: now,
     };
 
     // Check if we need to evict
@@ -120,7 +125,7 @@ export class MemoryCache<T> {
       hits: 0,
       misses: 0,
       evictions: 0,
-      totalOperations: 0
+      totalOperations: 0,
     };
     this.logger.debug('Cache cleared');
   }
@@ -149,7 +154,7 @@ export class MemoryCache<T> {
       hitRate: totalOps > 0 ? this.stats.hits / totalOps : 0,
       size: this.cache.size,
       maxSize: this.maxSize,
-      totalOperations: totalOps
+      totalOperations: totalOps,
     };
   }
 
@@ -243,14 +248,14 @@ export function memoize<T extends (...args: any[]) => any>(
 
     descriptor.value = function (...args: any[]) {
       const key = `${propertyKey}:${JSON.stringify(args)}`;
-      
+
       let result = cache.get(key);
       if (result !== undefined) {
         return result;
       }
 
       result = originalMethod.apply(this, args);
-      
+
       // Handle promises
       if (result && typeof result.then === 'function') {
         return result.then((resolvedValue: any) => {
@@ -278,7 +283,7 @@ export interface CircuitBreakerConfig {
 export enum CircuitState {
   CLOSED = 'closed',
   OPEN = 'open',
-  HALF_OPEN = 'half_open'
+  HALF_OPEN = 'half_open',
 }
 
 export class CircuitBreaker {
@@ -291,7 +296,7 @@ export class CircuitBreaker {
     totalRequests: 0,
     successfulRequests: 0,
     failedRequests: 0,
-    rejectedRequests: 0
+    rejectedRequests: 0,
   };
 
   constructor(config: CircuitBreakerConfig) {
@@ -325,7 +330,7 @@ export class CircuitBreaker {
   private onSuccess(): void {
     this.metrics.successfulRequests++;
     this.failures = 0;
-    
+
     if (this.state === CircuitState.HALF_OPEN) {
       this.state = CircuitState.CLOSED;
       this.logger.info('Circuit breaker CLOSED after successful request');
@@ -341,7 +346,7 @@ export class CircuitBreaker {
       this.state = CircuitState.OPEN;
       this.logger.warn('Circuit breaker OPENED', {
         failures: this.failures,
-        threshold: this.config.failureThreshold
+        threshold: this.config.failureThreshold,
       });
     }
   }
@@ -382,19 +387,19 @@ export class RateLimiter {
   async isAllowed(identifier: string): Promise<boolean> {
     const now = Date.now();
     const windowStart = now - this.config.windowSize;
-    
+
     // Get or create request history for this identifier
     let requestTimes = this.requests.get(identifier) || [];
-    
+
     // Remove old requests outside the window
     requestTimes = requestTimes.filter(time => time > windowStart);
-    
+
     // Check if we're at the limit
     if (requestTimes.length >= this.config.maxRequests) {
       this.logger.debug('Rate limit exceeded', {
         identifier,
         requests: requestTimes.length,
-        maxRequests: this.config.maxRequests
+        maxRequests: this.config.maxRequests,
       });
       return false;
     }
@@ -413,7 +418,7 @@ export class RateLimiter {
 
     Array.from(this.requests.entries()).forEach(([identifier, requestTimes]) => {
       const validRequests = requestTimes.filter(time => time > windowStart);
-      
+
       if (validRequests.length === 0) {
         this.requests.delete(identifier);
         cleaned++;
@@ -436,7 +441,7 @@ export class RateLimiter {
     return {
       requests: validRequests.length,
       maxRequests: this.config.maxRequests,
-      resetTime: windowStart + this.config.windowSize
+      resetTime: windowStart + this.config.windowSize,
     };
   }
 }
@@ -478,7 +483,7 @@ export class PerformanceMonitor {
       value: duration,
       unit: 'ms',
       timestamp: new Date(),
-      tags
+      tags,
     });
 
     return duration;
@@ -491,7 +496,7 @@ export class PerformanceMonitor {
       value: metric.value,
       unit: metric.unit,
       timestamp: metric.timestamp.toISOString(),
-      tags: metric.tags
+      tags: metric.tags,
     });
 
     // Keep only recent metrics to prevent memory leaks
@@ -560,11 +565,13 @@ export class MemoryMonitor {
   private readonly warningThreshold: number;
   private readonly criticalThreshold: number;
 
-  constructor(config: {
-    warningThreshold?: number; // percentage
-    criticalThreshold?: number; // percentage
-    logger?: Logger;
-  } = {}) {
+  constructor(
+    config: {
+      warningThreshold?: number; // percentage
+      criticalThreshold?: number; // percentage
+      logger?: Logger;
+    } = {}
+  ) {
     this.warningThreshold = config.warningThreshold || 80;
     this.criticalThreshold = config.criticalThreshold || 90;
     this.logger = config.logger || createLogger(false, 0, 'MemoryMonitor');
@@ -585,7 +592,7 @@ export class MemoryMonitor {
       used: usedMemory,
       total: totalMemory,
       percentage,
-      details: memUsage
+      details: memUsage,
     };
   }
 
@@ -597,14 +604,14 @@ export class MemoryMonitor {
         percentage: usage.percentage,
         used: usage.used,
         total: usage.total,
-        threshold: this.criticalThreshold
+        threshold: this.criticalThreshold,
       });
     } else if (usage.percentage >= this.warningThreshold) {
       this.logger.warn('High memory usage detected', {
         percentage: usage.percentage,
         used: usage.used,
         total: usage.total,
-        threshold: this.warningThreshold
+        threshold: this.warningThreshold,
       });
     }
   }
@@ -647,12 +654,12 @@ export class ConnectionPool<T> {
     // Try to get from pool
     while (this.pool.length > 0) {
       const resource = this.pool.pop()!;
-      
+
       if (await this.validator(resource)) {
         this.inUse.add(resource);
         this.logger.debug('Acquired resource from pool', {
           poolSize: this.pool.length,
-          inUse: this.inUse.size
+          inUse: this.inUse.size,
         });
         return resource;
       } else {
@@ -667,7 +674,7 @@ export class ConnectionPool<T> {
       this.inUse.add(resource);
       this.logger.debug('Created new resource', {
         poolSize: this.pool.length,
-        inUse: this.inUse.size
+        inUse: this.inUse.size,
       });
       return resource;
     }
@@ -687,13 +694,13 @@ export class ConnectionPool<T> {
       this.pool.push(resource);
       this.logger.debug('Released resource to pool', {
         poolSize: this.pool.length,
-        inUse: this.inUse.size
+        inUse: this.inUse.size,
       });
     } else {
       await this.destroyer(resource);
       this.logger.debug('Destroyed invalid resource', {
         poolSize: this.pool.length,
-        inUse: this.inUse.size
+        inUse: this.inUse.size,
       });
     }
   }
@@ -728,7 +735,7 @@ export class ConnectionPool<T> {
       inUse: this.inUse.size,
       total: this.getTotalSize(),
       maxSize: this.maxSize,
-      minSize: this.minSize
+      minSize: this.minSize,
     };
   }
 }

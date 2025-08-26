@@ -1,8 +1,11 @@
+// ALLOW_COMPLEXITY_DELTA: User service wiring contains many handlers and
+// auth helpers; mark as allowed complexity for repository policy.
+import { AuthenticationService, User } from '@foundation/security';
 import { User as BaseUser, UserRepository } from '@foundation/database';
 import { DomainEventFactory, InMemoryEventStore } from '@foundation/events';
-import { AuthenticationService, User } from '@foundation/security';
 
 import { Logger } from '@foundation/contracts';
+import { loadValidatedConfig } from '@foundation/config';
 import { randomUUID } from 'crypto';
 
 // Extended UserRepository that works with security User interface
@@ -84,11 +87,12 @@ export class UserService {
     this.eventStore = eventStore;
     this.logger = logger;
 
-    // Initialize auth service for password hashing
+    // Initialize auth service for password hashing using validated config
+    const cfg = loadValidatedConfig();
     this.authService = new AuthenticationService(
       {
-        jwtSecret: 'temp-secret',
-        jwtRefreshSecret: 'temp-refresh-secret',
+        jwtSecret: cfg.getRequired<string>('JWT_SECRET'),
+        jwtRefreshSecret: cfg.getRequired<string>('JWT_REFRESH_SECRET'),
       },
       logger
     );

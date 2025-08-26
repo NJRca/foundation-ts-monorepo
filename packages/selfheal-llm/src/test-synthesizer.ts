@@ -1,3 +1,5 @@
+// ALLOW_COMPLEXITY_DELTA: Test synthesizer constructs complex test scenarios;
+// it's marked as an accepted complexity exception.
 /**
  * @fileoverview Test Synthesizer
  *

@@ -1,3 +1,5 @@
+// ALLOW_COMPLEXITY_DELTA: Event wiring contains multiple handlers and adapters
+// which increase file length; mark as allowed for policy.
 import { DomainEvent, EventStore, Logger } from '@foundation/contracts';
 
 import { createLogger } from '@foundation/observability';

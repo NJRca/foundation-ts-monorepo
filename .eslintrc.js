@@ -14,7 +14,15 @@ module.exports = {
   rules: {
     // Basic TypeScript rules
     '@typescript-eslint/no-explicit-any': 'error',
-    '@typescript-eslint/no-unused-vars': 'error',
+    // Use the TypeScript-aware rule and keep it permissive for staged migration
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      { args: 'none', varsIgnorePattern: '^_', argsIgnorePattern: '^_' },
+    ],
+
+    // core "no-undef" can be noisy for TS projects (TypeScript handles undefined identifiers)
+    'no-undef': 'off',
 
     // No direct process.env access (except in config package)
     'no-process-env': 'error',

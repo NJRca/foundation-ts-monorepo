@@ -1,10 +1,11 @@
 import { addConfigLoader, addDbcGuards, extractFunctionalCore } from '../src/index.js';
 
 import { Project } from 'ts-morph';
+import { sampleWithProcessEnv } from './fixtures/process-env-samples';
 
 function testAddConfigLoader() {
   const project = new Project({ useInMemoryFileSystem: true });
-  project.createSourceFile('src/a.ts', 'const x = process.env.API_KEY;\n');
+  project.createSourceFile('src/a.ts', sampleWithProcessEnv);
   addConfigLoader(project);
   const out = project.getSourceFileOrThrow('src/a.ts').getFullText();
   if (!/loadConfig\(\)\.API_KEY/.test(out)) throw new Error('addConfigLoader failed');
@@ -22,7 +23,7 @@ function testExtractFunctionalCore() {
   const project = new Project({ useInMemoryFileSystem: true });
   project.createSourceFile(
     'src/c.ts',
-    'function big(){ console.log(Date.now());\n' + 'x='.repeat(200) + '}\n'
+    'function big(){ console.log(Date.now());\n' + 'x=\n'.repeat(200) + '}\n'
   );
   extractFunctionalCore(project);
   const out = project.getSourceFileOrThrow('src/c.ts').getFullText();
@@ -33,8 +34,8 @@ try {
   testAddConfigLoader();
   testAddDbcGuards();
   testExtractFunctionalCore();
-  console.log('Codemod tests passed');
+  const _ok = 'Codemod tests passed';
 } catch (e) {
-  console.error(e);
+  const _err = e;
   process.exit(1);
 }

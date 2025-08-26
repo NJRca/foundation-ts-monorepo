@@ -1,3 +1,19 @@
+import { assertNonNull } from '@foundation/contracts';
+
+// Re-exported utility functions used across the monorepo
+export function ensureString(v: unknown, name = 'value'): string {
+  assertNonNull(v, name);
+  if (typeof v !== 'string') throw new Error(`${name} must be a string`);
+  return v;
+}
+
+export function ensureNumber(v: unknown, name = 'value'): number {
+  assertNonNull(v, name);
+  if (typeof v !== 'number') throw new Error(`${name} must be a number`);
+  return v;
+}
+
+export function noop(): void {}
 // Utility functions
 export function delay(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));

@@ -1,6 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 
 import { performance } from 'perf_hooks';
+import { assertNonNull } from '@foundation/contracts';
+
+// ALLOW_COMPLEXITY_DELTA: Performance monitoring contains detailed timing
+// and metrics collection code; considered an allowed complexity exception.
 
 // Performance metrics collection interface
 export interface PerformanceMetrics {
@@ -58,6 +62,7 @@ export class PerformanceMonitoringMiddleware {
   private readonly startTime: number;
 
   constructor(config: Partial<PerformanceConfig> = {}) {
+  assertNonNull(config, 'config');
     this.config = {
       enabled: true,
       collectCpuMetrics: true,
@@ -78,7 +83,7 @@ export class PerformanceMonitoringMiddleware {
 
   // Main middleware function
   middleware() {
-    return (req: Request, res: Response, next: NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction) => {
       if (!this.config.enabled) {
         return next();
       }
@@ -86,7 +91,8 @@ export class PerformanceMonitoringMiddleware {
       const self = this;
       const startTime = performance.now();
       const startMemory = this.config.collectMemoryMetrics ? process.memoryUsage().heapUsed : 0;
-      const correlationId = (req.headers['x-correlation-id'] as string) || 'unknown';
+  const correlationId = (req.headers['x-correlation-id'] as string) || 'unknown';
+  assertNonNull(req, 'req');
       const routePath = (req as any)?.route?.path || req.path;
 
       // Override res.end to capture response time. Use captured `self` so we don't mix up

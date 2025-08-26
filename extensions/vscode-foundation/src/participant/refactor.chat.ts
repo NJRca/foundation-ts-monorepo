@@ -4,7 +4,10 @@ import { spawn } from 'child_process';
 import path from 'path';
 
 // Register a chat participant @foundation with an action: refactor <recipe>
+import { assertNonNull } from '@foundation/contracts';
+
 export function registerRefactorChatParticipant(context: vscode.ExtensionContext) {
+  assertNonNull(context, 'context');
   // Guard if chat participant API not present
   const anyVscode: any = vscode as any;
   if (!anyVscode.chat || !anyVscode.chat.createChatParticipant) {
