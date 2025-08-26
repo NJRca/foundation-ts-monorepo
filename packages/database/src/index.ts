@@ -8,13 +8,13 @@ import { createLogger } from '@foundation/observability';
 
 // Database connection interfaces
 export interface DatabaseConnection {
-  query<T extends QueryResultRow = any>(text: string, params?: any[]): Promise<QueryResult<T>>;
+  query<T extends QueryResultRow = QueryResultRow>(text: string, params?: unknown[]): Promise<QueryResult<T>>;
   transaction<T>(callback: (client: TransactionClient) => Promise<T>): Promise<T>;
   close(): Promise<void>;
 }
 
 export interface TransactionClient {
-  query<T extends QueryResultRow = any>(text: string, params?: any[]): Promise<QueryResult<T>>;
+  query<T extends QueryResultRow = QueryResultRow>(text: string, params?: unknown[]): Promise<QueryResult<T>>;
   commit(): Promise<void>;
   rollback(): Promise<void>;
 }
@@ -619,7 +619,6 @@ export class MigrationRunner {
 
     this.logger.info(`Rollback completed: ${migration.name}`, { version: migration.version });
   }
-    
 }
 
 // Health check implementations
