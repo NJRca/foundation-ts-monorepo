@@ -1,5 +1,5 @@
-import { FunctionDeclaration, Project, SourceFile } from 'ts-morph';
 import { Codemod, result } from './types.js';
+import { FunctionDeclaration, Project, SourceFile } from 'ts-morph';
 
 const ASSERT_IMPORT = '@foundation/contracts';
 
