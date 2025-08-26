@@ -264,7 +264,7 @@ export abstract class BaseRepository<T, ID> implements Repository<T, ID> {
   abstract findAll(): Promise<T[]>;
 
   // Helper methods for common operations
-  protected async findOne(query: string, params: any[]): Promise<T | undefined> {
+  protected async findOne(query: string, params?: unknown[]): Promise<T | undefined> {
     try {
       const result = await this.db.query<T & QueryResultRow>(query, params);
       return result.rows[0];
@@ -278,7 +278,7 @@ export abstract class BaseRepository<T, ID> implements Repository<T, ID> {
     }
   }
 
-  protected async findMany(query: string, params?: any[]): Promise<T[]> {
+  protected async findMany(query: string, params?: unknown[]): Promise<T[]> {
     try {
       const result = await this.db.query<T & QueryResultRow>(query, params);
       return result.rows;
@@ -292,7 +292,7 @@ export abstract class BaseRepository<T, ID> implements Repository<T, ID> {
     }
   }
 
-  protected async execute(query: string, params?: any[]): Promise<QueryResult> {
+  protected async execute(query: string, params?: unknown[]): Promise<QueryResult> {
     try {
       return await this.db.query(query, params);
     } catch (error) {
@@ -376,33 +376,43 @@ export class UserRepository extends BaseRepository<User, string> {
   }
 
   async findById(id: string): Promise<User | undefined> {
-    // Try cache first
-    const cached = await this.getFromCache(id);
-    if (cached) return cached;
+    try {
+      // Try cache first
+      const cached = await this.getFromCache(id);
+      if (cached) return cached;
 
-    // Query database
-    const user = await this.findOne(
-      'SELECT id, name, email, created_at, updated_at FROM users WHERE id = $1',
-      [id]
-    );
+      // Query database
+      const user = await this.findOne(
+        'SELECT id, name, email, created_at, updated_at FROM users WHERE id = $1',
+        [id]
+      );
 
-    if (user) {
-      // Transform database result
-      const transformedUser = this.transformFromDb(user);
-      await this.setInCache(id, transformedUser);
-      return transformedUser;
+      if (user) {
+        // Transform database result
+        const transformedUser = this.transformFromDb(user as QueryResultRow);
+        await this.setInCache(id, transformedUser);
+        return transformedUser;
+      }
+
+      return undefined;
+    } catch (error) {
+      this.logger.error('findById failed', { id, error: error instanceof Error ? error.message : 'Unknown error' });
+      throw error;
     }
-
-    return undefined;
   }
 
   async findByEmail(email: string): Promise<User | undefined> {
-    const user = await this.findOne(
-      'SELECT id, name, email, created_at, updated_at FROM users WHERE email = $1',
-      [email]
-    );
+    try {
+      const user = await this.findOne(
+        'SELECT id, name, email, created_at, updated_at FROM users WHERE email = $1',
+        [email]
+      );
 
-    return user ? this.transformFromDb(user) : undefined;
+      return user ? this.transformFromDb(user as QueryResultRow) : undefined;
+    } catch (error) {
+      this.logger.error('findByEmail failed', { email, error: error instanceof Error ? error.message : 'Unknown error' });
+      throw error;
+    }
   }
 
   async save(user: User): Promise<User> {
@@ -472,13 +482,13 @@ export class UserRepository extends BaseRepository<User, string> {
     }
   }
 
-  private transformFromDb(dbUser: any): User {
+  private transformFromDb(dbUser: QueryResultRow): User {
     return {
-      id: dbUser.id,
-      name: dbUser.name,
-      email: dbUser.email,
-      createdAt: new Date(dbUser.created_at),
-      updatedAt: new Date(dbUser.updated_at),
+      id: String(dbUser.id),
+      name: String(dbUser.name),
+      email: String(dbUser.email),
+      createdAt: new Date(dbUser.created_at as string | number),
+      updatedAt: new Date(dbUser.updated_at as string | number),
     };
   }
 }
