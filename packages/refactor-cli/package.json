@@ -17,6 +17,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
+    "@foundation/ts-codemods": "workspace:*",
     "chalk": "^5.3.0",
     "commander": "^12.1.0",
     "glob": "^10.3.10",

@@ -45,7 +45,7 @@ const rule: Rule.RuleModule = {
             context.report({
               node,
               messageId: 'missingJustification',
-              data: { delta: lines - base },
+              data: { delta: String(lines - base) },
             });
           }
         }

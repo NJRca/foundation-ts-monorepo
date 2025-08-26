@@ -15,11 +15,11 @@ function ensureImport(sf: SourceFile) {
 function addGuards(fn: FunctionDeclaration) {
   const body = fn.getBody();
   if (!body) return false;
-  const firstStmts = body
+  const firstStmts = (body as any)
     .getStatements()
     .slice(0, 3)
-    .map(s => s.getText());
-  if (firstStmts.some(t => /assert(NON|Number|IndexInRange|fail)/i.test(t))) return false; // already have
+    .map((s: any) => s.getText());
+  if (firstStmts.some((t: string) => /assert(NON|Number|IndexInRange|fail)/i.test(t))) return false; // already have
   const params = fn.getParameters();
   const lines: string[] = [];
   params.forEach(p => {
@@ -32,7 +32,7 @@ function addGuards(fn: FunctionDeclaration) {
       lines.push(`assertNonNull(${name}, '${name}');`);
   });
   if (!lines.length) return false;
-  body.insertStatements(0, lines.join('\n'));
+  (body as any).insertStatements(0, lines.join('\n'));
   return true;
 }
 
