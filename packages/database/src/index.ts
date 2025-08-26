@@ -396,7 +396,10 @@ export class UserRepository extends BaseRepository<User, string> {
 
       return undefined;
     } catch (error) {
-      this.logger.error('findById failed', { id, error: error instanceof Error ? error.message : 'Unknown error' });
+      this.logger.error('findById failed', {
+        id,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
       throw error;
     }
   }
@@ -410,7 +413,10 @@ export class UserRepository extends BaseRepository<User, string> {
 
       return user ? this.transformFromDb(user as QueryResultRow) : undefined;
     } catch (error) {
-      this.logger.error('findByEmail failed', { email, error: error instanceof Error ? error.message : 'Unknown error' });
+      this.logger.error('findByEmail failed', {
+        email,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
       throw error;
     }
   }
@@ -550,21 +556,7 @@ export class MigrationRunner {
         .sort((a, b) => a.version - b.version);
 
       for (const migration of migrationsToRun) {
-        this.logger.info(`Running migration: ${migration.name}`, {
-          version: migration.version,
-        });
-
-        await this.db.transaction(async client => {
-          await migration.up(this.db);
-          await client.query('INSERT INTO schema_migrations (version, name) VALUES ($1, $2)', [
-            migration.version,
-            migration.name,
-          ]);
-        });
-
-        this.logger.info(`Migration completed: ${migration.name}`, {
-          version: migration.version,
-        });
+        await this.runMigration(migration);
       }
     } catch (error) {
       this.logger.error('migrate failed', {
@@ -591,18 +583,7 @@ export class MigrationRunner {
         .sort((a, b) => b.version - a.version);
 
       for (const migration of migrationsToRollback) {
-        this.logger.info(`Rolling back migration: ${migration.name}`, {
-          version: migration.version,
-        });
-
-        await this.db.transaction(async client => {
-          await migration.down(this.db);
-          await client.query('DELETE FROM schema_migrations WHERE version = $1', [migration.version]);
-        });
-
-        this.logger.info(`Rollback completed: ${migration.name}`, {
-          version: migration.version,
-        });
+        await this.rollbackMigration(migration);
       }
     } catch (error) {
       this.logger.error('rollback failed', {
@@ -611,6 +592,34 @@ export class MigrationRunner {
       throw error;
     }
   }
+
+  // Helper to run a single migration inside a transaction and record it
+  private async runMigration(migration: Migration): Promise<void> {
+    this.logger.info(`Running migration: ${migration.name}`, { version: migration.version });
+
+    await this.db.transaction(async client => {
+      await migration.up(this.db);
+      await client.query('INSERT INTO schema_migrations (version, name) VALUES ($1, $2)', [
+        migration.version,
+        migration.name,
+      ]);
+    });
+
+    this.logger.info(`Migration completed: ${migration.name}`, { version: migration.version });
+  }
+
+  // Helper to rollback a single migration inside a transaction and remove its record
+  private async rollbackMigration(migration: Migration): Promise<void> {
+    this.logger.info(`Rolling back migration: ${migration.name}`, { version: migration.version });
+
+    await this.db.transaction(async client => {
+      await migration.down(this.db);
+      await client.query('DELETE FROM schema_migrations WHERE version = $1', [migration.version]);
+    });
+
+    this.logger.info(`Rollback completed: ${migration.name}`, { version: migration.version });
+  }
+    
 }
 
 // Health check implementations
