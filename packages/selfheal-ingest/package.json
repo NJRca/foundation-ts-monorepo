@@ -12,10 +12,10 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "@foundation/contracts": "*",
-    "@foundation/observability": "*",
-    "@foundation/database": "*",
-    "@foundation/events": "*",
+    "@foundation/contracts": "workspace:*",
+    "@foundation/observability": "workspace:*",
+    "@foundation/database": "workspace:*",
+    "@foundation/events": "workspace:*",
     "@types/node": "^20.0.0",
     "winston": "^3.10.0"
   },

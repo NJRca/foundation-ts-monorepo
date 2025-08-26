@@ -13,10 +13,10 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "@foundation/contracts": "*",
-    "@foundation/utils": "*",
-    "@foundation/config": "*",
-    "@foundation/observability": "*",
+    "@foundation/contracts": "workspace:*",
+    "@foundation/utils": "workspace:*",
+    "@foundation/config": "workspace:*",
+    "@foundation/observability": "workspace:*",
     "@types/node": "^20.0.0",
     "openai": "^4.0.0",
     "axios": "^1.6.0"

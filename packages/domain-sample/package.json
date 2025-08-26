@@ -14,7 +14,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@foundation/contracts": "*"
+    "@foundation/contracts": "workspace:*"
   },
   "devDependencies": {},
   "files": [
