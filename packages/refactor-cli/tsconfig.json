@@ -1,6 +1,12 @@
 {
   "extends": "../../tsconfig.json",
+  "references": [{ "path": "../contracts" }, { "path": "../config" }],
   "compilerOptions": {
+    "baseUrl": "../..",
+    "paths": {
+      "@foundation/contracts": ["packages/contracts/dist/index.d.ts"],
+      "@foundation/config": ["packages/config/dist/index.d.ts"]
+    },
     "outDir": "dist",
     "rootDir": "src",
     "moduleResolution": "NodeNext",

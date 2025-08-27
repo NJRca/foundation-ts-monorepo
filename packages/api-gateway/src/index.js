@@ -1,21 +1,21 @@
-"use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+'use strict';
+const __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator['throw'](value)); } catch (e) { reject(e); } }
         function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
-    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+const __generator = (this && this.__generator) || function (thisArg, body) {
+    let _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === 'function' ? Iterator : Object).prototype);
+    return g.next = verb(0), g['throw'] = verb(1), g['return'] = verb(2), typeof Symbol === 'function' && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
+        if (f) throw new TypeError('Generator is already executing.');
         while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (f = 1, y && (t = op[0] & 2 ? y['return'] : op[0] ? y['throw'] || ((t = y['return']) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
                 case 0: case 1: t = op; break;
@@ -35,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+const __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
         if (ar || !(i in from)) {
             if (!ar) ar = Array.prototype.slice.call(from, 0, i);
@@ -44,14 +44,14 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, '__esModule', { value: true });
 exports.CommonMiddleware = exports.RouteBuilder = exports.ApiGateway = void 0;
-var observability_1 = require("@foundation/observability");
-var express = require('express');
-var cors = require('cors');
-var helmet = require('helmet');
+const observability_1 = require('@foundation/observability');
+const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
 // API Gateway class
-var ApiGateway = /** @class */ (function () {
+const ApiGateway = /** @class */ (function () {
     function ApiGateway(config, logger) {
         this.routes = new Map();
         this.middlewareStack = [];
@@ -61,7 +61,7 @@ var ApiGateway = /** @class */ (function () {
         this.setupBaseMiddleware();
     }
     ApiGateway.prototype.setupBaseMiddleware = function () {
-        var _this = this;
+        const _this = this;
         // Trust proxy if configured
         if (this.config.security.trustProxy) {
             this.app.set('trust proxy', true);
@@ -95,10 +95,10 @@ var ApiGateway = /** @class */ (function () {
         });
     };
     ApiGateway.prototype.createRequestContextMiddleware = function () {
-        var _this = this;
+        const _this = this;
         return function (req, res, next) {
-            var requestId = req.headers['x-request-id'] || _this.generateRequestId();
-            var context = {
+            const requestId = req.headers['x-request-id'] || _this.generateRequestId();
+            const context = {
                 requestId: requestId,
                 userId: req.headers['x-user-id'],
                 userAgent: req.headers['user-agent'],
@@ -112,7 +112,7 @@ var ApiGateway = /** @class */ (function () {
             // Set response headers
             res.setHeader('X-Request-ID', requestId);
             // Log request
-            _this.logger.info("".concat(req.method, " ").concat(req.path), {
+            _this.logger.info(''.concat(req.method, ' ').concat(req.path), {
                 requestId: requestId,
                 method: req.method,
                 path: req.path,
@@ -125,7 +125,7 @@ var ApiGateway = /** @class */ (function () {
     ApiGateway.prototype.createCompressionMiddleware = function () {
         return function (req, res, next) {
             // Simple compression middleware
-            var originalSend = res.send;
+            const originalSend = res.send;
             res.send = function (data) {
                 if (typeof data === 'string' && data.length > 1024) {
                     res.setHeader('Content-Encoding', 'gzip');
@@ -137,7 +137,7 @@ var ApiGateway = /** @class */ (function () {
         };
     };
     ApiGateway.prototype.generateRequestId = function () {
-        return "req_".concat(Date.now(), "_").concat(Math.random().toString(36).substring(2, 11));
+        return 'req_'.concat(Date.now(), '_').concat(Math.random().toString(36).substring(2, 11));
     };
     // Add global middleware
     ApiGateway.prototype.addMiddleware = function (middleware) {
@@ -146,10 +146,10 @@ var ApiGateway = /** @class */ (function () {
     };
     // Add route
     ApiGateway.prototype.addRoute = function (config) {
-        var _a;
-        var routeKey = "".concat(config.method, ":").concat(config.path);
+        let _a;
+        const routeKey = ''.concat(config.method, ':').concat(config.path);
         this.routes.set(routeKey, config);
-        var middlewares = [];
+        const middlewares = [];
         // Add rate limiting if configured
         if (config.rateLimit) {
             middlewares.push(this.createRateLimitMiddleware(config.rateLimit));
@@ -169,9 +169,9 @@ var ApiGateway = /** @class */ (function () {
         // Add error handling wrapper
         middlewares.push(this.createErrorHandlingWrapper(config.handler));
         // Register route with Express
-        var method = config.method.toLowerCase();
+        const method = config.method.toLowerCase();
         (_a = this.app)[method].apply(_a, __spreadArray([config.path], middlewares, false));
-        this.logger.info("Registered route: ".concat(config.method, " ").concat(config.path), {
+        this.logger.info('Registered route: '.concat(config.method, ' ').concat(config.path), {
             method: config.method,
             path: config.path,
             requiresAuth: config.requiresAuth,
@@ -180,13 +180,13 @@ var ApiGateway = /** @class */ (function () {
         });
     };
     ApiGateway.prototype.createRateLimitMiddleware = function (config) {
-        var requests = new Map();
+        const requests = new Map();
         return function (req, res, next) {
-            var ip = req.ip || 'unknown';
-            var now = Date.now();
-            var windowStart = Math.floor(now / config.windowMs) * config.windowMs;
-            var key = "".concat(ip, ":").concat(windowStart);
-            var current = requests.get(key) || { count: 0, resetTime: windowStart + config.windowMs };
+            const ip = req.ip || 'unknown';
+            const now = Date.now();
+            const windowStart = Math.floor(now / config.windowMs) * config.windowMs;
+            const key = ''.concat(ip, ':').concat(windowStart);
+            const current = requests.get(key) || { count: 0, resetTime: windowStart + config.windowMs };
             if (now > current.resetTime) {
                 requests.delete(key);
                 current.count = 0;
@@ -200,7 +200,7 @@ var ApiGateway = /** @class */ (function () {
             if (current.count > config.maxRequests) {
                 res.status(429).json({
                     error: 'Too Many Requests',
-                    message: "Rate limit exceeded. Max ".concat(config.maxRequests, " requests per ").concat(config.windowMs, "ms."),
+                    message: 'Rate limit exceeded. Max '.concat(config.maxRequests, ' requests per ').concat(config.windowMs, 'ms.'),
                     retryAfter: Math.ceil((current.resetTime - now) / 1000)
                 });
                 return;
@@ -210,29 +210,29 @@ var ApiGateway = /** @class */ (function () {
     };
     ApiGateway.prototype.createValidationMiddleware = function (config) {
         return function (req, res, next) {
-            var errors = [];
+            const errors = [];
             // Simple validation - in a real implementation, use a library like Joi or Yup
             if (config.body) {
-                for (var _i = 0, _a = Object.entries(config.body); _i < _a.length; _i++) {
+                for (let _i = 0, _a = Object.entries(config.body); _i < _a.length; _i++) {
                     var _b = _a[_i], key = _b[0], schema = _b[1];
                     if (!req.body[key] && schema) {
-                        errors.push("Missing required field in body: ".concat(key));
+                        errors.push('Missing required field in body: '.concat(key));
                     }
                 }
             }
             if (config.query) {
-                for (var _c = 0, _d = Object.entries(config.query); _c < _d.length; _c++) {
+                for (let _c = 0, _d = Object.entries(config.query); _c < _d.length; _c++) {
                     var _e = _d[_c], key = _e[0], schema = _e[1];
                     if (!req.query[key] && schema) {
-                        errors.push("Missing required field in query: ".concat(key));
+                        errors.push('Missing required field in query: '.concat(key));
                     }
                 }
             }
             if (config.params) {
-                for (var _f = 0, _g = Object.entries(config.params); _f < _g.length; _f++) {
+                for (let _f = 0, _g = Object.entries(config.params); _f < _g.length; _f++) {
                     var _h = _g[_f], key = _h[0], schema = _h[1];
                     if (!req.params[key] && schema) {
-                        errors.push("Missing required field in params: ".concat(key));
+                        errors.push('Missing required field in params: '.concat(key));
                     }
                 }
             }
@@ -249,7 +249,7 @@ var ApiGateway = /** @class */ (function () {
     };
     ApiGateway.prototype.createAuthMiddleware = function () {
         return function (req, res, next) {
-            var authHeader = req.headers.authorization;
+            const authHeader = req.headers.authorization;
             if (!authHeader) {
                 res.status(401).json({
                     error: 'Unauthorized',
@@ -258,7 +258,7 @@ var ApiGateway = /** @class */ (function () {
                 return;
             }
             // Simple token validation - in a real implementation, verify JWT tokens
-            var token = authHeader.replace('Bearer ', '');
+            const token = authHeader.replace('Bearer ', '');
             if (!token || token.length < 10) {
                 res.status(401).json({
                     error: 'Unauthorized',
@@ -272,9 +272,9 @@ var ApiGateway = /** @class */ (function () {
         };
     };
     ApiGateway.prototype.createErrorHandlingWrapper = function (handler) {
-        var _this = this;
+        const _this = this;
         return function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-            var error_1, context;
+            let error_1, context;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -308,7 +308,7 @@ var ApiGateway = /** @class */ (function () {
     };
     // Add health check endpoints
     ApiGateway.prototype.addHealthChecks = function () {
-        var _this = this;
+        const _this = this;
         this.addRoute({
             path: '/health',
             method: 'GET',
@@ -349,11 +349,11 @@ var ApiGateway = /** @class */ (function () {
     };
     // Start the server
     ApiGateway.prototype.listen = function (port) {
-        var _this = this;
-        var serverPort = port || this.config.port;
+        const _this = this;
+        const serverPort = port || this.config.port;
         return new Promise(function (resolve) {
             _this.app.listen(serverPort, function () {
-                _this.logger.info("API Gateway listening on port ".concat(serverPort), {
+                _this.logger.info('API Gateway listening on port '.concat(serverPort), {
                     port: serverPort,
                     environment: process.env.NODE_ENV || 'development',
                     corsOrigins: _this.config.corsOrigins,
@@ -375,7 +375,7 @@ var ApiGateway = /** @class */ (function () {
 }());
 exports.ApiGateway = ApiGateway;
 // Route builder for fluent API
-var RouteBuilder = /** @class */ (function () {
+const RouteBuilder = /** @class */ (function () {
     function RouteBuilder() {
         this.config = {};
     }
@@ -415,8 +415,8 @@ var RouteBuilder = /** @class */ (function () {
         return this;
     };
     RouteBuilder.prototype.middleware = function () {
-        var middleware = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
+        const middleware = [];
+        for (let _i = 0; _i < arguments.length; _i++) {
             middleware[_i] = arguments[_i];
         }
         this.config.middleware = __spreadArray(__spreadArray([], (this.config.middleware || []), true), middleware, true);
@@ -463,12 +463,12 @@ exports.CommonMiddleware = {
     // Request logging middleware
     requestLogger: function (logger) {
         return function (req, res, next) {
-            var start = Date.now();
-            var originalSend = res.send;
+            const start = Date.now();
+            const originalSend = res.send;
             res.send = function (data) {
-                var duration = Date.now() - start;
-                var context = req.context;
-                logger.info("".concat(req.method, " ").concat(req.path, " - ").concat(res.statusCode), {
+                const duration = Date.now() - start;
+                const context = req.context;
+                logger.info(''.concat(req.method, ' ').concat(req.path, ' - ').concat(res.statusCode), {
                     requestId: context === null || context === void 0 ? void 0 : context.requestId,
                     method: req.method,
                     path: req.path,
@@ -485,7 +485,7 @@ exports.CommonMiddleware = {
     // Error handling middleware
     errorHandler: function (logger) {
         return function (error, req, res, next) {
-            var context = req.context;
+            const context = req.context;
             logger.error('Unhandled error in middleware', {
                 requestId: context === null || context === void 0 ? void 0 : context.requestId,
                 method: req.method,

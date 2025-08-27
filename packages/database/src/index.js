@@ -1,36 +1,36 @@
-"use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
+'use strict';
+const __extends = (this && this.__extends) || (function () {
+    let extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+            function (d, b) { for (const p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        if (typeof b !== 'function' && b !== null)
+            throw new TypeError('Class extends value ' + String(b) + ' is not a constructor or null');
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+const __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator['throw'](value)); } catch (e) { reject(e); } }
         function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
-    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+const __generator = (this && this.__generator) || function (thisArg, body) {
+    let _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === 'function' ? Iterator : Object).prototype);
+    return g.next = verb(0), g['throw'] = verb(1), g['return'] = verb(2), typeof Symbol === 'function' && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
+        if (f) throw new TypeError('Generator is already executing.');
         while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (f = 1, y && (t = op[0] & 2 ? y['return'] : op[0] ? y['throw'] || ((t = y['return']) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
                 case 0: case 1: t = op; break;
@@ -50,15 +50,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, '__esModule', { value: true });
 exports.CacheHealthCheck = exports.DatabaseHealthCheck = exports.MigrationRunner = exports.UserRepository = exports.BaseRepository = exports.RedisCache = exports.PostgresConnection = void 0;
-var pg_1 = require("pg");
-var redis_1 = require("redis");
-var observability_1 = require("@foundation/observability");
+const pg_1 = require('pg');
+const redis_1 = require('redis');
+const observability_1 = require('@foundation/observability');
 // PostgreSQL connection implementation
-var PostgresConnection = /** @class */ (function () {
+const PostgresConnection = /** @class */ (function () {
     function PostgresConnection(config, logger) {
-        var _this = this;
+        const _this = this;
         this.logger = logger || (0, observability_1.createLogger)(false, 0, 'PostgresConnection');
         this.pool = new pg_1.Pool({
             host: config.host,
@@ -115,8 +115,8 @@ var PostgresConnection = /** @class */ (function () {
     };
     PostgresConnection.prototype.transaction = function (callback) {
         return __awaiter(this, void 0, void 0, function () {
-            var client, transactionClient, result, error_2;
-            var _this = this;
+            let client, transactionClient, result, error_2;
+            const _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.pool.connect()];
@@ -197,9 +197,9 @@ var PostgresConnection = /** @class */ (function () {
 }());
 exports.PostgresConnection = PostgresConnection;
 // Redis cache implementation
-var RedisCache = /** @class */ (function () {
+const RedisCache = /** @class */ (function () {
     function RedisCache(config, logger) {
-        var _this = this;
+        const _this = this;
         this.logger = logger || (0, observability_1.createLogger)(false, 0, 'RedisCache');
         this.client = (0, redis_1.createClient)({
             socket: {
@@ -231,7 +231,7 @@ var RedisCache = /** @class */ (function () {
     };
     RedisCache.prototype.get = function (key) {
         return __awaiter(this, void 0, void 0, function () {
-            var value, error_3;
+            let value, error_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -255,7 +255,7 @@ var RedisCache = /** @class */ (function () {
     };
     RedisCache.prototype.set = function (key, value, ttlSeconds) {
         return __awaiter(this, void 0, void 0, function () {
-            var error_4;
+            let error_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -287,7 +287,7 @@ var RedisCache = /** @class */ (function () {
     };
     RedisCache.prototype.del = function (key) {
         return __awaiter(this, void 0, void 0, function () {
-            var error_5;
+            let error_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -311,7 +311,7 @@ var RedisCache = /** @class */ (function () {
     };
     RedisCache.prototype.exists = function (key) {
         return __awaiter(this, void 0, void 0, function () {
-            var exists, error_6;
+            let exists, error_6;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -349,17 +349,17 @@ var RedisCache = /** @class */ (function () {
 }());
 exports.RedisCache = RedisCache;
 // Base repository implementation
-var BaseRepository = /** @class */ (function () {
+const BaseRepository = /** @class */ (function () {
     function BaseRepository(tableName, db, cache, logger) {
         this.tableName = tableName;
         this.db = db;
         this.cache = cache;
-        this.logger = logger || (0, observability_1.createLogger)(false, 0, "".concat(tableName, "Repository"));
+        this.logger = logger || (0, observability_1.createLogger)(false, 0, ''.concat(tableName, 'Repository'));
     }
     // Helper methods for common operations
     BaseRepository.prototype.findOne = function (query, params) {
         return __awaiter(this, void 0, void 0, function () {
-            var result;
+            let result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.db.query(query, params)];
@@ -372,7 +372,7 @@ var BaseRepository = /** @class */ (function () {
     };
     BaseRepository.prototype.findMany = function (query, params) {
         return __awaiter(this, void 0, void 0, function () {
-            var result;
+            let result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.db.query(query, params)];
@@ -392,11 +392,11 @@ var BaseRepository = /** @class */ (function () {
     };
     // Cache helper methods
     BaseRepository.prototype.getCacheKey = function (id) {
-        return "".concat(this.tableName, ":").concat(id);
+        return ''.concat(this.tableName, ':').concat(id);
     };
     BaseRepository.prototype.getFromCache = function (id) {
         return __awaiter(this, void 0, void 0, function () {
-            var cached, error_7;
+            let cached, error_7;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -428,7 +428,7 @@ var BaseRepository = /** @class */ (function () {
     };
     BaseRepository.prototype.setInCache = function (id_1, entity_1) {
         return __awaiter(this, arguments, void 0, function (id, entity, ttlSeconds) {
-            var error_8;
+            let error_8;
             if (ttlSeconds === void 0) { ttlSeconds = 3600; }
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -458,7 +458,7 @@ var BaseRepository = /** @class */ (function () {
     };
     BaseRepository.prototype.invalidateCache = function (id) {
         return __awaiter(this, void 0, void 0, function () {
-            var error_9;
+            let error_9;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -488,14 +488,14 @@ var BaseRepository = /** @class */ (function () {
     return BaseRepository;
 }());
 exports.BaseRepository = BaseRepository;
-var UserRepository = /** @class */ (function (_super) {
+const UserRepository = /** @class */ (function (_super) {
     __extends(UserRepository, _super);
     function UserRepository(db, cache, logger) {
         return _super.call(this, 'users', db, cache, logger) || this;
     }
     UserRepository.prototype.findById = function (id) {
         return __awaiter(this, void 0, void 0, function () {
-            var cached, user, transformedUser;
+            let cached, user, transformedUser;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.getFromCache(id)];
@@ -519,7 +519,7 @@ var UserRepository = /** @class */ (function (_super) {
     };
     UserRepository.prototype.findByEmail = function (email) {
         return __awaiter(this, void 0, void 0, function () {
-            var user;
+            let user;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.findOne('SELECT id, name, email, created_at, updated_at FROM users WHERE email = $1', [email])];
@@ -540,7 +540,7 @@ var UserRepository = /** @class */ (function (_super) {
                         return [4 /*yield*/, this.findById(user.id)];
                     case 1:
                         if (!_a.sent()) return [3 /*break*/, 4];
-                        return [4 /*yield*/, this.execute("UPDATE users \n         SET name = $2, email = $3, updated_at = $4 \n         WHERE id = $1 \n         RETURNING id, name, email, created_at, updated_at", [user.id, user.name, user.email, now])];
+                        return [4 /*yield*/, this.execute('UPDATE users \n         SET name = $2, email = $3, updated_at = $4 \n         WHERE id = $1 \n         RETURNING id, name, email, created_at, updated_at', [user.id, user.name, user.email, now])];
                     case 2:
                         result = _a.sent();
                         updatedUser = this.transformFromDb(result.rows[0]);
@@ -548,7 +548,7 @@ var UserRepository = /** @class */ (function (_super) {
                     case 3:
                         _a.sent();
                         return [2 /*return*/, updatedUser];
-                    case 4: return [4 /*yield*/, this.execute("INSERT INTO users (id, name, email, created_at, updated_at) \n         VALUES ($1, $2, $3, $4, $5) \n         RETURNING id, name, email, created_at, updated_at", [user.id, user.name, user.email, now, now])];
+                    case 4: return [4 /*yield*/, this.execute('INSERT INTO users (id, name, email, created_at, updated_at) \n         VALUES ($1, $2, $3, $4, $5) \n         RETURNING id, name, email, created_at, updated_at', [user.id, user.name, user.email, now, now])];
                     case 5:
                         result = _a.sent();
                         newUser = this.transformFromDb(result.rows[0]);
@@ -577,8 +577,8 @@ var UserRepository = /** @class */ (function (_super) {
     };
     UserRepository.prototype.findAll = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var users;
-            var _this = this;
+            let users;
+            const _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.findMany('SELECT id, name, email, created_at, updated_at FROM users ORDER BY created_at DESC')];
@@ -601,7 +601,7 @@ var UserRepository = /** @class */ (function (_super) {
     return UserRepository;
 }(BaseRepository));
 exports.UserRepository = UserRepository;
-var MigrationRunner = /** @class */ (function () {
+const MigrationRunner = /** @class */ (function () {
     function MigrationRunner(db, logger) {
         this.migrations = new Map();
         this.db = db;
@@ -614,7 +614,7 @@ var MigrationRunner = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.db.query("\n      CREATE TABLE IF NOT EXISTS schema_migrations (\n        version INTEGER PRIMARY KEY,\n        name VARCHAR(255) NOT NULL,\n        applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n      )\n    ")];
+                    case 0: return [4 /*yield*/, this.db.query('\n      CREATE TABLE IF NOT EXISTS schema_migrations (\n        version INTEGER PRIMARY KEY,\n        name VARCHAR(255) NOT NULL,\n        applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n      )\n    ')];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];
@@ -624,8 +624,8 @@ var MigrationRunner = /** @class */ (function () {
     };
     MigrationRunner.prototype.getCurrentVersion = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var result;
-            var _a;
+            let result;
+            let _a;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0: return [4 /*yield*/, this.db.query('SELECT MAX(version) as version FROM schema_migrations')];
@@ -638,8 +638,8 @@ var MigrationRunner = /** @class */ (function () {
     };
     MigrationRunner.prototype.migrate = function (targetVersion) {
         return __awaiter(this, void 0, void 0, function () {
-            var currentVersion, target, migrationsToRun, _loop_1, this_1, _i, migrationsToRun_1, migration;
-            var _this = this;
+            let currentVersion, target, migrationsToRun, _loop_1, this_1, _i, migrationsToRun_1, migration;
+            const _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.initializeMigrationTable()];
@@ -663,7 +663,7 @@ var MigrationRunner = /** @class */ (function () {
                             return __generator(this, function (_b) {
                                 switch (_b.label) {
                                     case 0:
-                                        this_1.logger.info("Running migration: ".concat(migration.name), {
+                                        this_1.logger.info('Running migration: '.concat(migration.name), {
                                             version: migration.version
                                         });
                                         return [4 /*yield*/, this_1.db.transaction(function (client) { return __awaiter(_this, void 0, void 0, function () {
@@ -681,7 +681,7 @@ var MigrationRunner = /** @class */ (function () {
                                             }); })];
                                     case 1:
                                         _b.sent();
-                                        this_1.logger.info("Migration completed: ".concat(migration.name), {
+                                        this_1.logger.info('Migration completed: '.concat(migration.name), {
                                             version: migration.version
                                         });
                                         return [2 /*return*/];
@@ -708,8 +708,8 @@ var MigrationRunner = /** @class */ (function () {
     };
     MigrationRunner.prototype.rollback = function (targetVersion) {
         return __awaiter(this, void 0, void 0, function () {
-            var currentVersion, migrationsToRollback, _loop_2, this_2, _i, migrationsToRollback_1, migration;
-            var _this = this;
+            let currentVersion, migrationsToRollback, _loop_2, this_2, _i, migrationsToRollback_1, migration;
+            const _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.getCurrentVersion()];
@@ -729,7 +729,7 @@ var MigrationRunner = /** @class */ (function () {
                             return __generator(this, function (_b) {
                                 switch (_b.label) {
                                     case 0:
-                                        this_2.logger.info("Rolling back migration: ".concat(migration.name), {
+                                        this_2.logger.info('Rolling back migration: '.concat(migration.name), {
                                             version: migration.version
                                         });
                                         return [4 /*yield*/, this_2.db.transaction(function (client) { return __awaiter(_this, void 0, void 0, function () {
@@ -747,7 +747,7 @@ var MigrationRunner = /** @class */ (function () {
                                             }); })];
                                     case 1:
                                         _b.sent();
-                                        this_2.logger.info("Rollback completed: ".concat(migration.name), {
+                                        this_2.logger.info('Rollback completed: '.concat(migration.name), {
                                             version: migration.version
                                         });
                                         return [2 /*return*/];
@@ -776,13 +776,13 @@ var MigrationRunner = /** @class */ (function () {
 }());
 exports.MigrationRunner = MigrationRunner;
 // Health check implementations
-var DatabaseHealthCheck = /** @class */ (function () {
+const DatabaseHealthCheck = /** @class */ (function () {
     function DatabaseHealthCheck(db) {
         this.db = db;
     }
     DatabaseHealthCheck.prototype.check = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var start, latency, error_10;
+            let start, latency, error_10;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -809,13 +809,13 @@ var DatabaseHealthCheck = /** @class */ (function () {
     return DatabaseHealthCheck;
 }());
 exports.DatabaseHealthCheck = DatabaseHealthCheck;
-var CacheHealthCheck = /** @class */ (function () {
+const CacheHealthCheck = /** @class */ (function () {
     function CacheHealthCheck(cache) {
         this.cache = cache;
     }
     CacheHealthCheck.prototype.check = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var start, testKey, latency, error_11;
+            let start, testKey, latency, error_11;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:

@@ -17,7 +17,14 @@
     "removeComments": false,
     "types": ["node"],
     "composite": true,
-    "baseUrl": ".."
+    "baseUrl": "..",
+    "paths": {
+      "@foundation/contracts": [
+        "../packages/contracts/dist/index.d.ts",
+        "../packages/contracts/src"
+      ],
+      "@foundation/config": ["../packages/config/dist/index.d.ts", "../packages/config/src"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["dist", "node_modules", "**/*.test.ts", "**/*.spec.ts"],

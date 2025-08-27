@@ -1,19 +1,19 @@
-"use strict";
+'use strict';
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
             s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            for (const p in s) if (Object.prototype.hasOwnProperty.call(s, p))
                 t[p] = s[p];
         }
         return t;
     };
     return __assign.apply(this, arguments);
 };
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+const __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+    let desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ('get' in desc ? !m.__esModule : desc.writable || desc.configurable)) {
       desc = { enumerable: true, get: function() { return m[k]; } };
     }
     Object.defineProperty(o, k2, desc);
@@ -21,26 +21,26 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
 }));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+const __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (const p in m) if (p !== 'default' && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+const __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator['throw'](value)); } catch (e) { reject(e); } }
         function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
-    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+const __generator = (this && this.__generator) || function (thisArg, body) {
+    let _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === 'function' ? Iterator : Object).prototype);
+    return g.next = verb(0), g['throw'] = verb(1), g['return'] = verb(2), typeof Symbol === 'function' && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
+        if (f) throw new TypeError('Generator is already executing.');
         while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (f = 1, y && (t = op[0] & 2 ? y['return'] : op[0] ? y['throw'] || ((t = y['return']) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
                 case 0: case 1: t = op; break;
@@ -60,14 +60,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, '__esModule', { value: true });
 exports.AuthMiddleware = exports.SecurityUtils = exports.AuthorizationService = exports.AuthenticationService = void 0;
-var bcrypt = require("bcrypt");
-var jwt = require("jsonwebtoken");
-var crypto_1 = require("crypto");
-var observability_1 = require("@foundation/observability");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const crypto_1 = require('crypto');
+const observability_1 = require('@foundation/observability');
 // Authentication service
-var AuthenticationService = /** @class */ (function () {
+const AuthenticationService = /** @class */ (function () {
     function AuthenticationService(config, logger) {
         this.sessions = new Map();
         this.blacklistedTokens = new Set();
@@ -80,7 +80,7 @@ var AuthenticationService = /** @class */ (function () {
     }
     AuthenticationService.prototype.hashPassword = function (password) {
         return __awaiter(this, void 0, void 0, function () {
-            var hash, error_1;
+            let hash, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -103,7 +103,7 @@ var AuthenticationService = /** @class */ (function () {
     };
     AuthenticationService.prototype.verifyPassword = function (password, hash) {
         return __awaiter(this, void 0, void 0, function () {
-            var isValid, error_2;
+            let isValid, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -126,7 +126,7 @@ var AuthenticationService = /** @class */ (function () {
     };
     AuthenticationService.prototype.generateTokens = function (user) {
         return __awaiter(this, void 0, void 0, function () {
-            var sessionId, now, sessionData, accessPayload, refreshPayload, accessToken, refreshToken;
+            let sessionId, now, sessionData, accessPayload, refreshPayload, accessToken, refreshToken;
             return __generator(this, function (_a) {
                 sessionId = this.generateSessionId();
                 now = Math.floor(Date.now() / 1000);
@@ -186,7 +186,7 @@ var AuthenticationService = /** @class */ (function () {
     };
     AuthenticationService.prototype.verifyAccessToken = function (token) {
         return __awaiter(this, void 0, void 0, function () {
-            var payload, session;
+            let payload, session;
             return __generator(this, function (_a) {
                 if (this.blacklistedTokens.has(token)) {
                     this.logger.warn('Attempt to use blacklisted token');
@@ -221,7 +221,7 @@ var AuthenticationService = /** @class */ (function () {
     };
     AuthenticationService.prototype.refreshAccessToken = function (refreshToken) {
         return __awaiter(this, void 0, void 0, function () {
-            var payload, session, user, newTokens, error_3;
+            let payload, session, user, newTokens, error_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -268,7 +268,7 @@ var AuthenticationService = /** @class */ (function () {
     };
     AuthenticationService.prototype.revokeToken = function (token) {
         return __awaiter(this, void 0, void 0, function () {
-            var payload;
+            let payload;
             return __generator(this, function (_a) {
                 this.blacklistedTokens.add(token);
                 try {
@@ -292,11 +292,11 @@ var AuthenticationService = /** @class */ (function () {
     };
     AuthenticationService.prototype.revokeAllUserTokens = function (userId) {
         return __awaiter(this, void 0, void 0, function () {
-            var sessionsToRemove, _i, sessionsToRemove_1, sessionId;
+            let sessionsToRemove, _i, sessionsToRemove_1, sessionId;
             return __generator(this, function (_a) {
                 sessionsToRemove = [];
                 Array.from(this.sessions.entries()).forEach(function (_a) {
-                    var sessionId = _a[0], session = _a[1];
+                    const sessionId = _a[0], session = _a[1];
                     if (session.userId === userId) {
                         sessionsToRemove.push(sessionId);
                     }
@@ -318,9 +318,9 @@ var AuthenticationService = /** @class */ (function () {
     };
     // Session management
     AuthenticationService.prototype.getActiveSessions = function (userId) {
-        var userSessions = [];
+        const userSessions = [];
         Array.from(this.sessions.entries()).forEach(function (_a) {
-            var sessionId = _a[0], session = _a[1];
+            const sessionId = _a[0], session = _a[1];
             if (session.userId === userId) {
                 userSessions.push({
                     sessionId: sessionId,
@@ -333,14 +333,14 @@ var AuthenticationService = /** @class */ (function () {
     };
     AuthenticationService.prototype.cleanupExpiredSessions = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var now, expiredSessions, _i, expiredSessions_1, sessionId;
-            var _this = this;
+            let now, expiredSessions, _i, expiredSessions_1, sessionId;
+            const _this = this;
             return __generator(this, function (_a) {
                 now = new Date();
                 expiredSessions = [];
                 Array.from(this.sessions.entries()).forEach(function (_a) {
-                    var sessionId = _a[0], session = _a[1];
-                    var sessionAge = now.getTime() - session.lastAccessedAt.getTime();
+                    const sessionId = _a[0], session = _a[1];
+                    const sessionAge = now.getTime() - session.lastAccessedAt.getTime();
                     if (sessionAge > _this.refreshTokenTtl * 1000) {
                         expiredSessions.push(sessionId);
                     }
@@ -362,7 +362,7 @@ var AuthenticationService = /** @class */ (function () {
 }());
 exports.AuthenticationService = AuthenticationService;
 // Authorization service
-var AuthorizationService = /** @class */ (function () {
+const AuthorizationService = /** @class */ (function () {
     function AuthorizationService(logger) {
         this.roles = new Map();
         this.logger = logger || (0, observability_1.createLogger)(false, 0, 'AuthorizationService');
@@ -375,15 +375,15 @@ var AuthorizationService = /** @class */ (function () {
         });
     };
     AuthorizationService.prototype.hasPermission = function (userRoles, resource, action, context) {
-        for (var _i = 0, userRoles_1 = userRoles; _i < userRoles_1.length; _i++) {
-            var roleName = userRoles_1[_i];
-            var role = this.roles.get(roleName);
+        for (let _i = 0, userRoles_1 = userRoles; _i < userRoles_1.length; _i++) {
+            const roleName = userRoles_1[_i];
+            const role = this.roles.get(roleName);
             if (!role) {
                 this.logger.warn('Unknown role referenced', { roleName: roleName });
                 continue;
             }
-            for (var _a = 0, _b = role.permissions; _a < _b.length; _a++) {
-                var permission = _b[_a];
+            for (let _a = 0, _b = role.permissions; _a < _b.length; _a++) {
+                const permission = _b[_a];
                 if (this.matchesPermission(permission, resource, action, context)) {
                     this.logger.debug('Permission granted', {
                         roleName: roleName,
@@ -413,9 +413,9 @@ var AuthorizationService = /** @class */ (function () {
         }
         // Check conditions if present
         if (permission.conditions && context) {
-            for (var _i = 0, _a = Object.entries(permission.conditions); _i < _a.length; _i++) {
-                var _b = _a[_i], key = _b[0], expectedValue = _b[1];
-                var actualValue = context[key];
+            for (let _i = 0, _a = Object.entries(permission.conditions); _i < _a.length; _i++) {
+                const _b = _a[_i], key = _b[0], expectedValue = _b[1];
+                const actualValue = context[key];
                 if (actualValue !== expectedValue) {
                     return false;
                 }
@@ -430,16 +430,16 @@ var AuthorizationService = /** @class */ (function () {
             return true;
         // Simple wildcard matching
         if (pattern.includes('*')) {
-            var regex = new RegExp('^' + pattern.replace(/\*/g, '.*') + '$');
+            const regex = new RegExp('^' + pattern.replace(/\*/g, '.*') + '$');
             return regex.test(value);
         }
         return false;
     };
     AuthorizationService.prototype.getUserPermissions = function (userRoles) {
-        var permissions = [];
-        for (var _i = 0, userRoles_2 = userRoles; _i < userRoles_2.length; _i++) {
-            var roleName = userRoles_2[_i];
-            var role = this.roles.get(roleName);
+        const permissions = [];
+        for (let _i = 0, userRoles_2 = userRoles; _i < userRoles_2.length; _i++) {
+            const roleName = userRoles_2[_i];
+            const role = this.roles.get(roleName);
             if (role) {
                 permissions.push.apply(permissions, role.permissions);
             }
@@ -450,7 +450,7 @@ var AuthorizationService = /** @class */ (function () {
 }());
 exports.AuthorizationService = AuthorizationService;
 // Security utilities
-var SecurityUtils = /** @class */ (function () {
+const SecurityUtils = /** @class */ (function () {
     function SecurityUtils() {
     }
     SecurityUtils.generateSecureToken = function (length) {
@@ -458,17 +458,17 @@ var SecurityUtils = /** @class */ (function () {
         return (0, crypto_1.randomBytes)(length).toString('hex');
     };
     SecurityUtils.generateApiKey = function () {
-        var prefix = 'ak_';
-        var random = (0, crypto_1.randomBytes)(24).toString('hex');
+        const prefix = 'ak_';
+        const random = (0, crypto_1.randomBytes)(24).toString('hex');
         return prefix + random;
     };
     SecurityUtils.hashApiKey = function (apiKey) {
         return (0, crypto_1.createHash)('sha256').update(apiKey).digest('hex');
     };
     SecurityUtils.verifyApiKey = function (apiKey, hash) {
-        var computedHash = this.hashApiKey(apiKey);
-        var expected = Buffer.from(hash, 'hex');
-        var actual = Buffer.from(computedHash, 'hex');
+        const computedHash = this.hashApiKey(apiKey);
+        const expected = Buffer.from(hash, 'hex');
+        const actual = Buffer.from(computedHash, 'hex');
         if (expected.length !== actual.length) {
             return false;
         }
@@ -481,11 +481,11 @@ var SecurityUtils = /** @class */ (function () {
             .trim();
     };
     SecurityUtils.isStrongPassword = function (password) {
-        var minLength = 8;
-        var hasUpperCase = /[A-Z]/.test(password);
-        var hasLowerCase = /[a-z]/.test(password);
-        var hasNumbers = /\d/.test(password);
-        var hasSpecialChar = /[!@#$%^&*(),.?\":{}|<>]/.test(password);
+        const minLength = 8;
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerCase = /[a-z]/.test(password);
+        const hasNumbers = /\d/.test(password);
+        const hasSpecialChar = /[!@#$%^&*(),.?\":{}|<>]/.test(password);
         return password.length >= minLength &&
             hasUpperCase &&
             hasLowerCase &&
@@ -493,23 +493,23 @@ var SecurityUtils = /** @class */ (function () {
             hasSpecialChar;
     };
     SecurityUtils.validateEmail = function (email) {
-        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     };
     SecurityUtils.rateLimit = function (identifier, windowMs, maxRequests) {
-        var _this = this;
+        const _this = this;
         // Simple in-memory rate limiting (in production, use Redis)
-        var now = Date.now();
-        var windowStart = Math.floor(now / windowMs) * windowMs;
-        var key = "".concat(identifier, ":").concat(windowStart);
+        const now = Date.now();
+        const windowStart = Math.floor(now / windowMs) * windowMs;
+        const key = ''.concat(identifier, ':').concat(windowStart);
         if (!this.rateLimitStore.has(key)) {
             this.rateLimitStore.set(key, 0);
         }
-        var count = this.rateLimitStore.get(key) + 1;
+        const count = this.rateLimitStore.get(key) + 1;
         this.rateLimitStore.set(key, count);
         // Clean up old entries
         Array.from(this.rateLimitStore.keys()).forEach(function (storeKey) {
-            var keyTime = parseInt(storeKey.split(':')[1]);
+            const keyTime = parseInt(storeKey.split(':')[1]);
             if (keyTime < windowStart) {
                 _this.rateLimitStore.delete(storeKey);
             }
@@ -522,16 +522,16 @@ var SecurityUtils = /** @class */ (function () {
 }());
 exports.SecurityUtils = SecurityUtils;
 // Authentication middleware for Express
-var AuthMiddleware = /** @class */ (function () {
+const AuthMiddleware = /** @class */ (function () {
     function AuthMiddleware(authService, authzService, logger) {
         this.authService = authService;
         this.authzService = authzService;
         this.logger = logger || (0, observability_1.createLogger)(false, 0, 'AuthMiddleware');
     }
     AuthMiddleware.prototype.authenticate = function () {
-        var _this = this;
+        const _this = this;
         return function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-            var authHeader, token, payload;
+            let authHeader, token, payload;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -568,7 +568,7 @@ var AuthMiddleware = /** @class */ (function () {
         }); };
     };
     AuthMiddleware.prototype.authorize = function (resource, action) {
-        var _this = this;
+        const _this = this;
         return function (req, res, next) {
             if (!req.user) {
                 res.status(401).json({
@@ -577,7 +577,7 @@ var AuthMiddleware = /** @class */ (function () {
                 });
                 return;
             }
-            var hasPermission = _this.authzService.hasPermission(req.user.roles, resource, action, __assign(__assign({ userId: req.user.id }, req.params), req.query));
+            const hasPermission = _this.authzService.hasPermission(req.user.roles, resource, action, __assign(__assign({ userId: req.user.id }, req.params), req.query));
             if (!hasPermission) {
                 _this.logger.warn('Authorization failed', {
                     userId: req.user.id,
@@ -598,4 +598,4 @@ var AuthMiddleware = /** @class */ (function () {
 }());
 exports.AuthMiddleware = AuthMiddleware;
 // Export all types and classes
-__exportStar(require("@foundation/contracts"), exports);
+__exportStar(require('@foundation/contracts'), exports);

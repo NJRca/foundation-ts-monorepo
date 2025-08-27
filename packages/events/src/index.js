@@ -1,8 +1,8 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+'use strict';
+const __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+    let desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ('get' in desc ? !m.__esModule : desc.writable || desc.configurable)) {
       desc = { enumerable: true, get: function() { return m[k]; } };
     }
     Object.defineProperty(o, k2, desc);
@@ -10,26 +10,26 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
 }));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+const __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (const p in m) if (p !== 'default' && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+const __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator['throw'](value)); } catch (e) { reject(e); } }
         function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
-    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+const __generator = (this && this.__generator) || function (thisArg, body) {
+    let _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === 'function' ? Iterator : Object).prototype);
+    return g.next = verb(0), g['throw'] = verb(1), g['return'] = verb(2), typeof Symbol === 'function' && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
+        if (f) throw new TypeError('Generator is already executing.');
         while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (f = 1, y && (t = op[0] & 2 ? y['return'] : op[0] ? y['throw'] || ((t = y['return']) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
                 case 0: case 1: t = op; break;
@@ -49,7 +49,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+const __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
         if (ar || !(i in from)) {
             if (!ar) ar = Array.prototype.slice.call(from, 0, i);
@@ -58,12 +58,12 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, '__esModule', { value: true });
 exports.DomainEventFactory = exports.EventBus = exports.AggregateRoot = exports.InMemoryEventStore = void 0;
-var observability_1 = require("@foundation/observability");
-var node_crypto_1 = require("node:crypto");
+const observability_1 = require('@foundation/observability');
+const node_crypto_1 = require('node:crypto');
 // In-memory event store implementation
-var InMemoryEventStore = /** @class */ (function () {
+const InMemoryEventStore = /** @class */ (function () {
     function InMemoryEventStore(logger) {
         this.events = new Map();
         this.snapshots = new Map();
@@ -72,14 +72,14 @@ var InMemoryEventStore = /** @class */ (function () {
     }
     InMemoryEventStore.prototype.saveEvents = function (aggregateId, aggregateType, events, expectedVersion) {
         return __awaiter(this, void 0, void 0, function () {
-            var streamKey, existingEvents, storedEvents, _i, events_1, event_1;
+            let streamKey, existingEvents, storedEvents, _i, events_1, event_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        streamKey = "".concat(aggregateType, ":").concat(aggregateId);
+                        streamKey = ''.concat(aggregateType, ':').concat(aggregateId);
                         existingEvents = this.events.get(streamKey) || [];
                         if (expectedVersion !== undefined && existingEvents.length !== expectedVersion) {
-                            throw new Error("Concurrency conflict. Expected version ".concat(expectedVersion, ", but stream has ").concat(existingEvents.length, " events"));
+                            throw new Error('Concurrency conflict. Expected version '.concat(expectedVersion, ', but stream has ').concat(existingEvents.length, ' events'));
                         }
                         storedEvents = events.map(function (event, index) { return ({
                             id: (0, node_crypto_1.randomUUID)(),
@@ -92,7 +92,7 @@ var InMemoryEventStore = /** @class */ (function () {
                             metadata: event.metadata
                         }); });
                         this.events.set(streamKey, __spreadArray(__spreadArray([], existingEvents, true), storedEvents, true));
-                        this.logger.info("Saved ".concat(events.length, " events for ").concat(aggregateType, ":").concat(aggregateId), {
+                        this.logger.info('Saved '.concat(events.length, ' events for ').concat(aggregateType, ':').concat(aggregateId), {
                             aggregateId: aggregateId,
                             aggregateType: aggregateType,
                             eventCount: events.length,
@@ -117,9 +117,9 @@ var InMemoryEventStore = /** @class */ (function () {
     };
     InMemoryEventStore.prototype.loadEvents = function (aggregateId, aggregateType, fromVersion) {
         return __awaiter(this, void 0, void 0, function () {
-            var streamKey, events;
+            let streamKey, events;
             return __generator(this, function (_a) {
-                streamKey = "".concat(aggregateType, ":").concat(aggregateId);
+                streamKey = ''.concat(aggregateType, ':').concat(aggregateId);
                 events = this.events.get(streamKey) || [];
                 if (fromVersion !== undefined) {
                     return [2 /*return*/, events.filter(function (event) { return event.eventVersion > fromVersion; })];
@@ -130,7 +130,7 @@ var InMemoryEventStore = /** @class */ (function () {
     };
     InMemoryEventStore.prototype.loadEventStream = function (aggregateId, aggregateType) {
         return __awaiter(this, void 0, void 0, function () {
-            var events;
+            let events;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.loadEvents(aggregateId, aggregateType)];
@@ -151,11 +151,11 @@ var InMemoryEventStore = /** @class */ (function () {
     };
     InMemoryEventStore.prototype.saveSnapshot = function (snapshot) {
         return __awaiter(this, void 0, void 0, function () {
-            var snapshotKey;
+            let snapshotKey;
             return __generator(this, function (_a) {
-                snapshotKey = "".concat(snapshot.aggregateType, ":").concat(snapshot.aggregateId);
+                snapshotKey = ''.concat(snapshot.aggregateType, ':').concat(snapshot.aggregateId);
                 this.snapshots.set(snapshotKey, snapshot);
-                this.logger.info("Saved snapshot for ".concat(snapshot.aggregateType, ":").concat(snapshot.aggregateId), {
+                this.logger.info('Saved snapshot for '.concat(snapshot.aggregateType, ':').concat(snapshot.aggregateId), {
                     aggregateId: snapshot.aggregateId,
                     aggregateType: snapshot.aggregateType,
                     version: snapshot.version
@@ -166,23 +166,23 @@ var InMemoryEventStore = /** @class */ (function () {
     };
     InMemoryEventStore.prototype.loadSnapshot = function (aggregateId, aggregateType) {
         return __awaiter(this, void 0, void 0, function () {
-            var snapshotKey;
+            let snapshotKey;
             return __generator(this, function (_a) {
-                snapshotKey = "".concat(aggregateType, ":").concat(aggregateId);
+                snapshotKey = ''.concat(aggregateType, ':').concat(aggregateId);
                 return [2 /*return*/, this.snapshots.get(snapshotKey)];
             });
         });
     };
     // Event subscription and publishing
     InMemoryEventStore.prototype.subscribe = function (eventType, handler) {
-        var handlers = this.eventHandlers.get(eventType) || [];
+        const handlers = this.eventHandlers.get(eventType) || [];
         handlers.push(handler);
         this.eventHandlers.set(eventType, handlers);
-        this.logger.info("Subscribed handler for event type: ".concat(eventType));
+        this.logger.info('Subscribed handler for event type: '.concat(eventType));
     };
     InMemoryEventStore.prototype.publishEvent = function (event) {
         return __awaiter(this, void 0, void 0, function () {
-            var handlers, _i, handlers_1, handler, error_1;
+            let handlers, _i, handlers_1, handler, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -201,7 +201,7 @@ var InMemoryEventStore = /** @class */ (function () {
                         return [3 /*break*/, 5];
                     case 4:
                         error_1 = _a.sent();
-                        this.logger.error("Error in event handler for ".concat(event.eventType), {
+                        this.logger.error('Error in event handler for '.concat(event.eventType), {
                             eventType: event.eventType,
                             aggregateId: event.aggregateId,
                             error: error_1 instanceof Error ? error_1.message : 'Unknown error'
@@ -218,12 +218,12 @@ var InMemoryEventStore = /** @class */ (function () {
     // Query methods
     InMemoryEventStore.prototype.getAllEvents = function (aggregateType) {
         return __awaiter(this, void 0, void 0, function () {
-            var allEvents;
+            let allEvents;
             return __generator(this, function (_a) {
                 allEvents = [];
                 Array.from(this.events.entries()).forEach(function (_a) {
-                    var streamKey = _a[0], events = _a[1];
-                    if (!aggregateType || streamKey.startsWith("".concat(aggregateType, ":"))) {
+                    const streamKey = _a[0], events = _a[1];
+                    if (!aggregateType || streamKey.startsWith(''.concat(aggregateType, ':'))) {
                         allEvents.push.apply(allEvents, events);
                     }
                 });
@@ -233,7 +233,7 @@ var InMemoryEventStore = /** @class */ (function () {
     };
     InMemoryEventStore.prototype.getEventsByType = function (eventType) {
         return __awaiter(this, void 0, void 0, function () {
-            var allEvents;
+            let allEvents;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.getAllEvents()];
@@ -246,7 +246,7 @@ var InMemoryEventStore = /** @class */ (function () {
     };
     InMemoryEventStore.prototype.getEventsAfter = function (timestamp, aggregateType) {
         return __awaiter(this, void 0, void 0, function () {
-            var allEvents;
+            let allEvents;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.getAllEvents(aggregateType)];
@@ -261,7 +261,7 @@ var InMemoryEventStore = /** @class */ (function () {
 }());
 exports.InMemoryEventStore = InMemoryEventStore;
 // Base aggregate root class
-var AggregateRoot = /** @class */ (function () {
+const AggregateRoot = /** @class */ (function () {
     function AggregateRoot(id) {
         this.version = 0;
         this.uncommittedEvents = [];
@@ -288,10 +288,10 @@ var AggregateRoot = /** @class */ (function () {
         if (events.length === 0) {
             throw new Error('Cannot create aggregate from empty event history');
         }
-        var aggregate = new constructor(events[0].aggregateId);
-        for (var _i = 0, events_2 = events; _i < events_2.length; _i++) {
-            var storedEvent = events_2[_i];
-            var domainEvent = {
+        const aggregate = new constructor(events[0].aggregateId);
+        for (let _i = 0, events_2 = events; _i < events_2.length; _i++) {
+            const storedEvent = events_2[_i];
+            const domainEvent = {
                 aggregateId: storedEvent.aggregateId,
                 eventType: storedEvent.eventType,
                 eventData: storedEvent.eventData,
@@ -307,32 +307,32 @@ var AggregateRoot = /** @class */ (function () {
 }());
 exports.AggregateRoot = AggregateRoot;
 // Event bus for cross-aggregate communication
-var EventBus = /** @class */ (function () {
+const EventBus = /** @class */ (function () {
     function EventBus(logger) {
         this.subscribers = new Map();
         this.logger = logger || (0, observability_1.createLogger)(false, 0, 'EventBus');
     }
     EventBus.prototype.subscribe = function (eventType, handler) {
-        var handlers = this.subscribers.get(eventType) || [];
+        const handlers = this.subscribers.get(eventType) || [];
         handlers.push(handler);
         this.subscribers.set(eventType, handlers);
-        this.logger.info("Subscribed to event type: ".concat(eventType));
+        this.logger.info('Subscribed to event type: '.concat(eventType));
     };
     EventBus.prototype.publish = function (event) {
         return __awaiter(this, void 0, void 0, function () {
-            var handlers, promises;
-            var _this = this;
+            let handlers, promises;
+            const _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         handlers = this.subscribers.get(event.eventType) || [];
-                        this.logger.info("Publishing event: ".concat(event.eventType), {
+                        this.logger.info('Publishing event: '.concat(event.eventType), {
                             eventType: event.eventType,
                             aggregateId: event.aggregateId,
                             handlerCount: handlers.length
                         });
                         promises = handlers.map(function (handler) { return __awaiter(_this, void 0, void 0, function () {
-                            var error_2;
+                            let error_2;
                             return __generator(this, function (_a) {
                                 switch (_a.label) {
                                     case 0:
@@ -343,7 +343,7 @@ var EventBus = /** @class */ (function () {
                                         return [3 /*break*/, 3];
                                     case 2:
                                         error_2 = _a.sent();
-                                        this.logger.error("Error in event handler for ".concat(event.eventType), {
+                                        this.logger.error('Error in event handler for '.concat(event.eventType), {
                                             eventType: event.eventType,
                                             aggregateId: event.aggregateId,
                                             error: error_2 instanceof Error ? error_2.message : 'Unknown error'
@@ -365,7 +365,7 @@ var EventBus = /** @class */ (function () {
 }());
 exports.EventBus = EventBus;
 // Domain event factory
-var DomainEventFactory = /** @class */ (function () {
+const DomainEventFactory = /** @class */ (function () {
     function DomainEventFactory() {
     }
     DomainEventFactory.create = function (aggregateId, eventType, eventData, metadata) {
@@ -381,4 +381,4 @@ var DomainEventFactory = /** @class */ (function () {
 }());
 exports.DomainEventFactory = DomainEventFactory;
 // Export all types and implementations
-__exportStar(require("@foundation/contracts"), exports);
+__exportStar(require('@foundation/contracts'), exports);

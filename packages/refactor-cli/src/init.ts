@@ -11,12 +11,12 @@ export async function runInit(opts: { playbook?: string; branch?: string }) {
   if (!fs.existsSync(prTemplateDir)) {
     fs.writeFileSync(
       prTemplateDir,
-      `## Summary\n\nDescribe purpose.\n\n## Changes\n- Item 1\n\n## Validation\n- [ ] Tests pass\n`
+      '## Summary\n\nDescribe purpose.\n\n## Changes\n- Item 1\n\n## Validation\n- [ ] Tests pass\n'
     );
   }
   const codeowners = path.join(root, '.github', 'CODEOWNERS');
   if (!fs.existsSync(codeowners)) {
-    fs.writeFileSync(codeowners, `* @your-org/maintainers`);
+    fs.writeFileSync(codeowners, '* @your-org/maintainers');
   }
   const workflowDir = path.join(root, '.github', 'workflows');
   fs.mkdirSync(workflowDir, { recursive: true });
@@ -24,7 +24,7 @@ export async function runInit(opts: { playbook?: string; branch?: string }) {
   if (!fs.existsSync(workflowFile)) {
     fs.writeFileSync(
       workflowFile,
-      `name: Refactor Pipeline\non: [pull_request]\njobs:\n  reuse:\n    uses: ./.github/workflows/playbook-pipeline.yml`
+      'name: Refactor Pipeline\non: [pull_request]\njobs:\n  reuse:\n    uses: ./.github/workflows/playbook-pipeline.yml'
     );
   }
   console.log('Initialization complete (placeholder).');
