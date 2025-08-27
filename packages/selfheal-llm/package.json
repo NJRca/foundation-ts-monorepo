@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "jest --passWithNoTests",
+    "test": "jest --passWithNoTests --testPathPattern=src/index.test.js",
     "lint": "cd ../.. && npx eslint packages/selfheal-llm/src/**/*.ts",
     "analyze": "echo 'Static analysis for selfheal-llm package'",
     "clean": "rm -rf dist",

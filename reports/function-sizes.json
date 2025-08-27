@@ -1,0 +1,6778 @@
+[
+  {
+    "file": "extensions/vscode-foundation/src/commands/runRefactor.ts",
+    "name": "runRefactorCommand",
+    "kind": "FunctionDeclaration",
+    "startLine": 23,
+    "endLine": 64,
+    "length": 42
+  },
+  {
+    "file": "extensions/vscode-foundation/src/commands/runRefactor.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 40,
+    "endLine": 40,
+    "length": 1
+  },
+  {
+    "file": "extensions/vscode-foundation/src/commands/runRefactor.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 41,
+    "endLine": 41,
+    "length": 1
+  },
+  {
+    "file": "extensions/vscode-foundation/src/commands/runRefactor.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 42,
+    "endLine": 63,
+    "length": 22
+  },
+  {
+    "file": "extensions/vscode-foundation/src/commands/runRefactor.ts",
+    "name": "summarizePlan",
+    "kind": "FunctionDeclaration",
+    "startLine": 66,
+    "endLine": 80,
+    "length": 15
+  },
+  {
+    "file": "extensions/vscode-foundation/src/commands/runRefactor.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 69,
+    "endLine": 69,
+    "length": 1
+  },
+  {
+    "file": "extensions/vscode-foundation/src/commands/runRefactor.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 76,
+    "endLine": 76,
+    "length": 1
+  },
+  {
+    "file": "extensions/vscode-foundation/src/extension.ts",
+    "name": "activate",
+    "kind": "FunctionDeclaration",
+    "startLine": 7,
+    "endLine": 15,
+    "length": 9
+  },
+  {
+    "file": "extensions/vscode-foundation/src/extension.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 10,
+    "endLine": 12,
+    "length": 3
+  },
+  {
+    "file": "extensions/vscode-foundation/src/extension.ts",
+    "name": "deactivate",
+    "kind": "FunctionDeclaration",
+    "startLine": 17,
+    "endLine": 17,
+    "length": 1
+  },
+  {
+    "file": "extensions/vscode-foundation/src/participant/refactor.chat.ts",
+    "name": "registerRefactorChatParticipant",
+    "kind": "FunctionDeclaration",
+    "startLine": 8,
+    "endLine": 43,
+    "length": 36
+  },
+  {
+    "file": "extensions/vscode-foundation/src/participant/refactor.chat.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 17,
+    "endLine": 40,
+    "length": 24
+  },
+  {
+    "file": "extensions/vscode-foundation/src/participant/refactor.chat.ts",
+    "name": "runCli",
+    "kind": "FunctionDeclaration",
+    "startLine": 45,
+    "endLine": 58,
+    "length": 14
+  },
+  {
+    "file": "extensions/vscode-foundation/src/participant/refactor.chat.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 46,
+    "endLine": 57,
+    "length": 12
+  },
+  {
+    "file": "extensions/vscode-foundation/src/participant/refactor.chat.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 50,
+    "endLine": 50,
+    "length": 1
+  },
+  {
+    "file": "extensions/vscode-foundation/src/participant/refactor.chat.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 51,
+    "endLine": 51,
+    "length": 1
+  },
+  {
+    "file": "extensions/vscode-foundation/src/participant/refactor.chat.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 53,
+    "endLine": 56,
+    "length": 4
+  },
+  {
+    "file": "extensions/vscode-foundation/src/participant/refactor.chat.ts",
+    "name": "formatPlan",
+    "kind": "FunctionDeclaration",
+    "startLine": 60,
+    "endLine": 75,
+    "length": 16
+  },
+  {
+    "file": "extensions/vscode-foundation/src/participant/refactor.chat.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 63,
+    "endLine": 64,
+    "length": 2
+  },
+  {
+    "file": "extensions/vscode-foundation/src/participant/refactor.chat.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 71,
+    "endLine": 71,
+    "length": 1
+  },
+  {
+    "file": "packages/analyzer/src/cli.ts",
+    "name": "parseArgs",
+    "kind": "FunctionDeclaration",
+    "startLine": 16,
+    "endLine": 69,
+    "length": 54
+  },
+  {
+    "file": "packages/analyzer/src/cli.ts",
+    "name": "printHelp",
+    "kind": "FunctionDeclaration",
+    "startLine": 71,
+    "endLine": 99,
+    "length": 29
+  },
+  {
+    "file": "packages/analyzer/src/cli.ts",
+    "name": "getOutputPath",
+    "kind": "FunctionDeclaration",
+    "startLine": 101,
+    "endLine": 115,
+    "length": 15
+  },
+  {
+    "file": "packages/analyzer/src/cli.ts",
+    "name": "getLevelIcon",
+    "kind": "FunctionDeclaration",
+    "startLine": 117,
+    "endLine": 121,
+    "length": 5
+  },
+  {
+    "file": "packages/analyzer/src/cli.ts",
+    "name": "main",
+    "kind": "FunctionDeclaration",
+    "startLine": 127,
+    "endLine": 200,
+    "length": 74
+  },
+  {
+    "file": "packages/analyzer/src/cli.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 170,
+    "endLine": 170,
+    "length": 1
+  },
+  {
+    "file": "packages/analyzer/src/cli.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 171,
+    "endLine": 171,
+    "length": 1
+  },
+  {
+    "file": "packages/analyzer/src/cli.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 172,
+    "endLine": 172,
+    "length": 1
+  },
+  {
+    "file": "packages/analyzer/src/cli.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 192,
+    "endLine": 192,
+    "length": 1
+  },
+  {
+    "file": "packages/analyzer/src/cli.ts",
+    "name": "printSummary",
+    "kind": "FunctionDeclaration",
+    "startLine": 202,
+    "endLine": 217,
+    "length": 16
+  },
+  {
+    "file": "packages/analyzer/src/cli.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 206,
+    "endLine": 209,
+    "length": 4
+  },
+  {
+    "file": "packages/analyzer/src/cli.ts",
+    "name": "printConsoleResults",
+    "kind": "FunctionDeclaration",
+    "startLine": 219,
+    "endLine": 260,
+    "length": 42
+  },
+  {
+    "file": "packages/analyzer/src/cli.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 230,
+    "endLine": 234,
+    "length": 5
+  },
+  {
+    "file": "packages/analyzer/src/cli.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 246,
+    "endLine": 254,
+    "length": 9
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "StaticAnalyzer",
+    "kind": "ClassDeclaration",
+    "startLine": 60,
+    "endLine": 398,
+    "length": 339
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "StaticAnalyzer.constructor",
+    "kind": "Constructor",
+    "startLine": 72,
+    "endLine": 77,
+    "length": 6
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "StaticAnalyzer.initializeRules",
+    "kind": "MethodDeclaration",
+    "startLine": 79,
+    "endLine": 320,
+    "length": 242
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "StaticAnalyzer.analyze",
+    "kind": "MethodDeclaration",
+    "startLine": 322,
+    "endLine": 356,
+    "length": 35
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "StaticAnalyzer.scanDirectory",
+    "kind": "MethodDeclaration",
+    "startLine": 358,
+    "endLine": 370,
+    "length": 13
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "StaticAnalyzer.shouldSkipDirectory",
+    "kind": "MethodDeclaration",
+    "startLine": 372,
+    "endLine": 375,
+    "length": 4
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "StaticAnalyzer.shouldAnalyzeFile",
+    "kind": "MethodDeclaration",
+    "startLine": 377,
+    "endLine": 380,
+    "length": 4
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "StaticAnalyzer.analyzeFile",
+    "kind": "MethodDeclaration",
+    "startLine": 382,
+    "endLine": 397,
+    "length": 16
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "check",
+    "kind": "ArrowFunction",
+    "startLine": 86,
+    "endLine": 120,
+    "length": 35
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 90,
+    "endLine": 117,
+    "length": 28
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "check",
+    "kind": "ArrowFunction",
+    "startLine": 130,
+    "endLine": 169,
+    "length": 40
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 139,
+    "endLine": 166,
+    "length": 28
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "check",
+    "kind": "ArrowFunction",
+    "startLine": 179,
+    "endLine": 222,
+    "length": 44
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 183,
+    "endLine": 219,
+    "length": 37
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 192,
+    "endLine": 192,
+    "length": 1
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 192,
+    "endLine": 192,
+    "length": 1
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "check",
+    "kind": "ArrowFunction",
+    "startLine": 232,
+    "endLine": 274,
+    "length": 43
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 236,
+    "endLine": 271,
+    "length": 36
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 244,
+    "endLine": 270,
+    "length": 27
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "check",
+    "kind": "ArrowFunction",
+    "startLine": 284,
+    "endLine": 318,
+    "length": 35
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 288,
+    "endLine": 315,
+    "length": 28
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 337,
+    "endLine": 349,
+    "length": 13
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 379,
+    "endLine": 379,
+    "length": 1
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 386,
+    "endLine": 389,
+    "length": 4
+  },
+  {
+    "file": "packages/analyzer/src/index.ts",
+    "name": "generateSarifReport",
+    "kind": "FunctionDeclaration",
+    "startLine": 400,
+    "endLine": 404,
+    "length": 5
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "ApiGateway",
+    "kind": "ClassDeclaration",
+    "startLine": 71,
+    "endLine": 419,
+    "length": 349
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "ApiGateway.constructor",
+    "kind": "Constructor",
+    "startLine": 78,
+    "endLine": 84,
+    "length": 7
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "ApiGateway.setupBaseMiddleware",
+    "kind": "MethodDeclaration",
+    "startLine": 86,
+    "endLine": 127,
+    "length": 42
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "ApiGateway.createRequestContextMiddleware",
+    "kind": "MethodDeclaration",
+    "startLine": 129,
+    "endLine": 159,
+    "length": 31
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "ApiGateway.createCompressionMiddleware",
+    "kind": "MethodDeclaration",
+    "startLine": 161,
+    "endLine": 176,
+    "length": 16
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "ApiGateway.generateRequestId",
+    "kind": "MethodDeclaration",
+    "startLine": 178,
+    "endLine": 180,
+    "length": 3
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "ApiGateway.addMiddleware",
+    "kind": "MethodDeclaration",
+    "startLine": 183,
+    "endLine": 186,
+    "length": 4
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "ApiGateway.addRoute",
+    "kind": "MethodDeclaration",
+    "startLine": 189,
+    "endLine": 229,
+    "length": 41
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "ApiGateway.createRateLimitMiddleware",
+    "kind": "MethodDeclaration",
+    "startLine": 231,
+    "endLine": 266,
+    "length": 36
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "ApiGateway.createValidationMiddleware",
+    "kind": "MethodDeclaration",
+    "startLine": 268,
+    "endLine": 302,
+    "length": 35
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "ApiGateway.createAuthMiddleware",
+    "kind": "MethodDeclaration",
+    "startLine": 304,
+    "endLine": 330,
+    "length": 27
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "ApiGateway.createErrorHandlingWrapper",
+    "kind": "MethodDeclaration",
+    "startLine": 332,
+    "endLine": 356,
+    "length": 25
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "ApiGateway.addHealthChecks",
+    "kind": "MethodDeclaration",
+    "startLine": 359,
+    "endLine": 390,
+    "length": 32
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "ApiGateway.listen",
+    "kind": "MethodDeclaration",
+    "startLine": 393,
+    "endLine": 408,
+    "length": 16
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "ApiGateway.getApp",
+    "kind": "MethodDeclaration",
+    "startLine": 411,
+    "endLine": 413,
+    "length": 3
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "ApiGateway.getRoutes",
+    "kind": "MethodDeclaration",
+    "startLine": 416,
+    "endLine": 418,
+    "length": 3
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 124,
+    "endLine": 126,
+    "length": 3
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 130,
+    "endLine": 158,
+    "length": 29
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 162,
+    "endLine": 175,
+    "length": 14
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "<inline>",
+    "kind": "FunctionExpression",
+    "startLine": 166,
+    "endLine": 172,
+    "length": 7
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 234,
+    "endLine": 265,
+    "length": 32
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "validateSection",
+    "kind": "ArrowFunction",
+    "startLine": 269,
+    "endLine": 283,
+    "length": 15
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "validateSection",
+    "kind": "ArrowFunction",
+    "startLine": 269,
+    "endLine": 283,
+    "length": 15
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 285,
+    "endLine": 301,
+    "length": 17
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 305,
+    "endLine": 329,
+    "length": 25
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 333,
+    "endLine": 355,
+    "length": 23
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "handler",
+    "kind": "ArrowFunction",
+    "startLine": 363,
+    "endLine": 371,
+    "length": 9
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "handler",
+    "kind": "ArrowFunction",
+    "startLine": 377,
+    "endLine": 379,
+    "length": 3
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "handler",
+    "kind": "ArrowFunction",
+    "startLine": 385,
+    "endLine": 388,
+    "length": 4
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 396,
+    "endLine": 407,
+    "length": 12
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 397,
+    "endLine": 406,
+    "length": 10
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "RouteBuilder",
+    "kind": "ClassDeclaration",
+    "startLine": 424,
+    "endLine": 497,
+    "length": 74
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "RouteBuilder.create",
+    "kind": "MethodDeclaration",
+    "startLine": 427,
+    "endLine": 429,
+    "length": 3
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "RouteBuilder.path",
+    "kind": "MethodDeclaration",
+    "startLine": 431,
+    "endLine": 434,
+    "length": 4
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "RouteBuilder.method",
+    "kind": "MethodDeclaration",
+    "startLine": 436,
+    "endLine": 439,
+    "length": 4
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "RouteBuilder.get",
+    "kind": "MethodDeclaration",
+    "startLine": 441,
+    "endLine": 445,
+    "length": 5
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "RouteBuilder.post",
+    "kind": "MethodDeclaration",
+    "startLine": 447,
+    "endLine": 451,
+    "length": 5
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "RouteBuilder.put",
+    "kind": "MethodDeclaration",
+    "startLine": 453,
+    "endLine": 457,
+    "length": 5
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "RouteBuilder.delete",
+    "kind": "MethodDeclaration",
+    "startLine": 459,
+    "endLine": 463,
+    "length": 5
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "RouteBuilder.handler",
+    "kind": "MethodDeclaration",
+    "startLine": 465,
+    "endLine": 468,
+    "length": 4
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "RouteBuilder.middleware",
+    "kind": "MethodDeclaration",
+    "startLine": 470,
+    "endLine": 473,
+    "length": 4
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "RouteBuilder.requireAuth",
+    "kind": "MethodDeclaration",
+    "startLine": 475,
+    "endLine": 478,
+    "length": 4
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "RouteBuilder.rateLimit",
+    "kind": "MethodDeclaration",
+    "startLine": 480,
+    "endLine": 483,
+    "length": 4
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "RouteBuilder.validate",
+    "kind": "MethodDeclaration",
+    "startLine": 485,
+    "endLine": 488,
+    "length": 4
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "RouteBuilder.build",
+    "kind": "MethodDeclaration",
+    "startLine": 490,
+    "endLine": 496,
+    "length": 7
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "cors",
+    "kind": "ArrowFunction",
+    "startLine": 504,
+    "endLine": 508,
+    "length": 5
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "json",
+    "kind": "ArrowFunction",
+    "startLine": 511,
+    "endLine": 511,
+    "length": 1
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "urlencoded",
+    "kind": "ArrowFunction",
+    "startLine": 514,
+    "endLine": 514,
+    "length": 1
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "requestLogger",
+    "kind": "ArrowFunction",
+    "startLine": 517,
+    "endLine": 541,
+    "length": 25
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 518,
+    "endLine": 540,
+    "length": 23
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "<inline>",
+    "kind": "FunctionExpression",
+    "startLine": 522,
+    "endLine": 537,
+    "length": 16
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "errorHandler",
+    "kind": "ArrowFunction",
+    "startLine": 544,
+    "endLine": 564,
+    "length": 21
+  },
+  {
+    "file": "packages/api-gateway/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 545,
+    "endLine": 563,
+    "length": 19
+  },
+  {
+    "file": "packages/app/src/index.ts",
+    "name": "AppHealthCheck",
+    "kind": "ClassDeclaration",
+    "startLine": 25,
+    "endLine": 35,
+    "length": 11
+  },
+  {
+    "file": "packages/app/src/index.ts",
+    "name": "AppHealthCheck.check",
+    "kind": "MethodDeclaration",
+    "startLine": 28,
+    "endLine": 34,
+    "length": 7
+  },
+  {
+    "file": "packages/app/src/index.ts",
+    "name": "HttpServer",
+    "kind": "ClassDeclaration",
+    "startLine": 39,
+    "endLine": 186,
+    "length": 148
+  },
+  {
+    "file": "packages/app/src/index.ts",
+    "name": "HttpServer.constructor",
+    "kind": "Constructor",
+    "startLine": 46,
+    "endLine": 51,
+    "length": 6
+  },
+  {
+    "file": "packages/app/src/index.ts",
+    "name": "HttpServer.handleRequest",
+    "kind": "MethodDeclaration",
+    "startLine": 53,
+    "endLine": 77,
+    "length": 25
+  },
+  {
+    "file": "packages/app/src/index.ts",
+    "name": "HttpServer.handleHealth",
+    "kind": "MethodDeclaration",
+    "startLine": 79,
+    "endLine": 120,
+    "length": 42
+  },
+  {
+    "file": "packages/app/src/index.ts",
+    "name": "HttpServer.handleRoot",
+    "kind": "MethodDeclaration",
+    "startLine": 122,
+    "endLine": 134,
+    "length": 13
+  },
+  {
+    "file": "packages/app/src/index.ts",
+    "name": "HttpServer.handleNotFound",
+    "kind": "MethodDeclaration",
+    "startLine": 136,
+    "endLine": 147,
+    "length": 12
+  },
+  {
+    "file": "packages/app/src/index.ts",
+    "name": "HttpServer.handleServerError",
+    "kind": "MethodDeclaration",
+    "startLine": 149,
+    "endLine": 160,
+    "length": 12
+  },
+  {
+    "file": "packages/app/src/index.ts",
+    "name": "HttpServer.start",
+    "kind": "MethodDeclaration",
+    "startLine": 162,
+    "endLine": 176,
+    "length": 15
+  },
+  {
+    "file": "packages/app/src/index.ts",
+    "name": "HttpServer.stop",
+    "kind": "MethodDeclaration",
+    "startLine": 178,
+    "endLine": 185,
+    "length": 8
+  },
+  {
+    "file": "packages/app/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 81,
+    "endLine": 97,
+    "length": 17
+  },
+  {
+    "file": "packages/app/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 100,
+    "endLine": 100,
+    "length": 1
+  },
+  {
+    "file": "packages/app/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 102,
+    "endLine": 102,
+    "length": 1
+  },
+  {
+    "file": "packages/app/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 163,
+    "endLine": 175,
+    "length": 13
+  },
+  {
+    "file": "packages/app/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 167,
+    "endLine": 174,
+    "length": 8
+  },
+  {
+    "file": "packages/app/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 179,
+    "endLine": 184,
+    "length": 6
+  },
+  {
+    "file": "packages/app/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 180,
+    "endLine": 183,
+    "length": 4
+  },
+  {
+    "file": "packages/app/src/index.ts",
+    "name": "main",
+    "kind": "FunctionDeclaration",
+    "startLine": 188,
+    "endLine": 219,
+    "length": 32
+  },
+  {
+    "file": "packages/app/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 199,
+    "endLine": 203,
+    "length": 5
+  },
+  {
+    "file": "packages/app/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 205,
+    "endLine": 209,
+    "length": 5
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "ConfigValidationError",
+    "kind": "ClassDeclaration",
+    "startLine": 17,
+    "endLine": 25,
+    "length": 9
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "ConfigValidationError.constructor",
+    "kind": "Constructor",
+    "startLine": 18,
+    "endLine": 24,
+    "length": 7
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "EnvironmentConfigSource",
+    "kind": "ClassDeclaration",
+    "startLine": 27,
+    "endLine": 41,
+    "length": 15
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "EnvironmentConfigSource.constructor",
+    "kind": "Constructor",
+    "startLine": 30,
+    "endLine": 32,
+    "length": 3
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "EnvironmentConfigSource.get",
+    "kind": "MethodDeclaration",
+    "startLine": 34,
+    "endLine": 36,
+    "length": 3
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "EnvironmentConfigSource.has",
+    "kind": "MethodDeclaration",
+    "startLine": 38,
+    "endLine": 40,
+    "length": 3
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "MemoryConfigSource",
+    "kind": "ClassDeclaration",
+    "startLine": 43,
+    "endLine": 61,
+    "length": 19
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "MemoryConfigSource.constructor",
+    "kind": "Constructor",
+    "startLine": 46,
+    "endLine": 48,
+    "length": 3
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "MemoryConfigSource.get",
+    "kind": "MethodDeclaration",
+    "startLine": 50,
+    "endLine": 52,
+    "length": 3
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "MemoryConfigSource.has",
+    "kind": "MethodDeclaration",
+    "startLine": 54,
+    "endLine": 56,
+    "length": 3
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "MemoryConfigSource.set",
+    "kind": "MethodDeclaration",
+    "startLine": 58,
+    "endLine": 60,
+    "length": 3
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "ConfigManager",
+    "kind": "ClassDeclaration",
+    "startLine": 66,
+    "endLine": 171,
+    "length": 106
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "ConfigManager.constructor",
+    "kind": "Constructor",
+    "startLine": 70,
+    "endLine": 72,
+    "length": 3
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "ConfigManager.get",
+    "kind": "MethodDeclaration",
+    "startLine": 75,
+    "endLine": 85,
+    "length": 11
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "ConfigManager.has",
+    "kind": "MethodDeclaration",
+    "startLine": 87,
+    "endLine": 89,
+    "length": 3
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "ConfigManager.getRequired",
+    "kind": "MethodDeclaration",
+    "startLine": 94,
+    "endLine": 102,
+    "length": 9
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "ConfigManager.addValidationRule",
+    "kind": "MethodDeclaration",
+    "startLine": 107,
+    "endLine": 109,
+    "length": 3
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "ConfigManager.validate",
+    "kind": "MethodDeclaration",
+    "startLine": 114,
+    "endLine": 138,
+    "length": 25
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "ConfigManager.parseValue",
+    "kind": "MethodDeclaration",
+    "startLine": 140,
+    "endLine": 170,
+    "length": 31
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 88,
+    "endLine": 88,
+    "length": 1
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "isUrl",
+    "kind": "ArrowFunction",
+    "startLine": 175,
+    "endLine": 182,
+    "length": 8
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "isPort",
+    "kind": "ArrowFunction",
+    "startLine": 184,
+    "endLine": 187,
+    "length": 4
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "isNotDangerousDefault",
+    "kind": "ArrowFunction",
+    "startLine": 189,
+    "endLine": 197,
+    "length": 9
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "minLength",
+    "kind": "ArrowFunction",
+    "startLine": 200,
+    "endLine": 203,
+    "length": 4
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 201,
+    "endLine": 203,
+    "length": 3
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "isOneOf",
+    "kind": "ArrowFunction",
+    "startLine": 206,
+    "endLine": 209,
+    "length": 4
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 207,
+    "endLine": 209,
+    "length": 3
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "loadConfig",
+    "kind": "FunctionDeclaration",
+    "startLine": 215,
+    "endLine": 223,
+    "length": 9
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "loadValidatedConfig",
+    "kind": "FunctionDeclaration",
+    "startLine": 228,
+    "endLine": 280,
+    "length": 53
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "validator",
+    "kind": "ArrowFunction",
+    "startLine": 238,
+    "endLine": 238,
+    "length": 1
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "validator",
+    "kind": "ArrowFunction",
+    "startLine": 245,
+    "endLine": 245,
+    "length": 1
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "getTypedConfig",
+    "kind": "FunctionDeclaration",
+    "startLine": 313,
+    "endLine": 357,
+    "length": 45
+  },
+  {
+    "file": "packages/config/src/index.ts",
+    "name": "loadTypedConfig",
+    "kind": "FunctionDeclaration",
+    "startLine": 362,
+    "endLine": 365,
+    "length": 4
+  },
+  {
+    "file": "packages/contracts/src/index.ts",
+    "name": "success",
+    "kind": "ArrowFunction",
+    "startLine": 80,
+    "endLine": 84,
+    "length": 5
+  },
+  {
+    "file": "packages/contracts/src/index.ts",
+    "name": "failure",
+    "kind": "ArrowFunction",
+    "startLine": 86,
+    "endLine": 90,
+    "length": 5
+  },
+  {
+    "file": "packages/contracts/src/index.ts",
+    "name": "assertNonNull",
+    "kind": "FunctionDeclaration",
+    "startLine": 94,
+    "endLine": 101,
+    "length": 8
+  },
+  {
+    "file": "packages/contracts/src/index.ts",
+    "name": "assertNumberFinite",
+    "kind": "FunctionDeclaration",
+    "startLine": 103,
+    "endLine": 107,
+    "length": 5
+  },
+  {
+    "file": "packages/contracts/src/index.ts",
+    "name": "assertIndexInRange",
+    "kind": "FunctionDeclaration",
+    "startLine": 109,
+    "endLine": 119,
+    "length": 11
+  },
+  {
+    "file": "packages/contracts/src/index.ts",
+    "name": "fail",
+    "kind": "FunctionDeclaration",
+    "startLine": 121,
+    "endLine": 123,
+    "length": 3
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "PostgresConnection",
+    "kind": "ClassDeclaration",
+    "startLine": 10,
+    "endLine": 268,
+    "length": 259
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "PostgresConnection.constructor",
+    "kind": "Constructor",
+    "startLine": 14,
+    "endLine": 47,
+    "length": 34
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "PostgresConnection.query",
+    "kind": "MethodDeclaration",
+    "startLine": 49,
+    "endLine": 77,
+    "length": 29
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "PostgresConnection.transaction",
+    "kind": "MethodDeclaration",
+    "startLine": 79,
+    "endLine": 98,
+    "length": 20
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "PostgresConnection.runTransactionClient",
+    "kind": "MethodDeclaration",
+    "startLine": 100,
+    "endLine": 120,
+    "length": 21
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "PostgresConnection.executeCallbackAndCommit",
+    "kind": "MethodDeclaration",
+    "startLine": 122,
+    "endLine": 145,
+    "length": 24
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "PostgresConnection.handleTransactionError",
+    "kind": "MethodDeclaration",
+    "startLine": 147,
+    "endLine": 160,
+    "length": 14
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "PostgresConnection.acquireClient",
+    "kind": "MethodDeclaration",
+    "startLine": 162,
+    "endLine": 171,
+    "length": 10
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "PostgresConnection.beginTransaction",
+    "kind": "MethodDeclaration",
+    "startLine": 173,
+    "endLine": 182,
+    "length": 10
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "PostgresConnection.createTransactionClient",
+    "kind": "MethodDeclaration",
+    "startLine": 184,
+    "endLine": 199,
+    "length": 16
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "PostgresConnection.safeQuery",
+    "kind": "MethodDeclaration",
+    "startLine": 201,
+    "endLine": 215,
+    "length": 15
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "PostgresConnection.safeCommit",
+    "kind": "MethodDeclaration",
+    "startLine": 217,
+    "endLine": 234,
+    "length": 18
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "PostgresConnection.safeRollback",
+    "kind": "MethodDeclaration",
+    "startLine": 236,
+    "endLine": 245,
+    "length": 10
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "PostgresConnection.safeRelease",
+    "kind": "MethodDeclaration",
+    "startLine": 247,
+    "endLine": 255,
+    "length": 9
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "PostgresConnection.close",
+    "kind": "MethodDeclaration",
+    "startLine": 257,
+    "endLine": 267,
+    "length": 11
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 40,
+    "endLine": 42,
+    "length": 3
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 44,
+    "endLine": 46,
+    "length": 3
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "query",
+    "kind": "ArrowFunction",
+    "startLine": 186,
+    "endLine": 191,
+    "length": 6
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "commit",
+    "kind": "ArrowFunction",
+    "startLine": 192,
+    "endLine": 194,
+    "length": 3
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "rollback",
+    "kind": "ArrowFunction",
+    "startLine": 195,
+    "endLine": 197,
+    "length": 3
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "RedisCache",
+    "kind": "ClassDeclaration",
+    "startLine": 271,
+    "endLine": 386,
+    "length": 116
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "RedisCache.constructor",
+    "kind": "Constructor",
+    "startLine": 275,
+    "endLine": 302,
+    "length": 28
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "RedisCache.connect",
+    "kind": "MethodDeclaration",
+    "startLine": 304,
+    "endLine": 314,
+    "length": 11
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "RedisCache.get",
+    "kind": "MethodDeclaration",
+    "startLine": 316,
+    "endLine": 328,
+    "length": 13
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "RedisCache.set",
+    "kind": "MethodDeclaration",
+    "startLine": 330,
+    "endLine": 347,
+    "length": 18
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "RedisCache.del",
+    "kind": "MethodDeclaration",
+    "startLine": 349,
+    "endLine": 360,
+    "length": 12
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "RedisCache.exists",
+    "kind": "MethodDeclaration",
+    "startLine": 362,
+    "endLine": 373,
+    "length": 12
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "RedisCache.close",
+    "kind": "MethodDeclaration",
+    "startLine": 375,
+    "endLine": 385,
+    "length": 11
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 295,
+    "endLine": 297,
+    "length": 3
+  },
+  {
+    "file": "packages/database/src/adapters.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 299,
+    "endLine": 301,
+    "length": 3
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "BaseRepository",
+    "kind": "ClassDeclaration",
+    "startLine": 43,
+    "endLine": 157,
+    "length": 115
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "BaseRepository.constructor",
+    "kind": "Constructor",
+    "startLine": 49,
+    "endLine": 54,
+    "length": 6
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "BaseRepository.findById",
+    "kind": "MethodDeclaration",
+    "startLine": 56,
+    "endLine": 56,
+    "length": 1
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "BaseRepository.save",
+    "kind": "MethodDeclaration",
+    "startLine": 57,
+    "endLine": 57,
+    "length": 1
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "BaseRepository.delete",
+    "kind": "MethodDeclaration",
+    "startLine": 58,
+    "endLine": 58,
+    "length": 1
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "BaseRepository.findAll",
+    "kind": "MethodDeclaration",
+    "startLine": 59,
+    "endLine": 59,
+    "length": 1
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "BaseRepository.findOne",
+    "kind": "MethodDeclaration",
+    "startLine": 62,
+    "endLine": 74,
+    "length": 13
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "BaseRepository.findMany",
+    "kind": "MethodDeclaration",
+    "startLine": 76,
+    "endLine": 88,
+    "length": 13
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "BaseRepository.execute",
+    "kind": "MethodDeclaration",
+    "startLine": 90,
+    "endLine": 101,
+    "length": 12
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "BaseRepository.getCacheKey",
+    "kind": "MethodDeclaration",
+    "startLine": 104,
+    "endLine": 106,
+    "length": 3
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "BaseRepository.getFromCache",
+    "kind": "MethodDeclaration",
+    "startLine": 108,
+    "endLine": 126,
+    "length": 19
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "BaseRepository.setInCache",
+    "kind": "MethodDeclaration",
+    "startLine": 128,
+    "endLine": 141,
+    "length": 14
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "BaseRepository.invalidateCache",
+    "kind": "MethodDeclaration",
+    "startLine": 143,
+    "endLine": 156,
+    "length": 14
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "UserRepository",
+    "kind": "ClassDeclaration",
+    "startLine": 168,
+    "endLine": 248,
+    "length": 81
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "UserRepository.constructor",
+    "kind": "Constructor",
+    "startLine": 171,
+    "endLine": 180,
+    "length": 10
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "UserRepository.findById",
+    "kind": "MethodDeclaration",
+    "startLine": 182,
+    "endLine": 197,
+    "length": 16
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "UserRepository.findByEmail",
+    "kind": "MethodDeclaration",
+    "startLine": 199,
+    "endLine": 209,
+    "length": 11
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "UserRepository.save",
+    "kind": "MethodDeclaration",
+    "startLine": 211,
+    "endLine": 223,
+    "length": 13
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "UserRepository.delete",
+    "kind": "MethodDeclaration",
+    "startLine": 225,
+    "endLine": 236,
+    "length": 12
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "UserRepository.findAll",
+    "kind": "MethodDeclaration",
+    "startLine": 238,
+    "endLine": 247,
+    "length": 10
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "MigrationRunner",
+    "kind": "ClassDeclaration",
+    "startLine": 258,
+    "endLine": 370,
+    "length": 113
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "MigrationRunner.constructor",
+    "kind": "Constructor",
+    "startLine": 263,
+    "endLine": 266,
+    "length": 4
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "MigrationRunner.addMigration",
+    "kind": "MethodDeclaration",
+    "startLine": 268,
+    "endLine": 270,
+    "length": 3
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "MigrationRunner.initializeMigrationTable",
+    "kind": "MethodDeclaration",
+    "startLine": 272,
+    "endLine": 280,
+    "length": 9
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "MigrationRunner.getCurrentVersion",
+    "kind": "MethodDeclaration",
+    "startLine": 282,
+    "endLine": 285,
+    "length": 4
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "MigrationRunner.migrate",
+    "kind": "MethodDeclaration",
+    "startLine": 287,
+    "endLine": 315,
+    "length": 29
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "MigrationRunner.rollback",
+    "kind": "MethodDeclaration",
+    "startLine": 317,
+    "endLine": 342,
+    "length": 26
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "MigrationRunner.runMigration",
+    "kind": "MethodDeclaration",
+    "startLine": 345,
+    "endLine": 357,
+    "length": 13
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "MigrationRunner.rollbackMigration",
+    "kind": "MethodDeclaration",
+    "startLine": 360,
+    "endLine": 369,
+    "length": 10
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 303,
+    "endLine": 303,
+    "length": 1
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 304,
+    "endLine": 304,
+    "length": 1
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 330,
+    "endLine": 330,
+    "length": 1
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 331,
+    "endLine": 331,
+    "length": 1
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 348,
+    "endLine": 354,
+    "length": 7
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 363,
+    "endLine": 366,
+    "length": 4
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "DatabaseHealthCheck",
+    "kind": "ClassDeclaration",
+    "startLine": 373,
+    "endLine": 395,
+    "length": 23
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "DatabaseHealthCheck.constructor",
+    "kind": "Constructor",
+    "startLine": 376,
+    "endLine": 378,
+    "length": 3
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "DatabaseHealthCheck.check",
+    "kind": "MethodDeclaration",
+    "startLine": 380,
+    "endLine": 394,
+    "length": 15
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "CacheHealthCheck",
+    "kind": "ClassDeclaration",
+    "startLine": 397,
+    "endLine": 422,
+    "length": 26
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "CacheHealthCheck.constructor",
+    "kind": "Constructor",
+    "startLine": 400,
+    "endLine": 402,
+    "length": 3
+  },
+  {
+    "file": "packages/database/src/index.ts",
+    "name": "CacheHealthCheck.check",
+    "kind": "MethodDeclaration",
+    "startLine": 404,
+    "endLine": 421,
+    "length": 18
+  },
+  {
+    "file": "packages/database/src/repositories/user-adapter.ts",
+    "name": "PostgresUserAdapter",
+    "kind": "ClassDeclaration",
+    "startLine": 15,
+    "endLine": 164,
+    "length": 150
+  },
+  {
+    "file": "packages/database/src/repositories/user-adapter.ts",
+    "name": "PostgresUserAdapter.constructor",
+    "kind": "Constructor",
+    "startLine": 19,
+    "endLine": 22,
+    "length": 4
+  },
+  {
+    "file": "packages/database/src/repositories/user-adapter.ts",
+    "name": "PostgresUserAdapter.transformFromDb",
+    "kind": "MethodDeclaration",
+    "startLine": 24,
+    "endLine": 32,
+    "length": 9
+  },
+  {
+    "file": "packages/database/src/repositories/user-adapter.ts",
+    "name": "PostgresUserAdapter.findById",
+    "kind": "MethodDeclaration",
+    "startLine": 34,
+    "endLine": 59,
+    "length": 26
+  },
+  {
+    "file": "packages/database/src/repositories/user-adapter.ts",
+    "name": "PostgresUserAdapter.findByEmail",
+    "kind": "MethodDeclaration",
+    "startLine": 61,
+    "endLine": 86,
+    "length": 26
+  },
+  {
+    "file": "packages/database/src/repositories/user-adapter.ts",
+    "name": "PostgresUserAdapter.save",
+    "kind": "MethodDeclaration",
+    "startLine": 88,
+    "endLine": 130,
+    "length": 43
+  },
+  {
+    "file": "packages/database/src/repositories/user-adapter.ts",
+    "name": "PostgresUserAdapter.delete",
+    "kind": "MethodDeclaration",
+    "startLine": 132,
+    "endLine": 142,
+    "length": 11
+  },
+  {
+    "file": "packages/database/src/repositories/user-adapter.ts",
+    "name": "PostgresUserAdapter.findAll",
+    "kind": "MethodDeclaration",
+    "startLine": 144,
+    "endLine": 163,
+    "length": 20
+  },
+  {
+    "file": "packages/database/src/repositories/user-adapter.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 150,
+    "endLine": 150,
+    "length": 1
+  },
+  {
+    "file": "packages/domain-sample/src/index.ts",
+    "name": "UserService",
+    "kind": "ClassDeclaration",
+    "startLine": 16,
+    "endLine": 40,
+    "length": 25
+  },
+  {
+    "file": "packages/domain-sample/src/index.ts",
+    "name": "UserService.create",
+    "kind": "MethodDeclaration",
+    "startLine": 19,
+    "endLine": 31,
+    "length": 13
+  },
+  {
+    "file": "packages/domain-sample/src/index.ts",
+    "name": "UserService.findById",
+    "kind": "MethodDeclaration",
+    "startLine": 33,
+    "endLine": 35,
+    "length": 3
+  },
+  {
+    "file": "packages/domain-sample/src/index.ts",
+    "name": "UserService.findAll",
+    "kind": "MethodDeclaration",
+    "startLine": 37,
+    "endLine": 39,
+    "length": 3
+  },
+  {
+    "file": "packages/eslint-plugin-foundation/src/rules/complexity-delta-justified.ts",
+    "name": "getBaseline",
+    "kind": "FunctionDeclaration",
+    "startLine": 11,
+    "endLine": 18,
+    "length": 8
+  },
+  {
+    "file": "packages/eslint-plugin-foundation/src/rules/require-dbc-on-exported.ts",
+    "name": "isAssertionCall",
+    "kind": "FunctionDeclaration",
+    "startLine": 12,
+    "endLine": 18,
+    "length": 7
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "InMemoryEventStore",
+    "kind": "ClassDeclaration",
+    "startLine": 39,
+    "endLine": 190,
+    "length": 152
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "InMemoryEventStore.constructor",
+    "kind": "Constructor",
+    "startLine": 46,
+    "endLine": 48,
+    "length": 3
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "InMemoryEventStore.saveEvents",
+    "kind": "MethodDeclaration",
+    "startLine": 50,
+    "endLine": 89,
+    "length": 40
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "InMemoryEventStore.loadEvents",
+    "kind": "MethodDeclaration",
+    "startLine": 91,
+    "endLine": 104,
+    "length": 14
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "InMemoryEventStore.loadEventStream",
+    "kind": "MethodDeclaration",
+    "startLine": 106,
+    "endLine": 122,
+    "length": 17
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "InMemoryEventStore.saveSnapshot",
+    "kind": "MethodDeclaration",
+    "startLine": 124,
+    "endLine": 133,
+    "length": 10
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "InMemoryEventStore.loadSnapshot",
+    "kind": "MethodDeclaration",
+    "startLine": 135,
+    "endLine": 141,
+    "length": 7
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "InMemoryEventStore.subscribe",
+    "kind": "MethodDeclaration",
+    "startLine": 144,
+    "endLine": 150,
+    "length": 7
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "InMemoryEventStore.publishEvent",
+    "kind": "MethodDeclaration",
+    "startLine": 152,
+    "endLine": 166,
+    "length": 15
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "InMemoryEventStore.getAllEvents",
+    "kind": "MethodDeclaration",
+    "startLine": 169,
+    "endLine": 179,
+    "length": 11
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "InMemoryEventStore.getEventsByType",
+    "kind": "MethodDeclaration",
+    "startLine": 181,
+    "endLine": 184,
+    "length": 4
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "InMemoryEventStore.getEventsAfter",
+    "kind": "MethodDeclaration",
+    "startLine": 186,
+    "endLine": 189,
+    "length": 4
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 65,
+    "endLine": 74,
+    "length": 10
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 100,
+    "endLine": 100,
+    "length": 1
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 172,
+    "endLine": 176,
+    "length": 5
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 178,
+    "endLine": 178,
+    "length": 1
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 183,
+    "endLine": 183,
+    "length": 1
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 188,
+    "endLine": 188,
+    "length": 1
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "AggregateRoot",
+    "kind": "ClassDeclaration",
+    "startLine": 196,
+    "endLine": 254,
+    "length": 59
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "AggregateRoot.constructor",
+    "kind": "Constructor",
+    "startLine": 201,
+    "endLine": 203,
+    "length": 3
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "AggregateRoot.getId",
+    "kind": "MethodDeclaration",
+    "startLine": 205,
+    "endLine": 207,
+    "length": 3
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "AggregateRoot.getVersion",
+    "kind": "MethodDeclaration",
+    "startLine": 209,
+    "endLine": 211,
+    "length": 3
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "AggregateRoot.getUncommittedEvents",
+    "kind": "MethodDeclaration",
+    "startLine": 213,
+    "endLine": 215,
+    "length": 3
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "AggregateRoot.markEventsAsCommitted",
+    "kind": "MethodDeclaration",
+    "startLine": 217,
+    "endLine": 219,
+    "length": 3
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "AggregateRoot.applyEvent",
+    "kind": "MethodDeclaration",
+    "startLine": 221,
+    "endLine": 225,
+    "length": 5
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "AggregateRoot.handle",
+    "kind": "MethodDeclaration",
+    "startLine": 227,
+    "endLine": 227,
+    "length": 1
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "AggregateRoot.fromHistory",
+    "kind": "MethodDeclaration",
+    "startLine": 229,
+    "endLine": 253,
+    "length": 25
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "EventBus",
+    "kind": "ClassDeclaration",
+    "startLine": 260,
+    "endLine": 300,
+    "length": 41
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "EventBus.constructor",
+    "kind": "Constructor",
+    "startLine": 264,
+    "endLine": 266,
+    "length": 3
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "EventBus.subscribe",
+    "kind": "MethodDeclaration",
+    "startLine": 268,
+    "endLine": 274,
+    "length": 7
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "EventBus.publish",
+    "kind": "MethodDeclaration",
+    "startLine": 276,
+    "endLine": 299,
+    "length": 24
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 285,
+    "endLine": 296,
+    "length": 12
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "DomainEventFactory",
+    "kind": "ClassDeclaration",
+    "startLine": 305,
+    "endLine": 320,
+    "length": 16
+  },
+  {
+    "file": "packages/events/src/index.ts",
+    "name": "DomainEventFactory.create",
+    "kind": "MethodDeclaration",
+    "startLine": 306,
+    "endLine": 319,
+    "length": 14
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "InMemoryTracer",
+    "kind": "ClassDeclaration",
+    "startLine": 71,
+    "endLine": 164,
+    "length": 94
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "InMemoryTracer.constructor",
+    "kind": "Constructor",
+    "startLine": 75,
+    "endLine": 77,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "InMemoryTracer.startSpan",
+    "kind": "MethodDeclaration",
+    "startLine": 79,
+    "endLine": 105,
+    "length": 27
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "InMemoryTracer.finishSpan",
+    "kind": "MethodDeclaration",
+    "startLine": 107,
+    "endLine": 121,
+    "length": 15
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "InMemoryTracer.extractSpan",
+    "kind": "MethodDeclaration",
+    "startLine": 123,
+    "endLine": 126,
+    "length": 4
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "InMemoryTracer.injectSpan",
+    "kind": "MethodDeclaration",
+    "startLine": 128,
+    "endLine": 132,
+    "length": 5
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "InMemoryTracer.exportSpan",
+    "kind": "MethodDeclaration",
+    "startLine": 134,
+    "endLine": 150,
+    "length": 17
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "InMemoryTracer.getSpan",
+    "kind": "MethodDeclaration",
+    "startLine": 152,
+    "endLine": 155,
+    "length": 4
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "InMemoryTracer.getAllSpans",
+    "kind": "MethodDeclaration",
+    "startLine": 157,
+    "endLine": 159,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "InMemoryTracer.getTrace",
+    "kind": "MethodDeclaration",
+    "startLine": 161,
+    "endLine": 163,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 162,
+    "endLine": 162,
+    "length": 1
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "ConsoleLogOutput",
+    "kind": "ClassDeclaration",
+    "startLine": 166,
+    "endLine": 177,
+    "length": 12
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "ConsoleLogOutput.write",
+    "kind": "MethodDeclaration",
+    "startLine": 167,
+    "endLine": 176,
+    "length": 10
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "StructuredLogOutput",
+    "kind": "ClassDeclaration",
+    "startLine": 179,
+    "endLine": 193,
+    "length": 15
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "StructuredLogOutput.write",
+    "kind": "MethodDeclaration",
+    "startLine": 180,
+    "endLine": 192,
+    "length": 13
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "AppLogger",
+    "kind": "ClassDeclaration",
+    "startLine": 197,
+    "endLine": 257,
+    "length": 61
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "AppLogger.constructor",
+    "kind": "Constructor",
+    "startLine": 203,
+    "endLine": 211,
+    "length": 9
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "AppLogger.setRequestId",
+    "kind": "MethodDeclaration",
+    "startLine": 213,
+    "endLine": 215,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "AppLogger.clearRequestId",
+    "kind": "MethodDeclaration",
+    "startLine": 217,
+    "endLine": 219,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "AppLogger.debug",
+    "kind": "MethodDeclaration",
+    "startLine": 221,
+    "endLine": 223,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "AppLogger.info",
+    "kind": "MethodDeclaration",
+    "startLine": 225,
+    "endLine": 227,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "AppLogger.warn",
+    "kind": "MethodDeclaration",
+    "startLine": 229,
+    "endLine": 231,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "AppLogger.error",
+    "kind": "MethodDeclaration",
+    "startLine": 233,
+    "endLine": 235,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "AppLogger.log",
+    "kind": "MethodDeclaration",
+    "startLine": 237,
+    "endLine": 252,
+    "length": 16
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "AppLogger.child",
+    "kind": "MethodDeclaration",
+    "startLine": 254,
+    "endLine": 256,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 251,
+    "endLine": 251,
+    "length": 1
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "createLogger",
+    "kind": "FunctionDeclaration",
+    "startLine": 262,
+    "endLine": 269,
+    "length": 8
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "SimpleMetrics",
+    "kind": "ClassDeclaration",
+    "startLine": 293,
+    "endLine": 378,
+    "length": 86
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "SimpleMetrics.counter",
+    "kind": "MethodDeclaration",
+    "startLine": 298,
+    "endLine": 305,
+    "length": 8
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "SimpleMetrics.histogram",
+    "kind": "MethodDeclaration",
+    "startLine": 307,
+    "endLine": 315,
+    "length": 9
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "SimpleMetrics.gauge",
+    "kind": "MethodDeclaration",
+    "startLine": 317,
+    "endLine": 331,
+    "length": 15
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "SimpleMetrics.getMetrics",
+    "kind": "MethodDeclaration",
+    "startLine": 333,
+    "endLine": 339,
+    "length": 7
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "SimpleMetrics.getMetricsString",
+    "kind": "MethodDeclaration",
+    "startLine": 342,
+    "endLine": 377,
+    "length": 36
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "inc",
+    "kind": "ArrowFunction",
+    "startLine": 300,
+    "endLine": 303,
+    "length": 4
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "observe",
+    "kind": "ArrowFunction",
+    "startLine": 309,
+    "endLine": 313,
+    "length": 5
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "set",
+    "kind": "ArrowFunction",
+    "startLine": 319,
+    "endLine": 321,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "inc",
+    "kind": "ArrowFunction",
+    "startLine": 322,
+    "endLine": 325,
+    "length": 4
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "dec",
+    "kind": "ArrowFunction",
+    "startLine": 326,
+    "endLine": 329,
+    "length": 4
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 361,
+    "endLine": 361,
+    "length": 1
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 369,
+    "endLine": 369,
+    "length": 1
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "PrometheusMetricsCollector",
+    "kind": "ClassDeclaration",
+    "startLine": 381,
+    "endLine": 422,
+    "length": 42
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "PrometheusMetricsCollector.constructor",
+    "kind": "Constructor",
+    "startLine": 387,
+    "endLine": 392,
+    "length": 6
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "PrometheusMetricsCollector.incrementCounter",
+    "kind": "MethodDeclaration",
+    "startLine": 394,
+    "endLine": 397,
+    "length": 4
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "PrometheusMetricsCollector.setGauge",
+    "kind": "MethodDeclaration",
+    "startLine": 399,
+    "endLine": 402,
+    "length": 4
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "PrometheusMetricsCollector.observeHistogram",
+    "kind": "MethodDeclaration",
+    "startLine": 404,
+    "endLine": 407,
+    "length": 4
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "PrometheusMetricsCollector.getMetrics",
+    "kind": "MethodDeclaration",
+    "startLine": 409,
+    "endLine": 411,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "PrometheusMetricsCollector.recordHttpRequest",
+    "kind": "MethodDeclaration",
+    "startLine": 414,
+    "endLine": 417,
+    "length": 4
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "PrometheusMetricsCollector.setActiveConnections",
+    "kind": "MethodDeclaration",
+    "startLine": 419,
+    "endLine": 421,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "correlationMiddleware",
+    "kind": "FunctionDeclaration",
+    "startLine": 431,
+    "endLine": 461,
+    "length": 31
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 434,
+    "endLine": 434,
+    "length": 1
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 438,
+    "endLine": 460,
+    "length": 23
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 440,
+    "endLine": 440,
+    "length": 1
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "metricsMiddleware",
+    "kind": "FunctionDeclaration",
+    "startLine": 464,
+    "endLine": 495,
+    "length": 32
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 465,
+    "endLine": 494,
+    "length": 30
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 472,
+    "endLine": 491,
+    "length": 20
+  },
+  {
+    "file": "packages/observability/src/index.ts",
+    "name": "createObservabilitySetup",
+    "kind": "FunctionDeclaration",
+    "startLine": 498,
+    "endLine": 510,
+    "length": 13
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "ObservabilityMiddleware",
+    "kind": "ClassDeclaration",
+    "startLine": 55,
+    "endLine": 418,
+    "length": 364
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "ObservabilityMiddleware.constructor",
+    "kind": "Constructor",
+    "startLine": 61,
+    "endLine": 83,
+    "length": 23
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "ObservabilityMiddleware.buildConfig",
+    "kind": "MethodDeclaration",
+    "startLine": 85,
+    "endLine": 99,
+    "length": 15
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "ObservabilityMiddleware.parseLogLevel",
+    "kind": "MethodDeclaration",
+    "startLine": 101,
+    "endLine": 109,
+    "length": 9
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "ObservabilityMiddleware.middleware",
+    "kind": "MethodDeclaration",
+    "startLine": 114,
+    "endLine": 165,
+    "length": 52
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "ObservabilityMiddleware.errorMiddleware",
+    "kind": "MethodDeclaration",
+    "startLine": 170,
+    "endLine": 209,
+    "length": 40
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "ObservabilityMiddleware.metricsEndpoint",
+    "kind": "MethodDeclaration",
+    "startLine": 214,
+    "endLine": 223,
+    "length": 10
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "ObservabilityMiddleware.healthEndpoint",
+    "kind": "MethodDeclaration",
+    "startLine": 228,
+    "endLine": 249,
+    "length": 22
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "ObservabilityMiddleware.shouldSkipPath",
+    "kind": "MethodDeclaration",
+    "startLine": 251,
+    "endLine": 256,
+    "length": 6
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "ObservabilityMiddleware.addCorrelationId",
+    "kind": "MethodDeclaration",
+    "startLine": 258,
+    "endLine": 262,
+    "length": 5
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "ObservabilityMiddleware.startTracing",
+    "kind": "MethodDeclaration",
+    "startLine": 264,
+    "endLine": 281,
+    "length": 18
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "ObservabilityMiddleware.createRequestLogger",
+    "kind": "MethodDeclaration",
+    "startLine": 283,
+    "endLine": 310,
+    "length": 28
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "ObservabilityMiddleware.getRequestContext",
+    "kind": "MethodDeclaration",
+    "startLine": 312,
+    "endLine": 320,
+    "length": 9
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "ObservabilityMiddleware.handleRequestCompletion",
+    "kind": "MethodDeclaration",
+    "startLine": 322,
+    "endLine": 372,
+    "length": 51
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "ObservabilityMiddleware.handleRequestError",
+    "kind": "MethodDeclaration",
+    "startLine": 374,
+    "endLine": 389,
+    "length": 16
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "ObservabilityMiddleware.getLogger",
+    "kind": "MethodDeclaration",
+    "startLine": 394,
+    "endLine": 396,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "ObservabilityMiddleware.getMetrics",
+    "kind": "MethodDeclaration",
+    "startLine": 401,
+    "endLine": 403,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "ObservabilityMiddleware.getTracer",
+    "kind": "MethodDeclaration",
+    "startLine": 408,
+    "endLine": 410,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "ObservabilityMiddleware.getConfig",
+    "kind": "MethodDeclaration",
+    "startLine": 415,
+    "endLine": 417,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 115,
+    "endLine": 164,
+    "length": 50
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 154,
+    "endLine": 156,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 159,
+    "endLine": 161,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 171,
+    "endLine": 208,
+    "length": 38
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 215,
+    "endLine": 222,
+    "length": 8
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 229,
+    "endLine": 248,
+    "length": 20
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 255,
+    "endLine": 255,
+    "length": 1
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 293,
+    "endLine": 295,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 297,
+    "endLine": 299,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 301,
+    "endLine": 303,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 305,
+    "endLine": 307,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "createObservabilityMiddleware",
+    "kind": "FunctionDeclaration",
+    "startLine": 423,
+    "endLine": 425,
+    "length": 3
+  },
+  {
+    "file": "packages/observability/src/middleware.ts",
+    "name": "createCompleteObservabilitySetup",
+    "kind": "FunctionDeclaration",
+    "startLine": 430,
+    "endLine": 443,
+    "length": 14
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "MemoryCache",
+    "kind": "ClassDeclaration",
+    "startLine": 39,
+    "endLine": 214,
+    "length": 176
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "MemoryCache.constructor",
+    "kind": "Constructor",
+    "startLine": 52,
+    "endLine": 64,
+    "length": 13
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "MemoryCache.get",
+    "kind": "MethodDeclaration",
+    "startLine": 66,
+    "endLine": 95,
+    "length": 30
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "MemoryCache.set",
+    "kind": "MethodDeclaration",
+    "startLine": 97,
+    "endLine": 118,
+    "length": 22
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "MemoryCache.delete",
+    "kind": "MethodDeclaration",
+    "startLine": 120,
+    "endLine": 126,
+    "length": 7
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "MemoryCache.clear",
+    "kind": "MethodDeclaration",
+    "startLine": 128,
+    "endLine": 137,
+    "length": 10
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "MemoryCache.has",
+    "kind": "MethodDeclaration",
+    "startLine": 139,
+    "endLine": 150,
+    "length": 12
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "MemoryCache.size",
+    "kind": "MethodDeclaration",
+    "startLine": 152,
+    "endLine": 154,
+    "length": 3
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "MemoryCache.getStats",
+    "kind": "MethodDeclaration",
+    "startLine": 156,
+    "endLine": 165,
+    "length": 10
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "MemoryCache.evictEntries",
+    "kind": "MethodDeclaration",
+    "startLine": 167,
+    "endLine": 191,
+    "length": 25
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "MemoryCache.cleanup",
+    "kind": "MethodDeclaration",
+    "startLine": 194,
+    "endLine": 208,
+    "length": 15
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "MemoryCache.keys",
+    "kind": "MethodDeclaration",
+    "startLine": 211,
+    "endLine": 213,
+    "length": 3
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 172,
+    "endLine": 180,
+    "length": 9
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 198,
+    "endLine": 203,
+    "length": 6
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "LRUStrategy",
+    "kind": "ClassDeclaration",
+    "startLine": 217,
+    "endLine": 233,
+    "length": 17
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "LRUStrategy.shouldEvict",
+    "kind": "MethodDeclaration",
+    "startLine": 222,
+    "endLine": 224,
+    "length": 3
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "LRUStrategy.onAccess",
+    "kind": "MethodDeclaration",
+    "startLine": 226,
+    "endLine": 228,
+    "length": 3
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "LRUStrategy.onSet",
+    "kind": "MethodDeclaration",
+    "startLine": 230,
+    "endLine": 232,
+    "length": 3
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "LFUStrategy",
+    "kind": "ClassDeclaration",
+    "startLine": 235,
+    "endLine": 252,
+    "length": 18
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "LFUStrategy.shouldEvict",
+    "kind": "MethodDeclaration",
+    "startLine": 240,
+    "endLine": 242,
+    "length": 3
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "LFUStrategy.onAccess",
+    "kind": "MethodDeclaration",
+    "startLine": 244,
+    "endLine": 247,
+    "length": 4
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "LFUStrategy.onSet",
+    "kind": "MethodDeclaration",
+    "startLine": 249,
+    "endLine": 251,
+    "length": 3
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "memoize",
+    "kind": "FunctionDeclaration",
+    "startLine": 259,
+    "endLine": 294,
+    "length": 36
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "<inline>",
+    "kind": "FunctionExpression",
+    "startLine": 266,
+    "endLine": 293,
+    "length": 28
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "<inline>",
+    "kind": "FunctionExpression",
+    "startLine": 270,
+    "endLine": 290,
+    "length": 21
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 282,
+    "endLine": 285,
+    "length": 4
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "CircuitBreaker",
+    "kind": "ClassDeclaration",
+    "startLine": 310,
+    "endLine": 389,
+    "length": 80
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "CircuitBreaker.constructor",
+    "kind": "Constructor",
+    "startLine": 323,
+    "endLine": 326,
+    "length": 4
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "CircuitBreaker.execute",
+    "kind": "MethodDeclaration",
+    "startLine": 328,
+    "endLine": 349,
+    "length": 22
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "CircuitBreaker.onSuccess",
+    "kind": "MethodDeclaration",
+    "startLine": 351,
+    "endLine": 359,
+    "length": 9
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "CircuitBreaker.onFailure",
+    "kind": "MethodDeclaration",
+    "startLine": 361,
+    "endLine": 373,
+    "length": 13
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "CircuitBreaker.getState",
+    "kind": "MethodDeclaration",
+    "startLine": 375,
+    "endLine": 377,
+    "length": 3
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "CircuitBreaker.getMetrics",
+    "kind": "MethodDeclaration",
+    "startLine": 379,
+    "endLine": 381,
+    "length": 3
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "CircuitBreaker.reset",
+    "kind": "MethodDeclaration",
+    "startLine": 383,
+    "endLine": 388,
+    "length": 6
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "RateLimiter",
+    "kind": "ClassDeclaration",
+    "startLine": 398,
+    "endLine": 468,
+    "length": 71
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "RateLimiter.constructor",
+    "kind": "Constructor",
+    "startLine": 403,
+    "endLine": 406,
+    "length": 4
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "RateLimiter.isAllowed",
+    "kind": "MethodDeclaration",
+    "startLine": 408,
+    "endLine": 433,
+    "length": 26
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "RateLimiter.cleanup",
+    "kind": "MethodDeclaration",
+    "startLine": 435,
+    "endLine": 454,
+    "length": 20
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "RateLimiter.getUsage",
+    "kind": "MethodDeclaration",
+    "startLine": 456,
+    "endLine": 467,
+    "length": 12
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 416,
+    "endLine": 416,
+    "length": 1
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 440,
+    "endLine": 449,
+    "length": 10
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 441,
+    "endLine": 441,
+    "length": 1
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 460,
+    "endLine": 460,
+    "length": 1
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "PerformanceMonitor",
+    "kind": "ClassDeclaration",
+    "startLine": 479,
+    "endLine": 581,
+    "length": 103
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "PerformanceMonitor.constructor",
+    "kind": "Constructor",
+    "startLine": 484,
+    "endLine": 486,
+    "length": 3
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "PerformanceMonitor.startTimer",
+    "kind": "MethodDeclaration",
+    "startLine": 488,
+    "endLine": 490,
+    "length": 3
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "PerformanceMonitor.endTimer",
+    "kind": "MethodDeclaration",
+    "startLine": 492,
+    "endLine": 511,
+    "length": 20
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "PerformanceMonitor.recordMetric",
+    "kind": "MethodDeclaration",
+    "startLine": 513,
+    "endLine": 527,
+    "length": 15
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "PerformanceMonitor.getMetrics",
+    "kind": "MethodDeclaration",
+    "startLine": 529,
+    "endLine": 541,
+    "length": 13
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "PerformanceMonitor.getAverageMetric",
+    "kind": "MethodDeclaration",
+    "startLine": 543,
+    "endLine": 549,
+    "length": 7
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "PerformanceMonitor.monitor",
+    "kind": "MethodDeclaration",
+    "startLine": 552,
+    "endLine": 580,
+    "length": 29
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 533,
+    "endLine": 533,
+    "length": 1
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 537,
+    "endLine": 537,
+    "length": 1
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 547,
+    "endLine": 547,
+    "length": 1
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 553,
+    "endLine": 579,
+    "length": 27
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "<inline>",
+    "kind": "FunctionExpression",
+    "startLine": 557,
+    "endLine": 576,
+    "length": 20
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 565,
+    "endLine": 567,
+    "length": 3
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "MemoryMonitor",
+    "kind": "ClassDeclaration",
+    "startLine": 584,
+    "endLine": 645,
+    "length": 62
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "MemoryMonitor.constructor",
+    "kind": "Constructor",
+    "startLine": 589,
+    "endLine": 599,
+    "length": 11
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "MemoryMonitor.getMemoryUsage",
+    "kind": "MethodDeclaration",
+    "startLine": 601,
+    "endLine": 618,
+    "length": 18
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "MemoryMonitor.checkMemoryUsage",
+    "kind": "MethodDeclaration",
+    "startLine": 620,
+    "endLine": 638,
+    "length": 19
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "MemoryMonitor.startMonitoring",
+    "kind": "MethodDeclaration",
+    "startLine": 640,
+    "endLine": 644,
+    "length": 5
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 641,
+    "endLine": 643,
+    "length": 3
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "ConnectionPool",
+    "kind": "ClassDeclaration",
+    "startLine": 648,
+    "endLine": 762,
+    "length": 115
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "ConnectionPool.constructor",
+    "kind": "Constructor",
+    "startLine": 658,
+    "endLine": 672,
+    "length": 15
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "ConnectionPool.acquire",
+    "kind": "MethodDeclaration",
+    "startLine": 674,
+    "endLine": 704,
+    "length": 31
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "ConnectionPool.release",
+    "kind": "MethodDeclaration",
+    "startLine": 706,
+    "endLine": 727,
+    "length": 22
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "ConnectionPool.destroy",
+    "kind": "MethodDeclaration",
+    "startLine": 729,
+    "endLine": 741,
+    "length": 13
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "ConnectionPool.getTotalSize",
+    "kind": "MethodDeclaration",
+    "startLine": 743,
+    "endLine": 745,
+    "length": 3
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "ConnectionPool.getStats",
+    "kind": "MethodDeclaration",
+    "startLine": 747,
+    "endLine": 761,
+    "length": 15
+  },
+  {
+    "file": "packages/performance/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 737,
+    "endLine": 737,
+    "length": 1
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "PerformanceMonitoringMiddleware",
+    "kind": "ClassDeclaration",
+    "startLine": 61,
+    "endLine": 362,
+    "length": 302
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "PerformanceMonitoringMiddleware.constructor",
+    "kind": "Constructor",
+    "startLine": 68,
+    "endLine": 86,
+    "length": 19
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "PerformanceMonitoringMiddleware.middleware",
+    "kind": "MethodDeclaration",
+    "startLine": 89,
+    "endLine": 142,
+    "length": 54
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "PerformanceMonitoringMiddleware.recordRequest",
+    "kind": "MethodDeclaration",
+    "startLine": 145,
+    "endLine": 180,
+    "length": 36
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "PerformanceMonitoringMiddleware.updateMetrics",
+    "kind": "MethodDeclaration",
+    "startLine": 183,
+    "endLine": 216,
+    "length": 34
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "PerformanceMonitoringMiddleware.createEmptyMetrics",
+    "kind": "MethodDeclaration",
+    "startLine": 219,
+    "endLine": 234,
+    "length": 16
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "PerformanceMonitoringMiddleware.cleanupOldMetrics",
+    "kind": "MethodDeclaration",
+    "startLine": 237,
+    "endLine": 245,
+    "length": 9
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "PerformanceMonitoringMiddleware.getGlobalMetrics",
+    "kind": "MethodDeclaration",
+    "startLine": 248,
+    "endLine": 254,
+    "length": 7
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "PerformanceMonitoringMiddleware.getEndpointMetrics",
+    "kind": "MethodDeclaration",
+    "startLine": 257,
+    "endLine": 262,
+    "length": 6
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "PerformanceMonitoringMiddleware.getSlowRequests",
+    "kind": "MethodDeclaration",
+    "startLine": 265,
+    "endLine": 271,
+    "length": 7
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "PerformanceMonitoringMiddleware.getErrorRequests",
+    "kind": "MethodDeclaration",
+    "startLine": 274,
+    "endLine": 279,
+    "length": 6
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "PerformanceMonitoringMiddleware.getPrometheusMetrics",
+    "kind": "MethodDeclaration",
+    "startLine": 282,
+    "endLine": 335,
+    "length": 54
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "PerformanceMonitoringMiddleware.getDashboardData",
+    "kind": "MethodDeclaration",
+    "startLine": 338,
+    "endLine": 354,
+    "length": 17
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "PerformanceMonitoringMiddleware.reset",
+    "kind": "MethodDeclaration",
+    "startLine": 357,
+    "endLine": 361,
+    "length": 5
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 85,
+    "endLine": 85,
+    "length": 1
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 90,
+    "endLine": 141,
+    "length": 52
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "<inline>",
+    "kind": "FunctionExpression",
+    "startLine": 105,
+    "endLine": 138,
+    "length": 34
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 214,
+    "endLine": 214,
+    "length": 1
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 239,
+    "endLine": 239,
+    "length": 1
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 243,
+    "endLine": 243,
+    "length": 1
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 258,
+    "endLine": 261,
+    "length": 4
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 268,
+    "endLine": 268,
+    "length": 1
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 269,
+    "endLine": 269,
+    "length": 1
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 276,
+    "endLine": 276,
+    "length": 1
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 277,
+    "endLine": 277,
+    "length": 1
+  },
+  {
+    "file": "packages/performance/src/monitoring.ts",
+    "name": "createPerformanceMiddleware",
+    "kind": "FunctionDeclaration",
+    "startLine": 365,
+    "endLine": 367,
+    "length": 3
+  },
+  {
+    "file": "packages/refactor-cli/src/apply.ts",
+    "name": "runApply",
+    "kind": "FunctionDeclaration",
+    "startLine": 15,
+    "endLine": 60,
+    "length": 46
+  },
+  {
+    "file": "packages/refactor-cli/src/apply.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 20,
+    "endLine": 20,
+    "length": 1
+  },
+  {
+    "file": "packages/refactor-cli/src/apply.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 21,
+    "endLine": 21,
+    "length": 1
+  },
+  {
+    "file": "packages/refactor-cli/src/apply.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 51,
+    "endLine": 51,
+    "length": 1
+  },
+  {
+    "file": "packages/refactor-cli/src/guard.ts",
+    "name": "runGuard",
+    "kind": "FunctionDeclaration",
+    "startLine": 7,
+    "endLine": 33,
+    "length": 27
+  },
+  {
+    "file": "packages/refactor-cli/src/guard.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 21,
+    "endLine": 21,
+    "length": 1
+  },
+  {
+    "file": "packages/refactor-cli/src/guard.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 28,
+    "endLine": 28,
+    "length": 1
+  },
+  {
+    "file": "packages/refactor-cli/src/init.ts",
+    "name": "runInit",
+    "kind": "FunctionDeclaration",
+    "startLine": 5,
+    "endLine": 31,
+    "length": 27
+  },
+  {
+    "file": "packages/refactor-cli/src/plan.ts",
+    "name": "runPlan",
+    "kind": "FunctionDeclaration",
+    "startLine": 6,
+    "endLine": 17,
+    "length": 12
+  },
+  {
+    "file": "packages/refactor-cli/src/pr.ts",
+    "name": "runPr",
+    "kind": "FunctionDeclaration",
+    "startLine": 7,
+    "endLine": 52,
+    "length": 46
+  },
+  {
+    "file": "packages/refactor-cli/src/scan.ts",
+    "name": "runScan",
+    "kind": "FunctionDeclaration",
+    "startLine": 15,
+    "endLine": 52,
+    "length": 38
+  },
+  {
+    "file": "packages/refactor-cli/src/scan.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 27,
+    "endLine": 27,
+    "length": 1
+  },
+  {
+    "file": "packages/refactor-cli/src/scan.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 32,
+    "endLine": 36,
+    "length": 5
+  },
+  {
+    "file": "packages/refactor-cli/src/scan.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 43,
+    "endLine": 43,
+    "length": 1
+  },
+  {
+    "file": "packages/refactor-cli/src/util.ts",
+    "name": "findRepoRoot",
+    "kind": "FunctionDeclaration",
+    "startLine": 15,
+    "endLine": 23,
+    "length": 9
+  },
+  {
+    "file": "packages/refactor-cli/src/util.ts",
+    "name": "loadRules",
+    "kind": "FunctionDeclaration",
+    "startLine": 25,
+    "endLine": 31,
+    "length": 7
+  },
+  {
+    "file": "packages/refactor-cli/src/util.ts",
+    "name": "relativeToRoot",
+    "kind": "FunctionDeclaration",
+    "startLine": 33,
+    "endLine": 37,
+    "length": 5
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthenticationService",
+    "kind": "ClassDeclaration",
+    "startLine": 63,
+    "endLine": 342,
+    "length": 280
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthenticationService.constructor",
+    "kind": "Constructor",
+    "startLine": 73,
+    "endLine": 89,
+    "length": 17
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthenticationService.hashPassword",
+    "kind": "MethodDeclaration",
+    "startLine": 91,
+    "endLine": 102,
+    "length": 12
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthenticationService.verifyPassword",
+    "kind": "MethodDeclaration",
+    "startLine": 104,
+    "endLine": 115,
+    "length": 12
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthenticationService.generateTokens",
+    "kind": "MethodDeclaration",
+    "startLine": 117,
+    "endLine": 179,
+    "length": 63
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthenticationService.verifyAccessToken",
+    "kind": "MethodDeclaration",
+    "startLine": 181,
+    "endLine": 214,
+    "length": 34
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthenticationService.refreshAccessToken",
+    "kind": "MethodDeclaration",
+    "startLine": 216,
+    "endLine": 260,
+    "length": 45
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthenticationService.revokeToken",
+    "kind": "MethodDeclaration",
+    "startLine": 262,
+    "endLine": 279,
+    "length": 18
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthenticationService.revokeAllUserTokens",
+    "kind": "MethodDeclaration",
+    "startLine": 281,
+    "endLine": 298,
+    "length": 18
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthenticationService.generateSessionId",
+    "kind": "MethodDeclaration",
+    "startLine": 300,
+    "endLine": 302,
+    "length": 3
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthenticationService.getActiveSessions",
+    "kind": "MethodDeclaration",
+    "startLine": 305,
+    "endLine": 319,
+    "length": 15
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthenticationService.cleanupExpiredSessions",
+    "kind": "MethodDeclaration",
+    "startLine": 321,
+    "endLine": 341,
+    "length": 21
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 284,
+    "endLine": 288,
+    "length": 5
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 308,
+    "endLine": 316,
+    "length": 9
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 325,
+    "endLine": 330,
+    "length": 6
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthorizationService",
+    "kind": "ClassDeclaration",
+    "startLine": 347,
+    "endLine": 451,
+    "length": 105
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthorizationService.constructor",
+    "kind": "Constructor",
+    "startLine": 351,
+    "endLine": 353,
+    "length": 3
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthorizationService.addRole",
+    "kind": "MethodDeclaration",
+    "startLine": 355,
+    "endLine": 361,
+    "length": 7
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthorizationService.hasPermission",
+    "kind": "MethodDeclaration",
+    "startLine": 363,
+    "endLine": 395,
+    "length": 33
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthorizationService.matchesPermission",
+    "kind": "MethodDeclaration",
+    "startLine": 397,
+    "endLine": 424,
+    "length": 28
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthorizationService.matchesPattern",
+    "kind": "MethodDeclaration",
+    "startLine": 426,
+    "endLine": 437,
+    "length": 12
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthorizationService.getUserPermissions",
+    "kind": "MethodDeclaration",
+    "startLine": 439,
+    "endLine": 450,
+    "length": 12
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "SecurityUtils",
+    "kind": "ClassDeclaration",
+    "startLine": 456,
+    "endLine": 534,
+    "length": 79
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "SecurityUtils.generateSecureToken",
+    "kind": "MethodDeclaration",
+    "startLine": 459,
+    "endLine": 461,
+    "length": 3
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "SecurityUtils.generateApiKey",
+    "kind": "MethodDeclaration",
+    "startLine": 463,
+    "endLine": 467,
+    "length": 5
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "SecurityUtils.hashApiKey",
+    "kind": "MethodDeclaration",
+    "startLine": 469,
+    "endLine": 471,
+    "length": 3
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "SecurityUtils.verifyApiKey",
+    "kind": "MethodDeclaration",
+    "startLine": 473,
+    "endLine": 483,
+    "length": 11
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "SecurityUtils.sanitizeInput",
+    "kind": "MethodDeclaration",
+    "startLine": 485,
+    "endLine": 490,
+    "length": 6
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "SecurityUtils.isStrongPassword",
+    "kind": "MethodDeclaration",
+    "startLine": 492,
+    "endLine": 502,
+    "length": 11
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "SecurityUtils.validateEmail",
+    "kind": "MethodDeclaration",
+    "startLine": 504,
+    "endLine": 507,
+    "length": 4
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "SecurityUtils.rateLimit",
+    "kind": "MethodDeclaration",
+    "startLine": 509,
+    "endLine": 531,
+    "length": 23
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 523,
+    "endLine": 528,
+    "length": 6
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthMiddleware",
+    "kind": "ClassDeclaration",
+    "startLine": 537,
+    "endLine": 621,
+    "length": 85
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthMiddleware.constructor",
+    "kind": "Constructor",
+    "startLine": 542,
+    "endLine": 550,
+    "length": 9
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthMiddleware.authenticate",
+    "kind": "MethodDeclaration",
+    "startLine": 552,
+    "endLine": 585,
+    "length": 34
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "AuthMiddleware.authorize",
+    "kind": "MethodDeclaration",
+    "startLine": 587,
+    "endLine": 620,
+    "length": 34
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 553,
+    "endLine": 584,
+    "length": 32
+  },
+  {
+    "file": "packages/security/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 588,
+    "endLine": 619,
+    "length": 32
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 10,
+    "endLine": 12,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 11,
+    "endLine": 11,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 14,
+    "endLine": 21,
+    "length": 8
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 23,
+    "endLine": 86,
+    "length": 64
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 26,
+    "endLine": 29,
+    "length": 4
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 31,
+    "endLine": 85,
+    "length": 55
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 32,
+    "endLine": 46,
+    "length": 15
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 48,
+    "endLine": 60,
+    "length": 13
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 62,
+    "endLine": 84,
+    "length": 23
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 88,
+    "endLine": 158,
+    "length": 71
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 89,
+    "endLine": 110,
+    "length": 22
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 90,
+    "endLine": 101,
+    "length": 12
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 103,
+    "endLine": 109,
+    "length": 7
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 112,
+    "endLine": 131,
+    "length": 20
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 113,
+    "endLine": 122,
+    "length": 10
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 124,
+    "endLine": 130,
+    "length": 7
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 133,
+    "endLine": 157,
+    "length": 25
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 134,
+    "endLine": 144,
+    "length": 11
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 146,
+    "endLine": 156,
+    "length": 11
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "SelfHealIngest",
+    "kind": "ClassDeclaration",
+    "startLine": 57,
+    "endLine": 355,
+    "length": 299
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "SelfHealIngest.constructor",
+    "kind": "Constructor",
+    "startLine": 68,
+    "endLine": 71,
+    "length": 4
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "SelfHealIngest.processLogEntry",
+    "kind": "MethodDeclaration",
+    "startLine": 76,
+    "endLine": 94,
+    "length": 19
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "SelfHealIngest.createFingerprint",
+    "kind": "MethodDeclaration",
+    "startLine": 99,
+    "endLine": 122,
+    "length": 24
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "SelfHealIngest.extractErrorPattern",
+    "kind": "MethodDeclaration",
+    "startLine": 127,
+    "endLine": 137,
+    "length": 11
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "SelfHealIngest.extractStackSignature",
+    "kind": "MethodDeclaration",
+    "startLine": 142,
+    "endLine": 157,
+    "length": 16
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "SelfHealIngest.classifyErrorType",
+    "kind": "MethodDeclaration",
+    "startLine": 162,
+    "endLine": 206,
+    "length": 45
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "SelfHealIngest.updateFingerprint",
+    "kind": "MethodDeclaration",
+    "startLine": 211,
+    "endLine": 239,
+    "length": 29
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "SelfHealIngest.calculateSeverity",
+    "kind": "MethodDeclaration",
+    "startLine": 244,
+    "endLine": 249,
+    "length": 6
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "SelfHealIngest.evaluateForHealing",
+    "kind": "MethodDeclaration",
+    "startLine": 254,
+    "endLine": 291,
+    "length": 38
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "SelfHealIngest.getFingerprints",
+    "kind": "MethodDeclaration",
+    "startLine": 296,
+    "endLine": 298,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "SelfHealIngest.getFingerprint",
+    "kind": "MethodDeclaration",
+    "startLine": 303,
+    "endLine": 305,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "SelfHealIngest.updateFingerprintStatus",
+    "kind": "MethodDeclaration",
+    "startLine": 310,
+    "endLine": 316,
+    "length": 7
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "SelfHealIngest.getFingerprintsByService",
+    "kind": "MethodDeclaration",
+    "startLine": 321,
+    "endLine": 323,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "SelfHealIngest.getFingerprintsBySeverity",
+    "kind": "MethodDeclaration",
+    "startLine": 328,
+    "endLine": 330,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "SelfHealIngest.cleanup",
+    "kind": "MethodDeclaration",
+    "startLine": 335,
+    "endLine": 354,
+    "length": 20
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 148,
+    "endLine": 148,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 150,
+    "endLine": 154,
+    "length": 5
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 322,
+    "endLine": 322,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 329,
+    "endLine": 329,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 346,
+    "endLine": 346,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "LogParser",
+    "kind": "ClassDeclaration",
+    "startLine": 360,
+    "endLine": 421,
+    "length": 62
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "LogParser.parseJsonLog",
+    "kind": "MethodDeclaration",
+    "startLine": 364,
+    "endLine": 381,
+    "length": 18
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "LogParser.parseStandardLog",
+    "kind": "MethodDeclaration",
+    "startLine": 386,
+    "endLine": 400,
+    "length": 15
+  },
+  {
+    "file": "packages/selfheal-ingest/src/index.ts",
+    "name": "LogParser.parseContainerLog",
+    "kind": "MethodDeclaration",
+    "startLine": 405,
+    "endLine": 420,
+    "length": 16
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 15,
+    "endLine": 23,
+    "length": 9
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 26,
+    "endLine": 33,
+    "length": 8
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 35,
+    "endLine": 196,
+    "length": 162
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 36,
+    "endLine": 52,
+    "length": 17
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 37,
+    "endLine": 42,
+    "length": 6
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 44,
+    "endLine": 51,
+    "length": 8
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 54,
+    "endLine": 62,
+    "length": 9
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 55,
+    "endLine": 61,
+    "length": 7
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 64,
+    "endLine": 108,
+    "length": 45
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 67,
+    "endLine": 69,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 71,
+    "endLine": 73,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 75,
+    "endLine": 79,
+    "length": 5
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 81,
+    "endLine": 93,
+    "length": 13
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 95,
+    "endLine": 107,
+    "length": 13
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 110,
+    "endLine": 147,
+    "length": 38
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 111,
+    "endLine": 120,
+    "length": 10
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 116,
+    "endLine": 119,
+    "length": 4
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 122,
+    "endLine": 131,
+    "length": 10
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 127,
+    "endLine": 130,
+    "length": 4
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 133,
+    "endLine": 146,
+    "length": 14
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 135,
+    "endLine": 139,
+    "length": 5
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 142,
+    "endLine": 145,
+    "length": 4
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 149,
+    "endLine": 178,
+    "length": 30
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 150,
+    "endLine": 163,
+    "length": 14
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 165,
+    "endLine": 177,
+    "length": 13
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 180,
+    "endLine": 195,
+    "length": 16
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 181,
+    "endLine": 186,
+    "length": 6
+  },
+  {
+    "file": "packages/selfheal-llm/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 188,
+    "endLine": 194,
+    "length": 7
+  },
+  {
+    "file": "packages/selfheal-llm/src/llm-client.ts",
+    "name": "OpenAIClient",
+    "kind": "ClassDeclaration",
+    "startLine": 81,
+    "endLine": 213,
+    "length": 133
+  },
+  {
+    "file": "packages/selfheal-llm/src/llm-client.ts",
+    "name": "OpenAIClient.constructor",
+    "kind": "Constructor",
+    "startLine": 86,
+    "endLine": 101,
+    "length": 16
+  },
+  {
+    "file": "packages/selfheal-llm/src/llm-client.ts",
+    "name": "OpenAIClient.ensureOpenAIClient",
+    "kind": "MethodDeclaration",
+    "startLine": 106,
+    "endLine": 127,
+    "length": 22
+  },
+  {
+    "file": "packages/selfheal-llm/src/llm-client.ts",
+    "name": "OpenAIClient.complete",
+    "kind": "MethodDeclaration",
+    "startLine": 132,
+    "endLine": 193,
+    "length": 62
+  },
+  {
+    "file": "packages/selfheal-llm/src/llm-client.ts",
+    "name": "OpenAIClient.isConfigured",
+    "kind": "MethodDeclaration",
+    "startLine": 198,
+    "endLine": 205,
+    "length": 8
+  },
+  {
+    "file": "packages/selfheal-llm/src/llm-client.ts",
+    "name": "OpenAIClient.getAvailableModels",
+    "kind": "MethodDeclaration",
+    "startLine": 210,
+    "endLine": 212,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-llm/src/llm-client.ts",
+    "name": "MockLLMClient",
+    "kind": "ClassDeclaration",
+    "startLine": 218,
+    "endLine": 282,
+    "length": 65
+  },
+  {
+    "file": "packages/selfheal-llm/src/llm-client.ts",
+    "name": "MockLLMClient.constructor",
+    "kind": "Constructor",
+    "startLine": 221,
+    "endLine": 243,
+    "length": 23
+  },
+  {
+    "file": "packages/selfheal-llm/src/llm-client.ts",
+    "name": "MockLLMClient.addMockResponse",
+    "kind": "MethodDeclaration",
+    "startLine": 248,
+    "endLine": 250,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-llm/src/llm-client.ts",
+    "name": "MockLLMClient.complete",
+    "kind": "MethodDeclaration",
+    "startLine": 252,
+    "endLine": 273,
+    "length": 22
+  },
+  {
+    "file": "packages/selfheal-llm/src/llm-client.ts",
+    "name": "MockLLMClient.isConfigured",
+    "kind": "MethodDeclaration",
+    "startLine": 275,
+    "endLine": 277,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-llm/src/llm-client.ts",
+    "name": "MockLLMClient.getAvailableModels",
+    "kind": "MethodDeclaration",
+    "startLine": 279,
+    "endLine": 281,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-llm/src/llm-client.ts",
+    "name": "createLLMClient",
+    "kind": "FunctionDeclaration",
+    "startLine": 287,
+    "endLine": 299,
+    "length": 13
+  },
+  {
+    "file": "packages/selfheal-llm/src/patch-validator.ts",
+    "name": "PatchValidator",
+    "kind": "ClassDeclaration",
+    "startLine": 14,
+    "endLine": 207,
+    "length": 194
+  },
+  {
+    "file": "packages/selfheal-llm/src/patch-validator.ts",
+    "name": "PatchValidator.generateTraceId",
+    "kind": "MethodDeclaration",
+    "startLine": 18,
+    "endLine": 20,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-llm/src/patch-validator.ts",
+    "name": "PatchValidator.validate",
+    "kind": "MethodDeclaration",
+    "startLine": 25,
+    "endLine": 60,
+    "length": 36
+  },
+  {
+    "file": "packages/selfheal-llm/src/patch-validator.ts",
+    "name": "PatchValidator.validateSyntax",
+    "kind": "MethodDeclaration",
+    "startLine": 65,
+    "endLine": 89,
+    "length": 25
+  },
+  {
+    "file": "packages/selfheal-llm/src/patch-validator.ts",
+    "name": "PatchValidator.validateSecurity",
+    "kind": "MethodDeclaration",
+    "startLine": 94,
+    "endLine": 118,
+    "length": 25
+  },
+  {
+    "file": "packages/selfheal-llm/src/patch-validator.ts",
+    "name": "PatchValidator.validatePerformance",
+    "kind": "MethodDeclaration",
+    "startLine": 123,
+    "endLine": 147,
+    "length": 25
+  },
+  {
+    "file": "packages/selfheal-llm/src/patch-validator.ts",
+    "name": "PatchValidator.validateCompatibility",
+    "kind": "MethodDeclaration",
+    "startLine": 152,
+    "endLine": 173,
+    "length": 22
+  },
+  {
+    "file": "packages/selfheal-llm/src/patch-validator.ts",
+    "name": "PatchValidator.calculateRisk",
+    "kind": "MethodDeclaration",
+    "startLine": 178,
+    "endLine": 188,
+    "length": 11
+  },
+  {
+    "file": "packages/selfheal-llm/src/patch-validator.ts",
+    "name": "PatchValidator.getRecommendation",
+    "kind": "MethodDeclaration",
+    "startLine": 193,
+    "endLine": 206,
+    "length": 14
+  },
+  {
+    "file": "packages/selfheal-llm/src/patch-validator.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 53,
+    "endLine": 53,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-llm/src/patch-validator.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 54,
+    "endLine": 54,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-llm/src/patch-validator.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 56,
+    "endLine": 56,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-llm/src/patch-validator.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 57,
+    "endLine": 57,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-llm/src/patch-validator.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 180,
+    "endLine": 180,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-llm/src/prompt-manager.ts",
+    "name": "PromptManager",
+    "kind": "ClassDeclaration",
+    "startLine": 13,
+    "endLine": 84,
+    "length": 72
+  },
+  {
+    "file": "packages/selfheal-llm/src/prompt-manager.ts",
+    "name": "PromptManager.constructor",
+    "kind": "Constructor",
+    "startLine": 17,
+    "endLine": 19,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-llm/src/prompt-manager.ts",
+    "name": "PromptManager.loadPrompt",
+    "kind": "MethodDeclaration",
+    "startLine": 24,
+    "endLine": 38,
+    "length": 15
+  },
+  {
+    "file": "packages/selfheal-llm/src/prompt-manager.ts",
+    "name": "PromptManager.loadAllPrompts",
+    "kind": "MethodDeclaration",
+    "startLine": 43,
+    "endLine": 62,
+    "length": 20
+  },
+  {
+    "file": "packages/selfheal-llm/src/prompt-manager.ts",
+    "name": "PromptManager.processTemplate",
+    "kind": "MethodDeclaration",
+    "startLine": 67,
+    "endLine": 76,
+    "length": 10
+  },
+  {
+    "file": "packages/selfheal-llm/src/prompt-manager.ts",
+    "name": "PromptManager.clearCache",
+    "kind": "MethodDeclaration",
+    "startLine": 81,
+    "endLine": 83,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "SelfHealEngine",
+    "kind": "ClassDeclaration",
+    "startLine": 32,
+    "endLine": 746,
+    "length": 715
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "SelfHealEngine.constructor",
+    "kind": "Constructor",
+    "startLine": 39,
+    "endLine": 56,
+    "length": 18
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "SelfHealEngine.createValidatedConfig",
+    "kind": "MethodDeclaration",
+    "startLine": 61,
+    "endLine": 101,
+    "length": 41
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "SelfHealEngine.heal",
+    "kind": "MethodDeclaration",
+    "startLine": 106,
+    "endLine": 190,
+    "length": 85
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "SelfHealEngine.ensureLLMClient",
+    "kind": "MethodDeclaration",
+    "startLine": 195,
+    "endLine": 206,
+    "length": 12
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "SelfHealEngine.executeLLMRequest",
+    "kind": "MethodDeclaration",
+    "startLine": 211,
+    "endLine": 252,
+    "length": 42
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "SelfHealEngine.classifyIssue",
+    "kind": "MethodDeclaration",
+    "startLine": 257,
+    "endLine": 301,
+    "length": 45
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "SelfHealEngine.proposePatch",
+    "kind": "MethodDeclaration",
+    "startLine": 306,
+    "endLine": 363,
+    "length": 58
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "SelfHealEngine.validatePatch",
+    "kind": "MethodDeclaration",
+    "startLine": 368,
+    "endLine": 444,
+    "length": 77
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "SelfHealEngine.critiquePatch",
+    "kind": "MethodDeclaration",
+    "startLine": 449,
+    "endLine": 529,
+    "length": 81
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "SelfHealEngine.calculateOverallRisk",
+    "kind": "MethodDeclaration",
+    "startLine": 534,
+    "endLine": 545,
+    "length": 12
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "SelfHealEngine.generateTests",
+    "kind": "MethodDeclaration",
+    "startLine": 550,
+    "endLine": 599,
+    "length": 50
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "SelfHealEngine.generateCommitMessage",
+    "kind": "MethodDeclaration",
+    "startLine": 604,
+    "endLine": 609,
+    "length": 6
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "SelfHealEngine.generatePullRequestBody",
+    "kind": "MethodDeclaration",
+    "startLine": 614,
+    "endLine": 691,
+    "length": 78
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "SelfHealEngine.getAnalyzerSummary",
+    "kind": "MethodDeclaration",
+    "startLine": 696,
+    "endLine": 710,
+    "length": 15
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "SelfHealEngine.generateIssueId",
+    "kind": "MethodDeclaration",
+    "startLine": 715,
+    "endLine": 717,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "SelfHealEngine.generateTraceId",
+    "kind": "MethodDeclaration",
+    "startLine": 722,
+    "endLine": 724,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "SelfHealEngine.calculateOverallConfidence",
+    "kind": "MethodDeclaration",
+    "startLine": 729,
+    "endLine": 745,
+    "length": 17
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 167,
+    "endLine": 177,
+    "length": 11
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 409,
+    "endLine": 419,
+    "length": 11
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 492,
+    "endLine": 495,
+    "length": 4
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 494,
+    "endLine": 494,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 504,
+    "endLine": 504,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 504,
+    "endLine": 504,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 511,
+    "endLine": 511,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 511,
+    "endLine": 511,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 539,
+    "endLine": 539,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 681,
+    "endLine": 681,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-llm/src/selfheal-engine.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 685,
+    "endLine": 685,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-llm/src/test-synthesizer.ts",
+    "name": "TestSynthesizer",
+    "kind": "ClassDeclaration",
+    "startLine": 14,
+    "endLine": 219,
+    "length": 206
+  },
+  {
+    "file": "packages/selfheal-llm/src/test-synthesizer.ts",
+    "name": "TestSynthesizer.synthesize",
+    "kind": "MethodDeclaration",
+    "startLine": 18,
+    "endLine": 35,
+    "length": 18
+  },
+  {
+    "file": "packages/selfheal-llm/src/test-synthesizer.ts",
+    "name": "TestSynthesizer.generateUnitTests",
+    "kind": "MethodDeclaration",
+    "startLine": 40,
+    "endLine": 56,
+    "length": 17
+  },
+  {
+    "file": "packages/selfheal-llm/src/test-synthesizer.ts",
+    "name": "TestSynthesizer.generateIntegrationTests",
+    "kind": "MethodDeclaration",
+    "startLine": 61,
+    "endLine": 66,
+    "length": 6
+  },
+  {
+    "file": "packages/selfheal-llm/src/test-synthesizer.ts",
+    "name": "TestSynthesizer.generateRegressionTests",
+    "kind": "MethodDeclaration",
+    "startLine": 71,
+    "endLine": 87,
+    "length": 17
+  },
+  {
+    "file": "packages/selfheal-llm/src/test-synthesizer.ts",
+    "name": "TestSynthesizer.generateUnitTestContent",
+    "kind": "MethodDeclaration",
+    "startLine": 92,
+    "endLine": 149,
+    "length": 58
+  },
+  {
+    "file": "packages/selfheal-llm/src/test-synthesizer.ts",
+    "name": "TestSynthesizer.generateRegressionTestContent",
+    "kind": "MethodDeclaration",
+    "startLine": 154,
+    "endLine": 182,
+    "length": 29
+  },
+  {
+    "file": "packages/selfheal-llm/src/test-synthesizer.ts",
+    "name": "TestSynthesizer.estimateCoverage",
+    "kind": "MethodDeclaration",
+    "startLine": 187,
+    "endLine": 207,
+    "length": 21
+  },
+  {
+    "file": "packages/selfheal-llm/src/test-synthesizer.ts",
+    "name": "TestSynthesizer.toPascalCase",
+    "kind": "MethodDeclaration",
+    "startLine": 212,
+    "endLine": 218,
+    "length": 7
+  },
+  {
+    "file": "packages/selfheal-llm/src/test-synthesizer.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 216,
+    "endLine": 216,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-llm/src/test-synthesizer.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 217,
+    "endLine": 217,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 23,
+    "endLine": 25,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 24,
+    "endLine": 24,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 27,
+    "endLine": 34,
+    "length": 8
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 36,
+    "endLine": 38,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 40,
+    "endLine": 42,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 44,
+    "endLine": 183,
+    "length": 140
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 47,
+    "endLine": 54,
+    "length": 8
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 56,
+    "endLine": 65,
+    "length": 10
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 57,
+    "endLine": 59,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 61,
+    "endLine": 64,
+    "length": 4
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 67,
+    "endLine": 114,
+    "length": 48
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 68,
+    "endLine": 90,
+    "length": 23
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 85,
+    "endLine": 87,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 92,
+    "endLine": 113,
+    "length": 22
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 109,
+    "endLine": 112,
+    "length": 4
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 116,
+    "endLine": 129,
+    "length": 14
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 117,
+    "endLine": 128,
+    "length": 12
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 131,
+    "endLine": 182,
+    "length": 52
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 132,
+    "endLine": 154,
+    "length": 23
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.test.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 156,
+    "endLine": 181,
+    "length": 26
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "SelfHealWorker",
+    "kind": "ClassDeclaration",
+    "startLine": 64,
+    "endLine": 617,
+    "length": 554
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "SelfHealWorker.constructor",
+    "kind": "Constructor",
+    "startLine": 73,
+    "endLine": 86,
+    "length": 14
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "SelfHealWorker.start",
+    "kind": "MethodDeclaration",
+    "startLine": 91,
+    "endLine": 110,
+    "length": 20
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "SelfHealWorker.stop",
+    "kind": "MethodDeclaration",
+    "startLine": 115,
+    "endLine": 118,
+    "length": 4
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "SelfHealWorker.registerStrategy",
+    "kind": "MethodDeclaration",
+    "startLine": 123,
+    "endLine": 130,
+    "length": 8
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "SelfHealWorker.setupEventListeners",
+    "kind": "MethodDeclaration",
+    "startLine": 135,
+    "endLine": 143,
+    "length": 9
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "SelfHealWorker.handleHealingTrigger",
+    "kind": "MethodDeclaration",
+    "startLine": 148,
+    "endLine": 174,
+    "length": 27
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "SelfHealWorker.handleFingerprintUpdate",
+    "kind": "MethodDeclaration",
+    "startLine": 179,
+    "endLine": 192,
+    "length": 14
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "SelfHealWorker.initiateHealing",
+    "kind": "MethodDeclaration",
+    "startLine": 197,
+    "endLine": 288,
+    "length": 92
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "SelfHealWorker.buildHealingContext",
+    "kind": "MethodDeclaration",
+    "startLine": 293,
+    "endLine": 311,
+    "length": 19
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "SelfHealWorker.selectStrategies",
+    "kind": "MethodDeclaration",
+    "startLine": 316,
+    "endLine": 332,
+    "length": 17
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "SelfHealWorker.assessActiveFingerprints",
+    "kind": "MethodDeclaration",
+    "startLine": 337,
+    "endLine": 356,
+    "length": 20
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "SelfHealWorker.shouldTriggerProactiveHealing",
+    "kind": "MethodDeclaration",
+    "startLine": 361,
+    "endLine": 377,
+    "length": 17
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "SelfHealWorker.registerDefaultStrategies",
+    "kind": "MethodDeclaration",
+    "startLine": 382,
+    "endLine": 448,
+    "length": 67
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "SelfHealWorker.llmHealingStrategy",
+    "kind": "MethodDeclaration",
+    "startLine": 453,
+    "endLine": 494,
+    "length": 42
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "SelfHealWorker.buildLLMPrompt",
+    "kind": "MethodDeclaration",
+    "startLine": 499,
+    "endLine": 535,
+    "length": 37
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "SelfHealWorker.parseLLMResponse",
+    "kind": "MethodDeclaration",
+    "startLine": 540,
+    "endLine": 575,
+    "length": 36
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "SelfHealWorker.getHealingStats",
+    "kind": "MethodDeclaration",
+    "startLine": 580,
+    "endLine": 595,
+    "length": 16
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "SelfHealWorker.cleanup",
+    "kind": "MethodDeclaration",
+    "startLine": 600,
+    "endLine": 616,
+    "length": 17
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 100,
+    "endLine": 102,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 105,
+    "endLine": 107,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 136,
+    "endLine": 138,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 140,
+    "endLine": 142,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 319,
+    "endLine": 321,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 323,
+    "endLine": 329,
+    "length": 7
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 342,
+    "endLine": 342,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "execute",
+    "kind": "ArrowFunction",
+    "startLine": 389,
+    "endLine": 408,
+    "length": 20
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "execute",
+    "kind": "ArrowFunction",
+    "startLine": 417,
+    "endLine": 435,
+    "length": 19
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "execute",
+    "kind": "ArrowFunction",
+    "startLine": 444,
+    "endLine": 446,
+    "length": 3
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 544,
+    "endLine": 550,
+    "length": 7
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 585,
+    "endLine": 585,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 589,
+    "endLine": 589,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 590,
+    "endLine": 590,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 591,
+    "endLine": 591,
+    "length": 1
+  },
+  {
+    "file": "packages/selfheal-worker/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 592,
+    "endLine": 592,
+    "length": 1
+  },
+  {
+    "file": "packages/ts-codemods/src/add-config-loader.ts",
+    "name": "addConfigLoader",
+    "kind": "ArrowFunction",
+    "startLine": 6,
+    "endLine": 38,
+    "length": 33
+  },
+  {
+    "file": "packages/ts-codemods/src/add-config-loader.ts",
+    "name": "addConfigLoader",
+    "kind": "ArrowFunction",
+    "startLine": 6,
+    "endLine": 38,
+    "length": 33
+  },
+  {
+    "file": "packages/ts-codemods/src/add-config-loader.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 13,
+    "endLine": 21,
+    "length": 9
+  },
+  {
+    "file": "packages/ts-codemods/src/add-config-loader.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 24,
+    "endLine": 24,
+    "length": 1
+  },
+  {
+    "file": "packages/ts-codemods/src/add-dbc-guards.ts",
+    "name": "ensureImport",
+    "kind": "FunctionDeclaration",
+    "startLine": 6,
+    "endLine": 13,
+    "length": 8
+  },
+  {
+    "file": "packages/ts-codemods/src/add-dbc-guards.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 7,
+    "endLine": 7,
+    "length": 1
+  },
+  {
+    "file": "packages/ts-codemods/src/add-dbc-guards.ts",
+    "name": "addGuards",
+    "kind": "FunctionDeclaration",
+    "startLine": 15,
+    "endLine": 37,
+    "length": 23
+  },
+  {
+    "file": "packages/ts-codemods/src/add-dbc-guards.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 21,
+    "endLine": 21,
+    "length": 1
+  },
+  {
+    "file": "packages/ts-codemods/src/add-dbc-guards.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 22,
+    "endLine": 22,
+    "length": 1
+  },
+  {
+    "file": "packages/ts-codemods/src/add-dbc-guards.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 25,
+    "endLine": 33,
+    "length": 9
+  },
+  {
+    "file": "packages/ts-codemods/src/add-dbc-guards.ts",
+    "name": "addDbcGuards",
+    "kind": "ArrowFunction",
+    "startLine": 39,
+    "endLine": 58,
+    "length": 20
+  },
+  {
+    "file": "packages/ts-codemods/src/add-dbc-guards.ts",
+    "name": "addDbcGuards",
+    "kind": "ArrowFunction",
+    "startLine": 39,
+    "endLine": 58,
+    "length": 20
+  },
+  {
+    "file": "packages/ts-codemods/src/add-dbc-guards.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 42,
+    "endLine": 52,
+    "length": 11
+  },
+  {
+    "file": "packages/ts-codemods/src/add-dbc-guards.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 45,
+    "endLine": 50,
+    "length": 6
+  },
+  {
+    "file": "packages/ts-codemods/src/add-strangler-facade.ts",
+    "name": "addStranglerFacade",
+    "kind": "ArrowFunction",
+    "startLine": 5,
+    "endLine": 23,
+    "length": 19
+  },
+  {
+    "file": "packages/ts-codemods/src/add-strangler-facade.ts",
+    "name": "addStranglerFacade",
+    "kind": "ArrowFunction",
+    "startLine": 5,
+    "endLine": 23,
+    "length": 19
+  },
+  {
+    "file": "packages/ts-codemods/src/add-strangler-facade.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 8,
+    "endLine": 17,
+    "length": 10
+  },
+  {
+    "file": "packages/ts-codemods/src/extract-functional-core.ts",
+    "name": "extractFunctionalCore",
+    "kind": "ArrowFunction",
+    "startLine": 7,
+    "endLine": 36,
+    "length": 30
+  },
+  {
+    "file": "packages/ts-codemods/src/extract-functional-core.ts",
+    "name": "extractFunctionalCore",
+    "kind": "ArrowFunction",
+    "startLine": 7,
+    "endLine": 36,
+    "length": 30
+  },
+  {
+    "file": "packages/ts-codemods/src/extract-functional-core.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 10,
+    "endLine": 30,
+    "length": 21
+  },
+  {
+    "file": "packages/ts-codemods/src/extract-functional-core.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 12,
+    "endLine": 28,
+    "length": 17
+  },
+  {
+    "file": "packages/ts-codemods/src/types.ts",
+    "name": "result",
+    "kind": "FunctionDeclaration",
+    "startLine": 16,
+    "endLine": 19,
+    "length": 4
+  },
+  {
+    "file": "packages/ts-codemods/src/types.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 18,
+    "endLine": 18,
+    "length": 1
+  },
+  {
+    "file": "packages/ts-codemods/src/wrap-adapter-resilience.ts",
+    "name": "wrapAdapterResilience",
+    "kind": "ArrowFunction",
+    "startLine": 5,
+    "endLine": 28,
+    "length": 24
+  },
+  {
+    "file": "packages/ts-codemods/src/wrap-adapter-resilience.ts",
+    "name": "wrapAdapterResilience",
+    "kind": "ArrowFunction",
+    "startLine": 5,
+    "endLine": 28,
+    "length": 24
+  },
+  {
+    "file": "packages/ts-codemods/src/wrap-adapter-resilience.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 8,
+    "endLine": 22,
+    "length": 15
+  },
+  {
+    "file": "packages/ts-codemods/src/wrap-adapter-resilience.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 10,
+    "endLine": 20,
+    "length": 11
+  },
+  {
+    "file": "packages/ts-codemods/tests/run-tests.ts",
+    "name": "testAddConfigLoader",
+    "kind": "FunctionDeclaration",
+    "startLine": 6,
+    "endLine": 12,
+    "length": 7
+  },
+  {
+    "file": "packages/ts-codemods/tests/run-tests.ts",
+    "name": "testAddDbcGuards",
+    "kind": "FunctionDeclaration",
+    "startLine": 14,
+    "endLine": 20,
+    "length": 7
+  },
+  {
+    "file": "packages/ts-codemods/tests/run-tests.ts",
+    "name": "testExtractFunctionalCore",
+    "kind": "FunctionDeclaration",
+    "startLine": 22,
+    "endLine": 31,
+    "length": 10
+  },
+  {
+    "file": "packages/utils/src/index.ts",
+    "name": "ensureString",
+    "kind": "FunctionDeclaration",
+    "startLine": 8,
+    "endLine": 12,
+    "length": 5
+  },
+  {
+    "file": "packages/utils/src/index.ts",
+    "name": "ensureNumber",
+    "kind": "FunctionDeclaration",
+    "startLine": 14,
+    "endLine": 18,
+    "length": 5
+  },
+  {
+    "file": "packages/utils/src/index.ts",
+    "name": "noop",
+    "kind": "FunctionDeclaration",
+    "startLine": 20,
+    "endLine": 20,
+    "length": 1
+  },
+  {
+    "file": "packages/utils/src/index.ts",
+    "name": "delay",
+    "kind": "FunctionDeclaration",
+    "startLine": 22,
+    "endLine": 24,
+    "length": 3
+  },
+  {
+    "file": "packages/utils/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 23,
+    "endLine": 23,
+    "length": 1
+  },
+  {
+    "file": "packages/utils/src/index.ts",
+    "name": "isValidEmail",
+    "kind": "FunctionDeclaration",
+    "startLine": 26,
+    "endLine": 29,
+    "length": 4
+  },
+  {
+    "file": "packages/utils/src/index.ts",
+    "name": "generateId",
+    "kind": "FunctionDeclaration",
+    "startLine": 31,
+    "endLine": 33,
+    "length": 3
+  },
+  {
+    "file": "packages/utils/src/index.ts",
+    "name": "deepClone",
+    "kind": "FunctionDeclaration",
+    "startLine": 35,
+    "endLine": 37,
+    "length": 3
+  },
+  {
+    "file": "packages/utils/src/index.ts",
+    "name": "retry",
+    "kind": "FunctionDeclaration",
+    "startLine": 39,
+    "endLine": 63,
+    "length": 25
+  },
+  {
+    "file": "packages/utils/src/index.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 44,
+    "endLine": 62,
+    "length": 19
+  },
+  {
+    "file": "packages/utils/src/index.ts",
+    "name": "attempt",
+    "kind": "ArrowFunction",
+    "startLine": 47,
+    "endLine": 59,
+    "length": 13
+  },
+  {
+    "file": "packages/utils/src/index.ts",
+    "name": "attempt",
+    "kind": "ArrowFunction",
+    "startLine": 47,
+    "endLine": 59,
+    "length": 13
+  },
+  {
+    "file": "services/user-service/src/server-minimal.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 26,
+    "endLine": 34,
+    "length": 9
+  },
+  {
+    "file": "services/user-service/src/server-minimal.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 37,
+    "endLine": 50,
+    "length": 14
+  },
+  {
+    "file": "services/user-service/src/server-minimal.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 52,
+    "endLine": 82,
+    "length": 31
+  },
+  {
+    "file": "services/user-service/src/server-minimal.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 85,
+    "endLine": 92,
+    "length": 8
+  },
+  {
+    "file": "services/user-service/src/server-minimal.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 95,
+    "endLine": 101,
+    "length": 7
+  },
+  {
+    "file": "services/user-service/src/server-minimal.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 104,
+    "endLine": 109,
+    "length": 6
+  },
+  {
+    "file": "services/user-service/src/server-minimal.ts",
+    "name": "startServer",
+    "kind": "FunctionDeclaration",
+    "startLine": 112,
+    "endLine": 138,
+    "length": 27
+  },
+  {
+    "file": "services/user-service/src/server-minimal.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 116,
+    "endLine": 121,
+    "length": 6
+  },
+  {
+    "file": "services/user-service/src/server-minimal.ts",
+    "name": "shutdown",
+    "kind": "ArrowFunction",
+    "startLine": 124,
+    "endLine": 130,
+    "length": 7
+  },
+  {
+    "file": "services/user-service/src/server-minimal.ts",
+    "name": "shutdown",
+    "kind": "ArrowFunction",
+    "startLine": 124,
+    "endLine": 130,
+    "length": 7
+  },
+  {
+    "file": "services/user-service/src/server-minimal.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 126,
+    "endLine": 129,
+    "length": 4
+  },
+  {
+    "file": "services/user-service/src/server-minimal.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 141,
+    "endLine": 144,
+    "length": 4
+  },
+  {
+    "file": "services/user-service/src/server-observability.ts",
+    "name": "observabilityMiddleware",
+    "kind": "FunctionDeclaration",
+    "startLine": 18,
+    "endLine": 67,
+    "length": 50
+  },
+  {
+    "file": "services/user-service/src/server-observability.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 19,
+    "endLine": 66,
+    "length": 48
+  },
+  {
+    "file": "services/user-service/src/server-observability.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 41,
+    "endLine": 63,
+    "length": 23
+  },
+  {
+    "file": "services/user-service/src/server-observability.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 80,
+    "endLine": 104,
+    "length": 25
+  },
+  {
+    "file": "services/user-service/src/server-observability.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 107,
+    "endLine": 134,
+    "length": 28
+  },
+  {
+    "file": "services/user-service/src/server-observability.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 137,
+    "endLine": 165,
+    "length": 29
+  },
+  {
+    "file": "services/user-service/src/server-observability.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 167,
+    "endLine": 239,
+    "length": 73
+  },
+  {
+    "file": "services/user-service/src/server-observability.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 242,
+    "endLine": 261,
+    "length": 20
+  },
+  {
+    "file": "services/user-service/src/server-observability.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 264,
+    "endLine": 288,
+    "length": 25
+  },
+  {
+    "file": "services/user-service/src/server-observability.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 291,
+    "endLine": 310,
+    "length": 20
+  },
+  {
+    "file": "services/user-service/src/server-observability.ts",
+    "name": "startServer",
+    "kind": "FunctionDeclaration",
+    "startLine": 313,
+    "endLine": 387,
+    "length": 75
+  },
+  {
+    "file": "services/user-service/src/server-observability.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 328,
+    "endLine": 343,
+    "length": 16
+  },
+  {
+    "file": "services/user-service/src/server-observability.ts",
+    "name": "shutdown",
+    "kind": "ArrowFunction",
+    "startLine": 346,
+    "endLine": 365,
+    "length": 20
+  },
+  {
+    "file": "services/user-service/src/server-observability.ts",
+    "name": "shutdown",
+    "kind": "ArrowFunction",
+    "startLine": 346,
+    "endLine": 365,
+    "length": 20
+  },
+  {
+    "file": "services/user-service/src/server-observability.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 355,
+    "endLine": 364,
+    "length": 10
+  },
+  {
+    "file": "services/user-service/src/server-observability.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 390,
+    "endLine": 407,
+    "length": 18
+  },
+  {
+    "file": "services/user-service/src/server-simple.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 71,
+    "endLine": 78,
+    "length": 8
+  },
+  {
+    "file": "services/user-service/src/server-simple.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 81,
+    "endLine": 86,
+    "length": 6
+  },
+  {
+    "file": "services/user-service/src/server-simple.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 88,
+    "endLine": 107,
+    "length": 20
+  },
+  {
+    "file": "services/user-service/src/server-simple.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 110,
+    "endLine": 116,
+    "length": 7
+  },
+  {
+    "file": "services/user-service/src/server-simple.ts",
+    "name": "startServer",
+    "kind": "FunctionDeclaration",
+    "startLine": 119,
+    "endLine": 150,
+    "length": 32
+  },
+  {
+    "file": "services/user-service/src/server-simple.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 123,
+    "endLine": 128,
+    "length": 6
+  },
+  {
+    "file": "services/user-service/src/server-simple.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 131,
+    "endLine": 136,
+    "length": 6
+  },
+  {
+    "file": "services/user-service/src/server-simple.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 133,
+    "endLine": 135,
+    "length": 3
+  },
+  {
+    "file": "services/user-service/src/server-simple.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 138,
+    "endLine": 143,
+    "length": 6
+  },
+  {
+    "file": "services/user-service/src/server-simple.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 140,
+    "endLine": 142,
+    "length": 3
+  },
+  {
+    "file": "services/user-service/src/server-simple.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 153,
+    "endLine": 158,
+    "length": 6
+  },
+  {
+    "file": "services/user-service/src/server.ts",
+    "name": "startServer",
+    "kind": "FunctionDeclaration",
+    "startLine": 69,
+    "endLine": 424,
+    "length": 356
+  },
+  {
+    "file": "services/user-service/src/server.ts",
+    "name": "handler",
+    "kind": "ArrowFunction",
+    "startLine": 127,
+    "endLine": 130,
+    "length": 4
+  },
+  {
+    "file": "services/user-service/src/server.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 140,
+    "endLine": 165,
+    "length": 26
+  },
+  {
+    "file": "services/user-service/src/server.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 180,
+    "endLine": 209,
+    "length": 30
+  },
+  {
+    "file": "services/user-service/src/server.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 217,
+    "endLine": 238,
+    "length": 22
+  },
+  {
+    "file": "services/user-service/src/server.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 221,
+    "endLine": 227,
+    "length": 7
+  },
+  {
+    "file": "services/user-service/src/server.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 247,
+    "endLine": 274,
+    "length": 28
+  },
+  {
+    "file": "services/user-service/src/server.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 288,
+    "endLine": 303,
+    "length": 16
+  },
+  {
+    "file": "services/user-service/src/server.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 312,
+    "endLine": 336,
+    "length": 25
+  },
+  {
+    "file": "services/user-service/src/server.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 350,
+    "endLine": 373,
+    "length": 24
+  },
+  {
+    "file": "services/user-service/src/server.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 385,
+    "endLine": 393,
+    "length": 9
+  },
+  {
+    "file": "services/user-service/src/server.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 407,
+    "endLine": 411,
+    "length": 5
+  },
+  {
+    "file": "services/user-service/src/server.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 413,
+    "endLine": 417,
+    "length": 5
+  },
+  {
+    "file": "services/user-service/src/user-service.ts",
+    "name": "SecureUserRepository",
+    "kind": "ClassDeclaration",
+    "startLine": 12,
+    "endLine": 66,
+    "length": 55
+  },
+  {
+    "file": "services/user-service/src/user-service.ts",
+    "name": "SecureUserRepository.constructor",
+    "kind": "Constructor",
+    "startLine": 15,
+    "endLine": 17,
+    "length": 3
+  },
+  {
+    "file": "services/user-service/src/user-service.ts",
+    "name": "SecureUserRepository.findById",
+    "kind": "MethodDeclaration",
+    "startLine": 19,
+    "endLine": 22,
+    "length": 4
+  },
+  {
+    "file": "services/user-service/src/user-service.ts",
+    "name": "SecureUserRepository.findByEmail",
+    "kind": "MethodDeclaration",
+    "startLine": 24,
+    "endLine": 27,
+    "length": 4
+  },
+  {
+    "file": "services/user-service/src/user-service.ts",
+    "name": "SecureUserRepository.findAll",
+    "kind": "MethodDeclaration",
+    "startLine": 29,
+    "endLine": 32,
+    "length": 4
+  },
+  {
+    "file": "services/user-service/src/user-service.ts",
+    "name": "SecureUserRepository.save",
+    "kind": "MethodDeclaration",
+    "startLine": 34,
+    "endLine": 51,
+    "length": 18
+  },
+  {
+    "file": "services/user-service/src/user-service.ts",
+    "name": "SecureUserRepository.delete",
+    "kind": "MethodDeclaration",
+    "startLine": 53,
+    "endLine": 55,
+    "length": 3
+  },
+  {
+    "file": "services/user-service/src/user-service.ts",
+    "name": "SecureUserRepository.toSecureUser",
+    "kind": "MethodDeclaration",
+    "startLine": 57,
+    "endLine": 65,
+    "length": 9
+  },
+  {
+    "file": "services/user-service/src/user-service.ts",
+    "name": "<inline>",
+    "kind": "ArrowFunction",
+    "startLine": 31,
+    "endLine": 31,
+    "length": 1
+  },
+  {
+    "file": "services/user-service/src/user-service.ts",
+    "name": "UserService",
+    "kind": "ClassDeclaration",
+    "startLine": 85,
+    "endLine": 475,
+    "length": 391
+  },
+  {
+    "file": "services/user-service/src/user-service.ts",
+    "name": "UserService.constructor",
+    "kind": "Constructor",
+    "startLine": 91,
+    "endLine": 105,
+    "length": 15
+  },
+  {
+    "file": "services/user-service/src/user-service.ts",
+    "name": "UserService.createUser",
+    "kind": "MethodDeclaration",
+    "startLine": 107,
+    "endLine": 166,
+    "length": 60
+  },
+  {
+    "file": "services/user-service/src/user-service.ts",
+    "name": "UserService.getUserById",
+    "kind": "MethodDeclaration",
+    "startLine": 168,
+    "endLine": 179,
+    "length": 12
+  },
+  {
+    "file": "services/user-service/src/user-service.ts",
+    "name": "UserService.getUserByEmail",
+    "kind": "MethodDeclaration",
+    "startLine": 181,
+    "endLine": 192,
+    "length": 12
+  },
+  {
+    "file": "services/user-service/src/user-service.ts",
+    "name": "UserService.getAllUsers",
+    "kind": "MethodDeclaration",
+    "startLine": 194,
+    "endLine": 204,
+    "length": 11
+  },
+  {
+    "file": "services/user-service/src/user-service.ts",
+    "name": "UserService.updateUser",
+    "kind": "MethodDeclaration",
+    "startLine": 206,
+    "endLine": 263,
+    "length": 58
+  },
+  {
+    "file": "services/user-service/src/user-service.ts",
+    "name": "UserService.deleteUser",
+    "kind": "MethodDeclaration",
+    "startLine": 265,
+    "endLine": 293,
+    "length": 29
+  },
+  {
+    "file": "services/user-service/src/user-service.ts",
+    "name": "UserService.authenticateUser",
+    "kind": "MethodDeclaration",
+    "startLine": 295,
+    "endLine": 347,
+    "length": 53
+  },
+  {
+    "file": "services/user-service/src/user-service.ts",
+    "name": "UserService.deactivateUser",
+    "kind": "MethodDeclaration",
+    "startLine": 349,
+    "endLine": 385,
+    "length": 37
+  },
+  {
+    "file": "services/user-service/src/user-service.ts",
+    "name": "UserService.activateUser",
+    "kind": "MethodDeclaration",
+    "startLine": 387,
+    "endLine": 423,
+    "length": 37
+  },
+  {
+    "file": "services/user-service/src/user-service.ts",
+    "name": "UserService.changeUserPassword",
+    "kind": "MethodDeclaration",
+    "startLine": 425,
+    "endLine": 474,
+    "length": 50
+  }
+]

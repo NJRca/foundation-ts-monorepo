@@ -4,7 +4,12 @@ import * as fs from 'fs';
 
 import { SarifResult, generateSarifReport } from './index.js';
 
-import { assertNonNull } from '@foundation/contracts';
+// Local minimal assert to avoid importing from other workspace packages during package build
+function assertNonNull<T>(value: T | null | undefined, name?: string): asserts value is T {
+  if (value === null || value === undefined) {
+    throw new Error((name || 'value') + ' must not be null or undefined');
+  }
+}
 
 interface CliOptions {
   directory: string;
@@ -45,7 +50,9 @@ function parseArgs(): CliOptions {
         if (format && ['sarif', 'json', 'console'].includes(format)) {
           options.format = format as 'sarif' | 'json' | 'console';
         } else {
-          console.error(`Error: Invalid format '${format}'. Use: sarif, json, or console`);
+          // CLI error output is intentional
+          // eslint-disable-next-line no-console
+          console.error('Error: Invalid format ' + format + '. Use: sarif, json, or console');
           process.exit(1);
         }
         break;
@@ -58,7 +65,9 @@ function parseArgs(): CliOptions {
         if (!options.directory && !arg.startsWith('-')) {
           options.directory = arg;
         } else {
-          console.error(`Error: Unknown argument '${arg}'`);
+          // CLI error output is intentional
+          // eslint-disable-next-line no-console
+          console.error('Error: Unknown argument ' + arg);
           process.exit(1);
         }
         break;
@@ -120,7 +129,6 @@ function getLevelIcon(level: string): string {
   return '📝';
 }
 
-
 // ALLOW_COMPLEXITY_DELTA: CLI glue includes argument parsing and output formatting;
 // considered an allowed complexity exception.
 
@@ -135,17 +143,21 @@ function main(): void {
   }
 
   if (!fs.existsSync(options.directory)) {
-    console.error(`Error: Directory '${options.directory}' does not exist`);
+    // eslint-disable-next-line no-console
+    console.error('Error: Directory ' + options.directory + ' does not exist');
     process.exit(1);
   }
 
   if (!fs.statSync(options.directory).isDirectory()) {
-    console.error(`Error: '${options.directory}' is not a directory`);
+    // eslint-disable-next-line no-console
+    console.error('Error: ' + options.directory + ' is not a directory');
     process.exit(1);
   }
 
   if (!options.quiet) {
-    console.log(`🔍 Analyzing directory: ${options.directory}`);
+    // CLI informational output is intentional
+    // eslint-disable-next-line no-console
+    console.log('🔍 Analyzing directory: ' + options.directory);
   }
 
   try {
@@ -159,7 +171,9 @@ function main(): void {
       case 'sarif': {
         fs.writeFileSync(outputPath, JSON.stringify(report, null, 2));
         if (!options.quiet) {
-          console.log(`✅ SARIF analysis complete. Results written to: ${outputPath}`);
+          // CLI informational output is intentional
+          // eslint-disable-next-line no-console
+          console.log('✅ SARIF analysis complete. Results written to: ' + outputPath);
         }
         break;
       }
@@ -175,7 +189,9 @@ function main(): void {
         };
         fs.writeFileSync(outputPath, JSON.stringify(jsonOutput, null, 2));
         if (!options.quiet) {
-          console.log(`✅ JSON analysis complete. Results written to: ${outputPath}`);
+          // CLI informational output is intentional
+          // eslint-disable-next-line no-console
+          console.log('✅ JSON analysis complete. Results written to: ' + outputPath);
         }
         break;
       }
@@ -200,7 +216,9 @@ function main(): void {
 }
 
 function printSummary(results: SarifResult[]): void {
-  console.log(`📊 Found ${results.length} issues`);
+  // Summary output is CLI-level informational output
+  // eslint-disable-next-line no-console
+  console.log('📊 Found ' + results.length + ' issues');
 
   if (results.length > 0) {
     const summary = results.reduce<Record<string, number>>((acc, result) => {
@@ -208,17 +226,23 @@ function printSummary(results: SarifResult[]): void {
       return acc;
     }, {});
 
+    // CLI informational output
+    // eslint-disable-next-line no-console
     console.log('\n📋 Summary:');
     for (const [level, count] of Object.entries(summary)) {
       const icon = getLevelIcon(level);
-      console.log(`  ${icon} ${level}: ${count}`);
+      // eslint-disable-next-line no-console
+      console.log('  ' + icon + ' ' + level + ': ' + count);
     }
   }
 }
 
 function printConsoleResults(results: SarifResult[], quiet: boolean): void {
   if (!quiet) {
+    // CLI informational output
+    // eslint-disable-next-line no-console
     console.log('\n🔍 Static Analysis Results');
+    // eslint-disable-next-line no-console
     console.log('==========================');
   }
 
@@ -241,21 +265,26 @@ function printConsoleResults(results: SarifResult[], quiet: boolean): void {
     if (levelResults.length === 0) continue;
 
     const icon = getLevelIcon(level);
-    console.log(`\n${icon} ${level.toUpperCase()} (${levelResults.length}):`);
+    // eslint-disable-next-line no-console
+    console.log('\n' + icon + ' ' + level.toUpperCase() + ' (' + levelResults.length + '):');
 
     levelResults.forEach((result, index) => {
       const location = result.locations[0]?.physicalLocation;
       const file = location?.artifactLocation?.uri || 'unknown';
       const line = location?.region?.startLine || 0;
 
-      console.log(`  ${index + 1}. ${file}:${line}`);
-      console.log(`     ${result.message.text}`);
-      console.log(`     Rule: ${result.ruleId}`);
+      // eslint-disable-next-line no-console
+      console.log('  ' + (index + 1) + '. ' + file + ':' + line);
+      // eslint-disable-next-line no-console
+      console.log('     ' + result.message.text);
+      // eslint-disable-next-line no-console
+      console.log('     Rule: ' + result.ruleId);
     });
   }
 
   if (!quiet) {
-    console.log(`\n📊 Total: ${results.length} issues`);
+    // eslint-disable-next-line no-console
+    console.log('\n📊 Total: ' + results.length + ' issues');
   }
 }
 

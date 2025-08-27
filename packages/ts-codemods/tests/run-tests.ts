@@ -1,7 +1,14 @@
 import { addConfigLoader, addDbcGuards, extractFunctionalCore } from '../src/index.js';
 
 import { Project } from 'ts-morph';
-import { sampleWithProcessEnv } from './fixtures/process-env-samples';
+
+// Dynamically import fixture so ts-node/esm resolves the .ts file correctly
+let sampleWithProcessEnv: string;
+{
+  const fixtureUrl = new URL('./fixtures/process-env-samples.ts', import.meta.url);
+  const mod = await import(fixtureUrl.href);
+  sampleWithProcessEnv = (mod as { sampleWithProcessEnv: string }).sampleWithProcessEnv;
+}
 
 function testAddConfigLoader() {
   const project = new Project({ useInMemoryFileSystem: true });

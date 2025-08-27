@@ -1,6 +1,5 @@
 import { Config, Logger } from '@foundation/contracts';
 import {
-  InMemoryTracer,
   LogLevel,
   MetricsCollector,
   PrometheusMetricsCollector,
@@ -10,6 +9,7 @@ import {
 } from './index';
 
 import { assertNonNull } from '@foundation/contracts';
+import { createTracingService } from './tracing';
 // ALLOW_COMPLEXITY_DELTA: Observability middleware contains plumbing and
 // cross-cutting concerns. Marking as allowed for complexity policy.
 import { randomUUID } from 'crypto';
@@ -71,7 +71,8 @@ export class ObservabilityMiddleware {
     }
 
     if (this.config.enableTracing) {
-      this.tracer = new InMemoryTracer(this.logger);
+      const tracingService = createTracingService(this.config.enableTracing, this.logger);
+      this.tracer = tracingService.getTracer();
     }
 
     this.logger.info('Observability middleware initialized', {

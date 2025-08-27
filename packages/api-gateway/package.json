@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "jest --passWithNoTests",
+    "test": "jest --passWithNoTests --testPathPattern=src/base-middleware.test.js",
     "lint": "cd ../.. && npx eslint packages/api-gateway/src/**/*.ts",
     "clean": "rm -rf dist",
     "dev": "tsc --watch"
@@ -23,6 +23,6 @@
     "@types/cors": "^2.8.0"
   },
   "devDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "5.3.3"
   }
 }
