@@ -39,7 +39,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/*.test.ts', '**/*.spec.ts'],
+      files: ['**/*.test.ts', '**/*.spec.ts', '**/*.test.js', '**/*.spec.js'],
       env: {
         jest: true,
       },
@@ -50,12 +50,12 @@ module.exports = {
     },
     {
       files: [
-        'packages/api-gateway/src/**/*.ts',
-        'packages/database/src/**/*.ts',
-        'packages/observability/src/**/*.ts',
-        'packages/performance/src/**/*.ts',
-        'packages/security/src/**/*.ts',
-        'packages/selfheal-*/src/**/*.ts',
+        'packages/api-gateway/src/**/*.{ts,js}',
+        'packages/database/src/**/*.{ts,js}',
+        'packages/observability/src/**/*.{ts,js}',
+        'packages/performance/src/**/*.{ts,js}',
+        'packages/security/src/**/*.{ts,js}',
+        'packages/selfheal-*/src/**/*.{ts,js}',
       ],
       rules: {
         // Temporarily downgrade explicit any to warn during staged typing migration

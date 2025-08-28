@@ -32,8 +32,13 @@
     "paths": {
       "@foundation/*": ["packages/*/dist", "packages/*/src"],
       "@foundation/contracts": ["packages/contracts/dist/index.d.ts"],
-      "@foundation/config": ["packages/config/dist/index.d.ts"]
+      "@foundation/config": ["packages/config/dist/index.d.ts"],
+      "@foundation/ts-codemods": [
+        "packages/ts-codemods/dist/index.d.ts",
+        "packages/ts-codemods/src/index.ts"
+      ]
     },
+    "typeRoots": ["types", "node_modules/@types"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "resolveJsonModule": true,
@@ -42,6 +47,6 @@
     "allowUnreachableCode": false,
     "noEmitOnError": true
   },
-  "include": ["packages/**/*.ts", "services/**/*.ts", "src/**/*.ts"],
+  "include": ["packages/**/*.ts", "services/**/*.ts", "src/**/*.ts", "types/**/*.d.ts"],
   "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"]
 }
