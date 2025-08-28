@@ -20,7 +20,7 @@ function ok(msg) {
 const allFiles = glob
   .sync('**/*.ts', { ignore: ['**/node_modules/**', 'dist/**', '.git/**'] })
   .filter(f => !f.endsWith('.d.ts') && !f.includes('node_modules'));
-let violations = [];
+const violations = [];
 for (const file of allFiles) {
   const content = fs.readFileSync(file, 'utf8');
   if (content.includes('process.env')) {
@@ -42,7 +42,7 @@ if (violations.length > 0) {
 // 2) Check packages/contracts for exported functions
 const contractsDir = path.join('packages', 'contracts', 'src');
 const contractFiles = glob.sync(path.join(contractsDir, '**/*.ts'));
-let contractViolations = [];
+const contractViolations = [];
 for (const file of contractFiles) {
   const content = fs.readFileSync(file, 'utf8');
   // naive checks:

@@ -1,26 +1,26 @@
 {
-  "name": "@foundation/analyzer",
-  "version": "1.0.0",
-  "description": "Static analysis tool with SARIF output",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "bin": {
-    "analyzer": "dist/cli.js"
+  'name': '@foundation/analyzer',
+  'version': '1.0.0',
+  'description': 'Static analysis tool with SARIF output',
+  'main': 'dist/index.js',
+  'types': 'dist/index.d.ts',
+  'bin': {
+    'analyzer': 'dist/cli.js'
   },
-  "scripts": {
-    "build": "tsc",
-    "test": "jest --passWithNoTests",
-    "lint": "cd ../.. && npx eslint packages/analyzer/src/**/*.ts",
-    "analyze": "node dist/cli.js ../../examples",
-    "clean": "rm -rf dist",
-    "dev": "tsc --watch"
+  'scripts': {
+    'build': 'tsc',
+    'test': 'jest --passWithNoTests',
+    'lint': 'cd ../.. && npx eslint packages/analyzer/src/**/*.ts',
+    'analyze': 'node dist/cli.js ../../examples',
+    'clean': 'rm -rf dist',
+    'dev': 'tsc --watch'
   },
-  "dependencies": {
-    "@foundation/contracts": "workspace:*",
-    "@types/node": "^20.0.0"
+  'dependencies': {
+    '@foundation/contracts': 'workspace:*',
+    '@types/node': '^20.0.0'
   },
-  "devDependencies": {},
-  "files": [
-    "dist/**/*"
+  'devDependencies': {},
+  'files': [
+    'dist/**/*'
   ]
-}
+};

@@ -30,7 +30,9 @@
     "importHelpers": true,
     "baseUrl": ".",
     "paths": {
-      "@foundation/*": ["packages/*/src"]
+      "@foundation/*": ["packages/*/dist", "packages/*/src"],
+      "@foundation/contracts": ["packages/contracts/dist/index.d.ts"],
+      "@foundation/config": ["packages/config/dist/index.d.ts"]
     },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
@@ -40,15 +42,6 @@
     "allowUnreachableCode": false,
     "noEmitOnError": true
   },
-  "include": [
-    "packages/**/*.ts",
-    "services/**/*.ts",
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.test.ts",
-    "**/*.spec.ts"
-  ]
+  "include": ["packages/**/*.ts", "services/**/*.ts", "src/**/*.ts"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"]
 }

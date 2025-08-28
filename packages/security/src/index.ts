@@ -1,13 +1,18 @@
+// ALLOW_COMPLEXITY_DELTA: Security module consolidates auth and policy helpers; large by design.
+// Consider splitting into smaller modules in the future.
+
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 
 import { createHash, randomBytes, timingSafeEqual } from 'crypto';
 
-// Authentication interfaces
 import { User as BaseUser } from '@foundation/database';
+// Authentication interfaces
 import { Logger } from '@foundation/contracts';
 import { createLogger } from '@foundation/observability';
 
+// @intent: User (security)
+// Purpose: extend base user with authentication fields used by security services.
 export interface User extends BaseUser {
   passwordHash: string;
   roles: string[];
@@ -52,6 +57,9 @@ export interface Role {
 }
 
 // Authentication service
+// @intent: AuthenticationService
+// Purpose: manage password hashing, token generation/verification, sessions.
+// Constraints: in-memory session store used for simplicity; production should use durable stores.
 export class AuthenticationService {
   private readonly logger: Logger;
   private readonly jwtSecret: string;
@@ -62,13 +70,16 @@ export class AuthenticationService {
   private readonly sessions: Map<string, SessionData> = new Map();
   private readonly blacklistedTokens: Set<string> = new Set();
 
-  constructor(config: {
-    jwtSecret: string;
-    jwtRefreshSecret: string;
-    saltRounds?: number;
-    accessTokenTtl?: number; // seconds
-    refreshTokenTtl?: number; // seconds
-  }, logger?: Logger) {
+  constructor(
+    config: {
+      jwtSecret: string;
+      jwtRefreshSecret: string;
+      saltRounds?: number;
+      accessTokenTtl?: number; // seconds
+      refreshTokenTtl?: number; // seconds
+    },
+    logger?: Logger
+  ) {
     this.logger = logger || createLogger(false, 0, 'AuthenticationService');
     this.jwtSecret = config.jwtSecret;
     this.jwtRefreshSecret = config.jwtRefreshSecret;
@@ -84,7 +95,7 @@ export class AuthenticationService {
       return hash;
     } catch (error) {
       this.logger.error('Password hashing failed', {
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
       throw new Error('Password hashing failed');
     }
@@ -97,7 +108,7 @@ export class AuthenticationService {
       return isValid;
     } catch (error) {
       this.logger.error('Password verification failed', {
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
       throw new Error('Password verification failed');
     }
@@ -114,7 +125,7 @@ export class AuthenticationService {
       roles: user.roles,
       createdAt: new Date(),
       lastAccessedAt: new Date(),
-      tokenVersion: 1
+      tokenVersion: 1,
     };
     this.sessions.set(sessionId, sessionData);
 
@@ -125,7 +136,7 @@ export class AuthenticationService {
       roles: user.roles,
       sessionId,
       iat: now,
-      exp: now + this.accessTokenTtl
+      exp: now + this.accessTokenTtl,
     };
 
     // Generate refresh token
@@ -134,34 +145,34 @@ export class AuthenticationService {
       sessionId,
       tokenVersion: sessionData.tokenVersion,
       iat: now,
-      exp: now + this.refreshTokenTtl
+      exp: now + this.refreshTokenTtl,
     };
 
     try {
       const accessToken = jwt.sign(accessPayload, this.jwtSecret, {
-        algorithm: 'HS256'
+        algorithm: 'HS256',
       });
 
       const refreshToken = jwt.sign(refreshPayload, this.jwtRefreshSecret, {
-        algorithm: 'HS256'
+        algorithm: 'HS256',
       });
 
       this.logger.info('Tokens generated successfully', {
         userId: user.id,
         sessionId,
-        expiresIn: this.accessTokenTtl
+        expiresIn: this.accessTokenTtl,
       });
 
       return {
         accessToken,
         refreshToken,
         expiresIn: this.accessTokenTtl,
-        tokenType: 'Bearer'
+        tokenType: 'Bearer',
       };
     } catch (error) {
       this.logger.error('Token generation failed', {
         userId: user.id,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
       throw new Error('Token generation failed');
     }
@@ -175,12 +186,12 @@ export class AuthenticationService {
 
     try {
       const payload = jwt.verify(token, this.jwtSecret) as TokenPayload;
-      
+
       // Check if session exists
       const session = this.sessions.get(payload.sessionId);
       if (!session) {
         this.logger.warn('Token references non-existent session', {
-          sessionId: payload.sessionId
+          sessionId: payload.sessionId,
         });
         return null;
       }
@@ -190,13 +201,13 @@ export class AuthenticationService {
 
       this.logger.debug('Access token verified successfully', {
         userId: payload.userId,
-        sessionId: payload.sessionId
+        sessionId: payload.sessionId,
       });
 
       return payload;
     } catch (error) {
       this.logger.warn('Access token verification failed', {
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
       return null;
     }
@@ -205,14 +216,14 @@ export class AuthenticationService {
   async refreshAccessToken(refreshToken: string): Promise<AuthToken | null> {
     try {
       const payload = jwt.verify(refreshToken, this.jwtRefreshSecret) as RefreshTokenPayload;
-      
+
       // Check if session exists and token version matches
       const session = this.sessions.get(payload.sessionId);
       if (!session || session.tokenVersion !== payload.tokenVersion) {
         this.logger.warn('Refresh token references invalid session', {
           sessionId: payload.sessionId,
           expectedVersion: session?.tokenVersion,
-          providedVersion: payload.tokenVersion
+          providedVersion: payload.tokenVersion,
         });
         return null;
       }
@@ -226,23 +237,23 @@ export class AuthenticationService {
         passwordHash: '', // Not needed for token generation
         isActive: true,
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       };
 
       // Increment token version to invalidate old refresh tokens
       session.tokenVersion++;
-      
+
       const newTokens = await this.generateTokens(user);
 
       this.logger.info('Access token refreshed successfully', {
         userId: session.userId,
-        sessionId: payload.sessionId
+        sessionId: payload.sessionId,
       });
 
       return newTokens;
     } catch (error) {
       this.logger.warn('Refresh token verification failed', {
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
       return null;
     }
@@ -250,26 +261,26 @@ export class AuthenticationService {
 
   async revokeToken(token: string): Promise<void> {
     this.blacklistedTokens.add(token);
-    
+
     try {
       const payload = jwt.decode(token) as TokenPayload;
       if (payload?.sessionId) {
         this.sessions.delete(payload.sessionId);
         this.logger.info('Token and session revoked', {
           sessionId: payload.sessionId,
-          userId: payload.userId
+          userId: payload.userId,
         });
       }
     } catch (error) {
       this.logger.warn('Error during token revocation', {
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       });
     }
   }
 
   async revokeAllUserTokens(userId: string): Promise<void> {
     const sessionsToRemove: string[] = [];
-    
+
     Array.from(this.sessions.entries()).forEach(([sessionId, session]) => {
       if (session.userId === userId) {
         sessionsToRemove.push(sessionId);
@@ -282,7 +293,7 @@ export class AuthenticationService {
 
     this.logger.info('All user sessions revoked', {
       userId,
-      sessionCount: sessionsToRemove.length
+      sessionCount: sessionsToRemove.length,
     });
   }
 
@@ -293,13 +304,13 @@ export class AuthenticationService {
   // Session management
   getActiveSessions(userId: string): SessionInfo[] {
     const userSessions: SessionInfo[] = [];
-    
+
     Array.from(this.sessions.entries()).forEach(([sessionId, session]) => {
       if (session.userId === userId) {
         userSessions.push({
           sessionId,
           createdAt: session.createdAt,
-          lastAccessedAt: session.lastAccessedAt
+          lastAccessedAt: session.lastAccessedAt,
         });
       }
     });
@@ -324,13 +335,15 @@ export class AuthenticationService {
 
     if (expiredSessions.length > 0) {
       this.logger.info('Cleaned up expired sessions', {
-        expiredCount: expiredSessions.length
+        expiredCount: expiredSessions.length,
       });
     }
   }
 }
 
 // Authorization service
+// @intent: AuthorizationService
+// Purpose: role/permission management and checks for authorization decisions.
 export class AuthorizationService {
   private readonly logger: Logger;
   private readonly roles: Map<string, Role> = new Map();
@@ -343,11 +356,16 @@ export class AuthorizationService {
     this.roles.set(role.name, role);
     this.logger.debug('Role added', {
       roleName: role.name,
-      permissionCount: role.permissions.length
+      permissionCount: role.permissions.length,
     });
   }
 
-  hasPermission(userRoles: string[], resource: string, action: string, context?: Record<string, any>): boolean {
+  hasPermission(
+    userRoles: string[],
+    resource: string,
+    action: string,
+    context?: Record<string, any>
+  ): boolean {
     for (const roleName of userRoles) {
       const role = this.roles.get(roleName);
       if (!role) {
@@ -361,7 +379,7 @@ export class AuthorizationService {
             roleName,
             resource,
             action,
-            permission
+            permission,
           });
           return true;
         }
@@ -371,12 +389,17 @@ export class AuthorizationService {
     this.logger.debug('Permission denied', {
       userRoles,
       resource,
-      action
+      action,
     });
     return false;
   }
 
-  private matchesPermission(permission: Permission, resource: string, action: string, context?: Record<string, any>): boolean {
+  private matchesPermission(
+    permission: Permission,
+    resource: string,
+    action: string,
+    context?: Record<string, any>
+  ): boolean {
     // Check resource match (support wildcards)
     if (!this.matchesPattern(permission.resource, resource)) {
       return false;
@@ -403,7 +426,7 @@ export class AuthorizationService {
   private matchesPattern(pattern: string, value: string): boolean {
     if (pattern === '*') return true;
     if (pattern === value) return true;
-    
+
     // Simple wildcard matching
     if (pattern.includes('*')) {
       const regex = new RegExp('^' + pattern.replace(/\*/g, '.*') + '$');
@@ -415,7 +438,7 @@ export class AuthorizationService {
 
   getUserPermissions(userRoles: string[]): Permission[] {
     const permissions: Permission[] = [];
-    
+
     for (const roleName of userRoles) {
       const role = this.roles.get(roleName);
       if (role) {
@@ -428,6 +451,8 @@ export class AuthorizationService {
 }
 
 // Security utilities
+// @intent: SecurityUtils
+// Purpose: collection of helper functions for tokens, API keys, validation, and sanitization.
 export class SecurityUtils {
   private static readonly logger = createLogger(false, 0, 'SecurityUtils');
 
@@ -449,7 +474,7 @@ export class SecurityUtils {
     const computedHash = this.hashApiKey(apiKey);
     const expected = Buffer.from(hash, 'hex');
     const actual = Buffer.from(computedHash, 'hex');
-    
+
     if (expected.length !== actual.length) {
       return false;
     }
@@ -471,11 +496,9 @@ export class SecurityUtils {
     const hasNumbers = /\d/.test(password);
     const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
 
-    return password.length >= minLength && 
-           hasUpperCase && 
-           hasLowerCase && 
-           hasNumbers && 
-           hasSpecialChar;
+    return (
+      password.length >= minLength && hasUpperCase && hasLowerCase && hasNumbers && hasSpecialChar
+    );
   }
 
   static validateEmail(email: string): boolean {
@@ -529,11 +552,11 @@ export class AuthMiddleware {
   authenticate() {
     return async (req: any, res: any, next: any): Promise<void> => {
       const authHeader = req.headers.authorization;
-      
+
       if (!authHeader?.startsWith('Bearer ')) {
         res.status(401).json({
           error: 'Unauthorized',
-          message: 'Missing or invalid authorization header'
+          message: 'Missing or invalid authorization header',
         });
         return;
       }
@@ -544,7 +567,7 @@ export class AuthMiddleware {
       if (!payload) {
         res.status(401).json({
           error: 'Unauthorized',
-          message: 'Invalid or expired token'
+          message: 'Invalid or expired token',
         });
         return;
       }
@@ -554,7 +577,7 @@ export class AuthMiddleware {
         id: payload.userId,
         email: payload.email,
         roles: payload.roles,
-        sessionId: payload.sessionId
+        sessionId: payload.sessionId,
       };
 
       next();
@@ -566,29 +589,28 @@ export class AuthMiddleware {
       if (!req.user) {
         res.status(401).json({
           error: 'Unauthorized',
-          message: 'Authentication required'
+          message: 'Authentication required',
         });
         return;
       }
 
-      const hasPermission = this.authzService.hasPermission(
-        req.user.roles,
-        resource,
-        action,
-        { userId: req.user.id, ...req.params, ...req.query }
-      );
+      const hasPermission = this.authzService.hasPermission(req.user.roles, resource, action, {
+        userId: req.user.id,
+        ...req.params,
+        ...req.query,
+      });
 
       if (!hasPermission) {
         this.logger.warn('Authorization failed', {
           userId: req.user.id,
           resource,
           action,
-          userRoles: req.user.roles
+          userRoles: req.user.roles,
         });
 
         res.status(403).json({
           error: 'Forbidden',
-          message: 'Insufficient permissions'
+          message: 'Insufficient permissions',
         });
         return;
       }

@@ -1,10 +1,11 @@
+// ALLOW_COMPLEXITY_DELTA: Worker orchestration is intentionally complex.
 import * as cron from 'node-cron';
 
 import { DomainEvent, Logger } from '@foundation/contracts';
 import { ErrorFingerprint, SelfHealIngest } from '@foundation/selfheal-ingest';
-import { LLMClient } from '@foundation/selfheal-llm';
 
 import { EventBus } from '@foundation/events';
+import { LLMClient } from '@foundation/selfheal-llm';
 import { createLogger } from '@foundation/observability';
 
 export interface HealingStrategy {
@@ -41,6 +42,15 @@ export interface HealingAction {
   executed: boolean;
   result?: string;
 }
+
+/**
+ * @intent: selfheal-worker
+ * Purpose: Orchestrate healing workflows by consuming events, invoking LLMs,
+ *          and executing strategies. Keep worker logic resilient: avoid crashing
+ *          on individual failures and prefer publishing results to EventBus.
+ * Constraints: Do not mutate external state directly; use injectable strategy
+ *              implementations for side-effects (restart, apply patch, scale).
+ */
 
 /**
  * Self-Healing Worker

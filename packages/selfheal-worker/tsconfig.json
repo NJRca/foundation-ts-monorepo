@@ -1,19 +1,19 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "composite": true,
-    "declaration": true
+  'extends': '../../tsconfig.json',
+  'compilerOptions': {
+    'outDir': './dist',
+    'rootDir': './src',
+    'composite': true,
+    'declaration': true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "**/*.test.ts"],
-  "references": [
-    { "path": "../contracts" },
-    { "path": "../observability" },
-    { "path": "../events" },
-    { "path": "../database" },
-    { "path": "../selfheal-ingest" },
-    { "path": "../selfheal-llm" }
+  'include': ['src/**/*'],
+  'exclude': ['node_modules', 'dist', '**/*.test.ts'],
+  'references': [
+    { 'path': '../contracts' },
+    { 'path': '../observability' },
+    { 'path': '../events' },
+    { 'path': '../database' },
+    { 'path': '../selfheal-ingest' },
+    { 'path': '../selfheal-llm' }
   ]
-}
+};

@@ -1,23 +1,23 @@
 {
-  "name": "@foundation/observability",
-  "version": "1.0.0",
-  "description": "Logging, metrics, and observability utilities",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "tsc",
-    "test": "jest --passWithNoTests",
-    "lint": "cd ../.. && npx eslint packages/observability/src/**/*.ts",
-    "analyze": "echo 'No static analysis configured for observability'",
-    "clean": "rm -rf dist",
-    "dev": "tsc --watch"
+  'name': '@foundation/observability',
+  'version': '1.0.0',
+  'description': 'Logging, metrics, and observability utilities',
+  'main': 'dist/index.js',
+  'types': 'dist/index.d.ts',
+  'scripts': {
+    'build': 'tsc',
+    'test': 'jest --passWithNoTests',
+    'lint': 'cd ../.. && npx eslint packages/observability/src/**/*.ts',
+    'analyze': 'echo \'No static analysis configured for observability\'',
+    'clean': 'rm -rf dist',
+    'dev': 'tsc --watch'
   },
-  "dependencies": {
-    "@foundation/contracts": "workspace:*",
-    "@foundation/config": "workspace:*"
+  'dependencies': {
+    '@foundation/contracts': 'workspace:*',
+    '@foundation/config': 'workspace:*'
   },
-  "devDependencies": {},
-  "files": [
-    "dist/**/*"
+  'devDependencies': {},
+  'files': [
+    'dist/**/*'
   ]
-}
+};

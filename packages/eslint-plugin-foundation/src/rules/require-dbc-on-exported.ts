@@ -32,17 +32,15 @@ const rule: Rule.RuleModule = {
   },
   create(context) {
     return {
-      FunctionDeclaration(node: any) {
+      FunctionDeclaration(node: ESTree.FunctionDeclaration) {
         if (!node.id || !node.id.name) return;
-        // Find if exported
-        const scopeBody: any = (node as any).parent;
         const sourceText = context.getSourceCode().getText();
-        const funcStart = node.body && node.body.body ? node.body.body : [];
-        const hasAssertion = funcStart.slice(0, 3).some(isAssertionCall);
-        // simplistic export detection
-        const exported = /export\s+function\s+/.test(
-          sourceText.slice(node.range[0] - 15, node.range[0] + 30)
-        );
+        const funcStart = node.body && node.body.type === 'BlockStatement' ? node.body.body : [];
+        const hasAssertion = (funcStart as ESTree.Node[]).slice(0, 3).some(isAssertionCall);
+        // simplistic export detection (guard range)
+        const exported = Array.isArray(node.range)
+          ? /export\s+function\s+/.test(sourceText.slice(node.range[0] - 15, node.range[0] + 30))
+          : false;
         if (exported && !hasAssertion) {
           context.report({ node, messageId: 'missing' });
         }

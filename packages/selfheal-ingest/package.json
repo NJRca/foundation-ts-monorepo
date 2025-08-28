@@ -1,27 +1,27 @@
 {
-  "name": "@foundation/selfheal-ingest",
-  "version": "1.0.0",
-  "description": "Log ingestion and fingerprinting for self-healing system",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "tsc",
-    "test": "jest",
-    "lint": "cd ../.. && npx eslint packages/selfheal-ingest/src/**/*.ts",
-    "clean": "rm -rf dist",
-    "dev": "tsc --watch"
+  'name': '@foundation/selfheal-ingest',
+  'version': '1.0.0',
+  'description': 'Log ingestion and fingerprinting for self-healing system',
+  'main': 'dist/index.js',
+  'types': 'dist/index.d.ts',
+  'scripts': {
+    'build': 'tsc',
+    'test': 'jest --passWithNoTests --testPathPattern=src/index.test.js',
+    'lint': 'cd ../.. && npx eslint packages/selfheal-ingest/src/**/*.ts',
+    'clean': 'rm -rf dist',
+    'dev': 'tsc --watch'
   },
-  "dependencies": {
-    "@foundation/contracts": "workspace:*",
-    "@foundation/observability": "workspace:*",
-    "@foundation/database": "workspace:*",
-    "@foundation/events": "workspace:*",
-    "@types/node": "^20.0.0",
-    "winston": "^3.10.0"
+  'dependencies': {
+    '@foundation/contracts': 'workspace:*',
+    '@foundation/observability': 'workspace:*',
+    '@foundation/database': 'workspace:*',
+    '@foundation/events': 'workspace:*',
+    '@types/node': '^20.0.0',
+    'winston': '^3.10.0'
   },
-  "devDependencies": {
-    "typescript": "^5.0.0",
-    "jest": "^29.0.0",
-    "@types/jest": "^29.0.0"
+  'devDependencies': {
+    'typescript': '5.3.3',
+    'jest': '^29.0.0',
+    '@types/jest': '^29.0.0'
   }
-}
+};

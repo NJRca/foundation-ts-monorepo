@@ -1,3 +1,4 @@
+import { assertNonNull } from '@foundation/contracts';
 import fs from 'fs';
 import { load } from 'js-yaml';
 import path from 'path';
@@ -12,6 +13,7 @@ export interface PlaybookRules {
 }
 
 export function findRepoRoot(start = process.cwd()): string {
+  assertNonNull(start, 'start');
   let curr = start;
   while (curr !== path.parse(curr).root) {
     if (fs.existsSync(path.join(curr, 'package.json'))) return curr;
@@ -21,6 +23,7 @@ export function findRepoRoot(start = process.cwd()): string {
 }
 
 export function loadRules(root = findRepoRoot()): PlaybookRules | null {
+  assertNonNull(root, 'root');
   const p = path.join(root, 'playbook', 'rules.yaml');
   if (!fs.existsSync(p)) return null;
   const raw = fs.readFileSync(p, 'utf8');
@@ -28,5 +31,7 @@ export function loadRules(root = findRepoRoot()): PlaybookRules | null {
 }
 
 export function relativeToRoot(file: string, root = findRepoRoot()): string {
+  assertNonNull(file, 'file');
+  assertNonNull(root, 'root');
   return path.relative(root, file) || '.';
 }

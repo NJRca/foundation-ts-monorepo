@@ -1,5 +1,7 @@
 import { beforeAll, describe, expect, it } from '@jest/globals';
 
+import { createLogger } from '@foundation/observability';
+
 // Test configuration
 const USER_SERVICE_URL = 'http://localhost:3001';
 const TEST_TIMEOUT = 10000;
@@ -27,10 +29,13 @@ describe('User Service - Acceptance Tests', () => {
           break;
         }
       } catch (error) {
-        console.log(`⏳ Attempt ${attempt}/${maxAttempts}: Service not ready...`);
+        const logger = createLogger(false, 0, 'acceptance-tests');
+        logger.info(`⏳ Attempt ${attempt}/${maxAttempts}: Service not ready...`);
         // Log error for debugging if needed
         if (attempt === maxAttempts) {
-          console.error('Service startup error:', error);
+          logger.error('Service startup error:', {
+            error: error instanceof Error ? error.message : String(error),
+          });
         }
       }
 
@@ -45,7 +50,7 @@ describe('User Service - Acceptance Tests', () => {
       );
     }
 
-    console.log('✅ User service is ready for testing');
+    logger.info('✅ User service is ready for testing');
   }, 60000);
 
   describe('Health Check', () => {

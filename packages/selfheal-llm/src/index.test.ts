@@ -1,5 +1,3 @@
-// Import after mocking
-import { beforeEach, describe, expect, it } from '@jest/globals';
 import {
   LLMModel,
   MockLLMClient,
@@ -7,6 +5,8 @@ import {
   SUPPORTED_MODELS,
   createLLMClient,
 } from '../src/index';
+// Import after mocking
+import { beforeEach, describe, expect, it } from '@jest/globals';
 
 import { Config } from '@foundation/contracts';
 
@@ -15,7 +15,8 @@ const mockConfig: Config = {
   get: jest.fn().mockImplementation((key: string, defaultValue?: any) => {
     const mockValues: Record<string, any> = {
       LLM_PROVIDER: 'mock',
-      OPENAI_API_KEY: 'test-key',
+      // Use a clearly marked test-only placeholder key
+      OPENAI_API_KEY: 'placeholder-test-openai-key',
       OPENAI_MODEL: 'gpt-4o-mini',
     };
     return mockValues[key] || defaultValue;

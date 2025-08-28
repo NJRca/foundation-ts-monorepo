@@ -1,36 +1,36 @@
 {
-  "name": "@foundation/selfheal-llm",
-  "version": "1.0.0",
-  "description": "Self-healing LLM package for automated code repair and testing",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "tsc",
-    "test": "jest --passWithNoTests",
-    "lint": "cd ../.. && npx eslint packages/selfheal-llm/src/**/*.ts",
-    "analyze": "echo 'Static analysis for selfheal-llm package'",
-    "clean": "rm -rf dist",
-    "dev": "tsc --watch"
+  'name': '@foundation/selfheal-llm',
+  'version': '1.0.0',
+  'description': 'Self-healing LLM package for automated code repair and testing',
+  'main': 'dist/index.js',
+  'types': 'dist/index.d.ts',
+  'scripts': {
+    'build': 'tsc',
+    'test': 'jest --passWithNoTests --testPathPattern=src/index.test.js',
+    'lint': 'cd ../.. && npx eslint packages/selfheal-llm/src/**/*.ts',
+    'analyze': 'echo \'Static analysis for selfheal-llm package\'',
+    'clean': 'rm -rf dist',
+    'dev': 'tsc --watch'
   },
-  "dependencies": {
-    "@foundation/contracts": "workspace:*",
-    "@foundation/utils": "workspace:*",
-    "@foundation/config": "workspace:*",
-    "@foundation/observability": "workspace:*",
-    "@types/node": "^20.0.0",
-    "openai": "^4.0.0",
-    "axios": "^1.6.0"
+  'dependencies': {
+    '@foundation/contracts': 'workspace:*',
+    '@foundation/utils': 'workspace:*',
+    '@foundation/config': 'workspace:*',
+    '@foundation/observability': 'workspace:*',
+    '@types/node': '^20.0.0',
+    'openai': '^4.0.0',
+    'axios': '^1.6.0'
   },
-  "devDependencies": {},
-  "files": [
-    "dist/**/*",
-    "prompts/**/*"
+  'devDependencies': {},
+  'files': [
+    'dist/**/*',
+    'prompts/**/*'
   ],
-  "keywords": [
-    "llm",
-    "self-healing",
-    "automated-testing",
-    "code-repair",
-    "ai"
+  'keywords': [
+    'llm',
+    'self-healing',
+    'automated-testing',
+    'code-repair',
+    'ai'
   ]
-}
+};

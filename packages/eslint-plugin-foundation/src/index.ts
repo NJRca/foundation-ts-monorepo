@@ -4,6 +4,8 @@ const noProcessEnvOutsideConfig = require('./rules/no-process-env-outside-config
 const requireDbcOnExported = require('./rules/require-dbc-on-exported');
 const complexityDeltaJustified = require('./rules/complexity-delta-justified');
 
+// @intent: eslint-plugin-foundation
+// Purpose: provide organization-wide ESLint rules enforcing foundation patterns.
 export const rules = {
   'no-process-env-outside-config': noProcessEnvOutsideConfig,
   'require-dbc-on-exported': requireDbcOnExported,

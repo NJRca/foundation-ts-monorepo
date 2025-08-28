@@ -15,10 +15,10 @@ function ensureImport(sf: SourceFile) {
 function addGuards(fn: FunctionDeclaration) {
   const body = fn.getBody();
   if (!body) return false;
-  const firstStmts = (body as any)
+  const firstStmts = (body as import('ts-morph').Block)
     .getStatements()
     .slice(0, 3)
-    .map((s: any) => s.getText());
+    .map(s => s.getText());
   if (firstStmts.some((t: string) => /assert(NON|Number|IndexInRange|fail)/i.test(t))) return false; // already have
   const params = fn.getParameters();
   const lines: string[] = [];
@@ -32,7 +32,7 @@ function addGuards(fn: FunctionDeclaration) {
       lines.push(`assertNonNull(${name}, '${name}');`);
   });
   if (!lines.length) return false;
-  (body as any).insertStatements(0, lines.join('\n'));
+  (body as import('ts-morph').Block).insertStatements(0, lines.join('\n'));
   return true;
 }
 

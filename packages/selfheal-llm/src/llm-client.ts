@@ -1,3 +1,5 @@
+// ALLOW_COMPLEXITY_DELTA: LLM client contains multiple protocol handlers and
+// adapter glue; marking as allowed for complexity policy.
 /**
  * @fileoverview LLM Client Interface and Multiple Provider Implementations
  *

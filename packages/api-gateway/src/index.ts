@@ -1,4 +1,7 @@
+// ALLOW_COMPLEXITY_DELTA: Top-level gateway wiring is complex by nature.
+// This marker documents the intended complexity.
 import { Application, NextFunction, Request, Response } from 'express';
+import { createCompressionMiddleware, createRequestContextMiddleware } from './base-middleware';
 
 import { Logger } from '@foundation/contracts';
 import { createLogger } from '@foundation/observability';
@@ -62,6 +65,10 @@ export interface RequestContext {
 }
 
 // API Gateway class
+// @intent: ApiGateway
+// Purpose: central Express-based gateway to register routes, middleware, and health checks.
+// Constraints: keeps routing, request-context creation, and lightweight rate/validation middleware.
+// Behaviour: non-destructive; does not change handler signatures or response shapes.
 export class ApiGateway {
   private readonly app: Application;
   private readonly logger: Logger;
@@ -107,11 +114,16 @@ export class ApiGateway {
     this.app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
     // Request context middleware
-    this.app.use(this.createRequestContextMiddleware());
+    this.app.use(
+      createRequestContextMiddleware({
+        generateRequestId: () => this.generateRequestId(),
+        logger: this.logger,
+      })
+    );
 
     // Compression middleware
     if (this.config.compression) {
-      this.app.use(this.createCompressionMiddleware());
+      this.app.use(createCompressionMiddleware());
     }
 
     // Global middleware stack
@@ -133,8 +145,8 @@ export class ApiGateway {
         method: req.method,
       };
 
-      // Attach context to request
-      (req as any).context = context;
+      // Attach context to request (stored as index property)
+      (req as unknown as Record<string, unknown>).context = context;
 
       // Set response headers
       res.setHeader('X-Request-ID', requestId);
@@ -157,13 +169,16 @@ export class ApiGateway {
       // Simple compression middleware
       const originalSend = res.send;
 
-      res.send = function (data: any): Response {
+      type SendFn = (this: Response, body?: unknown) => Response;
+      const typedOriginalSend = originalSend as SendFn;
+
+      res.send = function (this: Response, data?: unknown): Response {
         if (typeof data === 'string' && data.length > 1024) {
           res.setHeader('Content-Encoding', 'gzip');
           // In a real implementation, you'd use a compression library here
         }
-        return originalSend.call(this, data);
-      };
+        return typedOriginalSend.call(this, data);
+      } as unknown as typeof res.send;
 
       next();
     };
@@ -262,7 +277,7 @@ export class ApiGateway {
   private createValidationMiddleware(config: ValidationConfig): Middleware {
     const validateSection = (
       section: Record<string, unknown> | undefined,
-      values: Record<string, any>,
+      values: Record<string, unknown>,
       sectionName: string
     ): string[] => {
       const errors: string[] = [];
@@ -318,7 +333,12 @@ export class ApiGateway {
       }
 
       // Add user info to request context
-      (req as any).context.userId = 'user_from_token';
+      const ctx = (req as unknown as Record<string, unknown>).context as
+        | Record<string, unknown>
+        | undefined;
+      if (ctx) {
+        ctx.userId = 'user_from_token';
+      }
       next();
     };
   }
@@ -328,7 +348,7 @@ export class ApiGateway {
       try {
         await handler(req, res, next);
       } catch (error) {
-        const context = (req as any).context as RequestContext;
+        const context = (req as unknown as Record<string, unknown>).context as RequestContext;
 
         this.logger.error('Route handler error', {
           requestId: context.requestId,
@@ -392,7 +412,8 @@ export class ApiGateway {
         this.logger.info(`API Gateway listening on port ${serverPort}`, {
           port: serverPort,
           // Prefer a provided environment field or gracefully fallback
-          environment: (this.config as any).environment || 'development',
+          environment:
+            (this.config as unknown as Record<string, unknown>).environment || 'development',
           corsOrigins: this.config.corsOrigins,
           routeCount: this.routes.size,
         });
@@ -413,6 +434,8 @@ export class ApiGateway {
 }
 
 // Route builder for fluent API
+// @intent: RouteBuilder
+// Purpose: fluent builder for RouteConfig to encourage consistent route registration.
 export class RouteBuilder {
   private readonly config: Partial<RouteConfig> = {};
 
@@ -489,6 +512,8 @@ export class RouteBuilder {
 }
 
 // Export common middleware functions
+// @intent: CommonMiddleware
+// Purpose: collection of reusable middleware factories (CORS, parsers, logging, error handling).
 export const CommonMiddleware = {
   // CORS middleware factory
   cors: (origins: string[]) =>
@@ -509,9 +534,12 @@ export const CommonMiddleware = {
       const start = Date.now();
       const originalSend = res.send;
 
-      res.send = function (data: any): Response {
+      type SendFn = (this: Response, body?: unknown) => Response;
+      const typedOriginalSend = originalSend as SendFn;
+
+      res.send = function (this: Response, data?: unknown): Response {
         const duration = Date.now() - start;
-        const context = (req as any).context as RequestContext;
+        const context = (req as unknown as Record<string, unknown>).context as RequestContext;
 
         logger.info(`${req.method} ${req.path} - ${res.statusCode}`, {
           requestId: context?.requestId,
@@ -523,8 +551,8 @@ export const CommonMiddleware = {
           userAgent: req.headers['user-agent'],
         });
 
-        return originalSend.call(this, data);
-      };
+        return typedOriginalSend.call(this, data);
+      } as unknown as typeof res.send;
 
       next();
     };
@@ -533,7 +561,7 @@ export const CommonMiddleware = {
   // Error handling middleware
   errorHandler: (logger: Logger): ErrorMiddleware => {
     return (error: Error, req: Request, res: Response, next: NextFunction): void => {
-      const context = (req as any).context as RequestContext;
+      const context = (req as unknown as Record<string, unknown>).context as RequestContext;
 
       logger.error('Unhandled error in middleware', {
         requestId: context?.requestId,

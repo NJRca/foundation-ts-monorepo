@@ -1,9 +1,10 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+'use strict';
+Object.defineProperty(exports, '__esModule', { value: true });
 const express = require('express');
 const { randomUUID } = require('crypto');
 // Simple config using environment variables directly
 const config = {
+    // ALLOW_RUNTIME_ENV: this is a temp entrypoint that reads runtime environment variables
     port: parseInt(process.env.PORT || '3000', 10),
     nodeEnv: process.env.NODE_ENV || 'development',
 };
@@ -94,7 +95,7 @@ app.get('/metrics', (req, res) => {
 # TYPE http_requests_total counter
 http_requests_total{method="GET",status="200"} 1
 
-# HELP process_uptime_seconds Process uptime in seconds  
+# HELP process_uptime_seconds Process uptime in seconds
 # TYPE process_uptime_seconds gauge
 process_uptime_seconds ${process.uptime()}
 

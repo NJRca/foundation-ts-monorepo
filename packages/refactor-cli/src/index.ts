@@ -8,6 +8,14 @@ import { runPlan } from './plan.js';
 import { runPr } from './pr.js';
 import { runScan } from './scan.js';
 
+/**
+ * @intent: refactor-cli
+ * Purpose: Small CLI entrypoint that wires refactor commands (init, scan, plan, apply).
+ * Constraints: Keep logic thin; delegate to subcommands. Avoid network calls in core actions
+ *             unless explicitly required by the subcommand. This file must remain side-effect
+ *             free except for CLI argument parsing and command registration.
+ */
+
 const program = new Command();
 program
   .name('refactor-kit')

@@ -1,43 +1,43 @@
 {
-  "name": "@foundation/user-service",
-  "version": "1.0.0",
-  "description": "User management microservice",
-  "main": "dist/server-minimal.js",
-  "bin": {
-    "user-service": "dist/server-minimal.js"
+  'name': '@foundation/user-service',
+  'version': '1.0.0',
+  'description': 'User management microservice',
+  'main': 'dist/server-minimal.js',
+  'bin': {
+    'user-service': 'dist/server-minimal.js'
   },
-  "scripts": {
-    "build": "tsc",
-    "start": "node dist/server-minimal.js",
-    "dev": "ts-node src/server-minimal.ts",
-    "test": "jest --passWithNoTests",
-    "lint": "cd ../.. && npx eslint services/user-service/src/**/*.ts",
-    "clean": "rm -rf dist",
-    "docker:build": "docker build -t user-service .",
-    "docker:run": "docker run -p 3001:3001 user-service",
-    "typecheck": "tsc --noEmit"
+  'scripts': {
+    'build': 'tsc',
+    'start': 'node dist/server-minimal.js',
+    'dev': 'ts-node src/server-minimal.ts',
+    'test': 'jest --passWithNoTests',
+    'lint': 'cd ../.. && npx eslint services/user-service/src/**/*.ts',
+    'clean': 'rm -rf dist',
+    'docker:build': 'docker build -t user-service .',
+    'docker:run': 'docker run -p 3001:3001 user-service',
+    'typecheck': 'tsc --noEmit'
   },
-  "dependencies": {
-    "@types/node": "^20.0.0",
-    "express": "^4.18.0",
-    "@types/express": "^4.17.0",
-    "@foundation/api-gateway": "workspace:*",
-    "@foundation/security": "workspace:*",
-    "@foundation/database": "workspace:*",
-    "@foundation/events": "workspace:*",
-    "@foundation/observability": "workspace:*",
-    "@foundation/contracts": "workspace:*",
-    "bcrypt": "^5.1.0",
-    "jsonwebtoken": "^9.0.0",
-    "@types/bcrypt": "^5.0.0",
-    "@types/jsonwebtoken": "^9.0.0",
-    "pg": "^8.11.0",
-    "@types/pg": "^8.10.0",
-    "redis": "^4.6.0",
-    "@types/redis": "^4.0.0"
+  'dependencies': {
+    '@types/node': '^20.0.0',
+    'express': '^4.18.0',
+    '@types/express': '^4.17.0',
+    '@foundation/api-gateway': 'workspace:*',
+    '@foundation/security': 'workspace:*',
+    '@foundation/database': 'workspace:*',
+    '@foundation/events': 'workspace:*',
+    '@foundation/observability': 'workspace:*',
+    '@foundation/contracts': 'workspace:*',
+    'bcrypt': '^5.1.0',
+    'jsonwebtoken': '^9.0.0',
+    '@types/bcrypt': '^5.0.0',
+    '@types/jsonwebtoken': '^9.0.0',
+    'pg': '^8.11.0',
+    '@types/pg': '^8.10.0',
+    'redis': '^4.6.0',
+    '@types/redis': '^4.0.0'
   },
-  "devDependencies": {
-    "typescript": "^5.0.0",
-    "ts-node": "^10.9.0"
+  'devDependencies': {
+  'typescript': '5.3.3',
+    'ts-node': '^10.9.0'
   }
-}
+};

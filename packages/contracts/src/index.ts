@@ -1,4 +1,7 @@
 // Core domain contracts and interfaces
+// @intent: contracts
+// Purpose: central typed contracts used across packages (Logger, Config, Repository, DomainEvent etc.).
+// Constraints: keep stable and minimal; other packages must not change these interfaces without coordination.
 export interface Logger {
   info(message: string, meta?: Record<string, unknown>): void;
   warn(message: string, meta?: Record<string, unknown>): void;

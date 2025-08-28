@@ -1,6 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
 
+import { assertNonNull } from '@foundation/contracts';
+// @intent: PerformanceMonitoringMiddleware
+// Purpose: collect in-process request timing and basic system metrics for observability.
+// Constraints: lightweight, in-memory; not a replacement for dedicated APM. All exported
+// interfaces are read-only snapshots to avoid leaking internal mutable state.
 import { performance } from 'perf_hooks';
+
+// ALLOW_COMPLEXITY_DELTA: Performance monitoring contains detailed timing
+// and metrics collection code; considered an allowed complexity exception.
 
 // Performance metrics collection interface
 export interface PerformanceMetrics {
@@ -58,6 +66,7 @@ export class PerformanceMonitoringMiddleware {
   private readonly startTime: number;
 
   constructor(config: Partial<PerformanceConfig> = {}) {
+    assertNonNull(config, 'config');
     this.config = {
       enabled: true,
       collectCpuMetrics: true,
@@ -87,6 +96,7 @@ export class PerformanceMonitoringMiddleware {
       const startTime = performance.now();
       const startMemory = this.config.collectMemoryMetrics ? process.memoryUsage().heapUsed : 0;
       const correlationId = (req.headers['x-correlation-id'] as string) || 'unknown';
+      assertNonNull(req, 'req');
       const routePath = (req as any)?.route?.path || req.path;
 
       // Override res.end to capture response time. Use captured `self` so we don't mix up

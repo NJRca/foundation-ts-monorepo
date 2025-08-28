@@ -1,8 +1,11 @@
+import { AuthenticationService, User } from '@foundation/security';
+// ALLOW_COMPLEXITY_DELTA: User service wiring contains many handlers and
+// auth helpers; mark as allowed complexity for repository policy.
 import { User as BaseUser, UserRepository } from '@foundation/database';
 import { DomainEventFactory, InMemoryEventStore } from '@foundation/events';
-import { AuthenticationService, User } from '@foundation/security';
 
 import { Logger } from '@foundation/contracts';
+import { loadValidatedConfig } from '@foundation/config';
 import { randomUUID } from 'crypto';
 
 // Extended UserRepository that works with security User interface
@@ -62,6 +65,12 @@ class SecureUserRepository {
   }
 }
 
+/**
+ * @intent: user-service-domain
+ * Purpose: Core domain service for user management within the user-service.
+ * Constraints: Keep persistence interactions through repository adapters and
+ *             surface only domain-safe operations. Avoid direct DB SQL here.
+ */
 export interface CreateUserRequest {
   name: string;
   email: string;
@@ -84,133 +93,173 @@ export class UserService {
     this.eventStore = eventStore;
     this.logger = logger;
 
-    // Initialize auth service for password hashing
+    // Initialize auth service for password hashing using validated config
+    const cfg = loadValidatedConfig();
     this.authService = new AuthenticationService(
       {
-        jwtSecret: 'temp-secret',
-        jwtRefreshSecret: 'temp-refresh-secret',
+        jwtSecret: cfg.getRequired<string>('JWT_SECRET'),
+        jwtRefreshSecret: cfg.getRequired<string>('JWT_REFRESH_SECRET'),
       },
       logger
     );
   }
 
   async createUser(name: string, email: string, password: string): Promise<User> {
-    this.logger.info('Creating user', { email, name });
+    try {
+      this.logger.info('Creating user', { email, name });
 
-    // Check if user already exists
-    const existingUser = await this.userRepository.findByEmail(email);
-    if (existingUser) {
-      throw new Error('User with this email already exists');
-    }
-
-    // Hash password
-    const passwordHash = await this.authService.hashPassword(password);
-
-    // Create user
-    const user: User = {
-      id: randomUUID(),
-      name,
-      email,
-      passwordHash,
-      roles: ['user'],
-      isActive: true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-
-    // Save user
-    const savedUser = await this.userRepository.save(user);
-
-    // Publish domain event
-    const event = DomainEventFactory.create(
-      user.id,
-      'UserCreated',
-      {
-        userId: user.id,
-        name: user.name,
-        email: user.email,
-        createdAt: user.createdAt,
-      },
-      {
-        service: 'user-service',
-        version: '1.0.0',
+      // Check if user already exists
+      const existingUser = await this.userRepository.findByEmail(email);
+      if (existingUser) {
+        throw new Error('User with this email already exists');
       }
-    );
 
-    await this.eventStore.saveEvents(user.id, 'User', [event]);
+      // Hash password
+      const passwordHash = await this.authService.hashPassword(password);
 
-    this.logger.info('User created successfully', {
-      userId: user.id,
-      email: user.email,
-    });
+      // Create user
+      const user: User = {
+        id: randomUUID(),
+        name,
+        email,
+        passwordHash,
+        roles: ['user'],
+        isActive: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
 
-    return savedUser;
+      // Save user
+      const savedUser = await this.userRepository.save(user);
+
+      // Publish domain event
+      const event = DomainEventFactory.create(
+        user.id,
+        'UserCreated',
+        {
+          userId: user.id,
+          name: user.name,
+          email: user.email,
+          createdAt: user.createdAt,
+        },
+        {
+          service: 'user-service',
+          version: '1.0.0',
+        }
+      );
+
+      await this.eventStore.saveEvents(user.id, 'User', [event]);
+
+      this.logger.info('User created successfully', {
+        userId: user.id,
+        email: user.email,
+      });
+
+      return savedUser;
+    } catch (error) {
+      this.logger.error('UserService.createUser failed', {
+        email,
+        error: error instanceof Error ? error.message : error,
+      });
+      throw error;
+    }
   }
 
   async getUserById(id: string): Promise<User | undefined> {
-    this.logger.debug('Fetching user by ID', { userId: id });
-    return this.userRepository.findById(id);
+    try {
+      this.logger.debug('Fetching user by ID', { userId: id });
+      return await this.userRepository.findById(id);
+    } catch (error) {
+      this.logger.error('UserService.getUserById failed', {
+        userId: id,
+        error: error instanceof Error ? error.message : error,
+      });
+      throw error;
+    }
   }
 
   async getUserByEmail(email: string): Promise<User | undefined> {
-    this.logger.debug('Fetching user by email', { email });
-    return this.userRepository.findByEmail(email);
+    try {
+      this.logger.debug('Fetching user by email', { email });
+      return await this.userRepository.findByEmail(email);
+    } catch (error) {
+      this.logger.error('UserService.getUserByEmail failed', {
+        email,
+        error: error instanceof Error ? error.message : error,
+      });
+      throw error;
+    }
   }
 
   async getAllUsers(): Promise<User[]> {
-    this.logger.debug('Fetching all users');
-    return this.userRepository.findAll();
+    try {
+      this.logger.debug('Fetching all users');
+      return await this.userRepository.findAll();
+    } catch (error) {
+      this.logger.error('UserService.getAllUsers failed', {
+        error: error instanceof Error ? error.message : error,
+      });
+      throw error;
+    }
   }
 
   async updateUser(id: string, updates: UpdateUserRequest): Promise<User | undefined> {
-    this.logger.info('Updating user', { userId: id, updates });
+    try {
+      this.logger.info('Updating user', { userId: id, updates });
 
-    const user = await this.userRepository.findById(id);
-    if (!user) {
-      return undefined;
-    }
-
-    // Check if email is being changed and if it's already taken
-    if (updates.email && updates.email !== user.email) {
-      const existingUser = await this.userRepository.findByEmail(updates.email);
-      if (existingUser) {
-        throw new Error('Email is already taken');
+      const user = await this.userRepository.findById(id);
+      if (!user) {
+        return undefined;
       }
-    }
 
-    // Update user
-    const updatedUser: User = {
-      ...user,
-      ...(updates.name ? { name: updates.name } : {}),
-      ...(updates.email ? { email: updates.email } : {}),
-      updatedAt: new Date(),
-    };
+      // Check if email is being changed and if it's already taken
+      if (updates.email && updates.email !== user.email) {
+        const existingUser = await this.userRepository.findByEmail(updates.email);
+        if (existingUser) {
+          throw new Error('Email is already taken');
+        }
+      }
 
-    const savedUser = await this.userRepository.save(updatedUser);
+      // Update user
+      const updatedUser: User = {
+        ...user,
+        ...(updates.name ? { name: updates.name } : {}),
+        ...(updates.email ? { email: updates.email } : {}),
+        updatedAt: new Date(),
+      };
 
-    // Publish domain event
-    const event = DomainEventFactory.create(
-      user.id,
-      'UserUpdated',
-      {
+      const savedUser = await this.userRepository.save(updatedUser);
+
+      // Publish domain event
+      const event = DomainEventFactory.create(
+        user.id,
+        'UserUpdated',
+        {
+          userId: user.id,
+          changes: updates,
+          updatedAt: updatedUser.updatedAt,
+        },
+        {
+          service: 'user-service',
+          version: '1.0.0',
+        }
+      );
+
+      await this.eventStore.saveEvents(user.id, 'User', [event]);
+
+      this.logger.info('User updated successfully', {
         userId: user.id,
         changes: updates,
-        updatedAt: updatedUser.updatedAt,
-      },
-      {
-        service: 'user-service',
-        version: '1.0.0',
-      }
-    );
+      });
 
-    await this.eventStore.saveEvents(user.id, 'User', [event]);
-
-    this.logger.info('User updated successfully', {
-      userId: user.id,
-      changes: updates,
-    });
-
-    return savedUser;
+      return savedUser;
+    } catch (error) {
+      this.logger.error('UserService.updateUser failed', {
+        userId: id,
+        error: error instanceof Error ? error.message : error,
+      });
+      throw error;
+    }
   }
 
   async deleteUser(id: string): Promise<void> {

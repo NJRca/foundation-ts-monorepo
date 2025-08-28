@@ -30,31 +30,33 @@ try {
     loadValidatedConfig = configModule.loadValidatedConfig;
   }
 } catch (error) {
-  console.error('❌ Failed to load @foundation/config package');
-  console.error('   Make sure to run "npm run build" first');
-  console.error('   Error:', error.message);
+  process.stderr.write('❌ Failed to load @foundation/config package\n');
+  process.stderr.write('   Make sure to run "npm run build" first\n');
+  process.stderr.write(
+    '   Error: ' + (error && error.message ? error.message : String(error)) + '\n'
+  );
   process.exit(1);
 }
 
 async function validateConfiguration() {
-  console.log('🔍 Foundation Monorepo - Configuration Validation');
-  console.log('=================================================');
-  console.log('');
+  process.stdout.write('🔍 Foundation Monorepo - Configuration Validation\n');
+  process.stdout.write('=================================================\n');
+  process.stdout.write('\n');
 
   try {
     // Load and validate configuration
     const config = loadValidatedConfig();
 
-    console.log('📋 Validating configuration...');
+    process.stdout.write('📋 Validating configuration...\n');
 
     // Perform validation
     config.validate();
 
-    console.log('✅ Configuration validation passed!');
-    console.log('');
+    process.stdout.write('✅ Configuration validation passed!\n');
+    process.stdout.write('\n');
 
     // Show loaded configuration (without sensitive values)
-    console.log('📊 Configuration Summary:');
+    process.stdout.write('📊 Configuration Summary:\n');
 
     const configKeys = [
       'NODE_ENV',
@@ -72,14 +74,14 @@ async function validateConfiguration() {
     for (const key of configKeys) {
       const value = config.get(key);
       if (value !== undefined) {
-        console.log(`   ${key}: ${value}`);
+        process.stdout.write(`   ${key}: ${value}\n`);
       }
     }
 
     // Check sensitive configuration exists (without showing values)
     const sensitiveKeys = ['JWT_SECRET', 'JWT_REFRESH_SECRET', 'DB_PASSWORD'];
-    console.log('');
-    console.log('🔒 Sensitive Configuration Check:');
+    process.stdout.write('\n');
+    process.stdout.write('🔒 Sensitive Configuration Check:\n');
 
     for (const key of sensitiveKeys) {
       const exists = config.has(key);
@@ -87,54 +89,55 @@ async function validateConfiguration() {
       const isValid = value && value.length >= 8;
 
       if (exists && isValid) {
-        console.log(`   ✅ ${key}: Present and valid`);
+        process.stdout.write(`   ✅ ${key}: Present and valid\n`);
       } else if (exists) {
-        console.log(`   ⚠️  ${key}: Present but may be too short`);
+        process.stdout.write(`   ⚠️  ${key}: Present but may be too short\n`);
       } else {
-        console.log(`   ❌ ${key}: Missing`);
+        process.stdout.write(`   ❌ ${key}: Missing\n`);
       }
     }
 
-    console.log('');
-    console.log('🎉 All configuration validation checks passed!');
+    process.stdout.write('\n');
+    process.stdout.write('🎉 All configuration validation checks passed!\n');
   } catch (error) {
-    console.error('❌ Configuration validation failed:');
-    console.error('');
+    process.stderr.write('❌ Configuration validation failed:\n\n');
 
     if (error.name === 'ConfigValidationError') {
       console.error(error.message);
 
       if (error.missingKeys && error.missingKeys.length > 0) {
-        console.error('');
-        console.error('Missing required environment variables:');
+        process.stderr.write('\n');
+        process.stderr.write('Missing required environment variables:\n');
         for (const key of error.missingKeys) {
-          console.error(`   - ${key}`);
+          process.stderr.write(`   - ${key}\n`);
         }
 
-        console.error('');
-        console.error('💡 Quick fix:');
-        console.error('   1. Copy .env.example to .env');
-        console.error('   2. Fill in the required values');
-        console.error('   3. Source the .env file or restart your shell');
+        process.stderr.write('\n');
+        process.stderr.write('💡 Quick fix:\n');
+        process.stderr.write('   1. Copy .env.example to .env\n');
+        process.stderr.write('   2. Fill in the required values\n');
+        process.stderr.write('   3. Source the .env file or restart your shell\n');
       }
     } else {
-      console.error(error.message);
+      process.stderr.write((error && error.message ? error.message : String(error)) + '\n');
     }
 
-    console.error('');
-    console.error('🚫 Configuration validation failed - services will not start properly');
+    process.stderr.write('\n');
+    process.stderr.write('🚫 Configuration validation failed - services will not start properly\n');
     process.exit(1);
   }
 }
 
 // Handle unhandled rejections
 process.on('unhandledRejection', (reason, promise) => {
-  console.error('❌ Unhandled Rejection at:', promise, 'reason:', reason);
+  process.stderr.write(
+    '❌ Unhandled Rejection at: ' + String(promise) + ' reason: ' + String(reason) + '\n'
+  );
   process.exit(1);
 });
 
 // Run validation
 validateConfiguration().catch(error => {
-  console.error('❌ Configuration validation script failed:', error);
+  process.stderr.write('❌ Configuration validation script failed: ' + String(error) + '\n');
   process.exit(1);
 });

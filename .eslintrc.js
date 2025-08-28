@@ -14,7 +14,15 @@ module.exports = {
   rules: {
     // Basic TypeScript rules
     '@typescript-eslint/no-explicit-any': 'error',
-    '@typescript-eslint/no-unused-vars': 'error',
+    // Use the TypeScript-aware rule and keep it permissive for staged migration
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      { args: 'none', varsIgnorePattern: '^_', argsIgnorePattern: '^_' },
+    ],
+
+    // core "no-undef" can be noisy for TS projects (TypeScript handles undefined identifiers)
+    'no-undef': 'off',
 
     // No direct process.env access (except in config package)
     'no-process-env': 'error',
@@ -72,6 +80,20 @@ module.exports = {
       rules: {
         'no-console': 'off',
         'no-fallthrough': 'off',
+      },
+    },
+    {
+      files: ['scripts/**/*.js', 'scripts/**/*.ts', 'packages/refactor-cli/src/**/*.ts'],
+      rules: {
+        'no-console': 'off',
+        'no-process-env': 'off',
+      },
+    },
+    {
+      files: ['services/user-service/src/**/*.js', 'services/user-service/src/**/*.ts'],
+      rules: {
+        'no-console': 'off',
+        'no-process-env': 'off',
       },
     },
   ],

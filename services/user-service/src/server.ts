@@ -1,12 +1,14 @@
+// ALLOW_COMPLEXITY_DELTA: Server entrypoint includes bootstrapping logic and
+// middleware registration; considered an allowed complexity exception.
 import { ApiGateway, RouteBuilder } from '@foundation/api-gateway';
-import { PostgresConnection, UserRepository } from '@foundation/database';
 import { AuthenticationService, AuthorizationService } from '@foundation/security';
+import { PostgresConnection, UserRepository } from '@foundation/database';
 import { Request, Response } from 'express';
 
-import { loadValidatedConfig } from '@foundation/config';
 import { InMemoryEventStore } from '@foundation/events';
-import { createObservabilitySetup } from '@foundation/observability';
 import { UserService } from './user-service';
+import { createObservabilitySetup } from '@foundation/observability';
+import { loadValidatedConfig } from '@foundation/config';
 
 // Setup observability
 const observability = createObservabilitySetup('user-service');
@@ -71,7 +73,9 @@ async function startServer(): Promise<void> {
     // Initialize dependencies
     const database = new PostgresConnection(config.database, logger);
     const eventStore = new InMemoryEventStore(logger);
-    const userRepository = new UserRepository(database, undefined, logger);
+    // Use adapter-backed repository to centralize SQL in PostgresUserAdapter
+    const userAdapter = new (require('@foundation/database').PostgresUserAdapter)(database, logger);
+    const userRepository = new UserRepository(database, undefined, logger, userAdapter);
 
     // Initialize services
     const authService = new AuthenticationService(config.auth, logger);

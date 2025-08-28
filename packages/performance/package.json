@@ -1,22 +1,22 @@
 {
-  "name": "@foundation/performance",
-  "version": "1.0.0",
-  "description": "Caching and performance optimization layers",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "tsc",
-    "test": "jest --passWithNoTests",
-    "lint": "cd ../.. && npx eslint packages/performance/src/**/*.ts",
-    "clean": "rm -rf dist",
-    "dev": "tsc --watch"
+  'name': '@foundation/performance',
+  'version': '1.0.0',
+  'description': 'Caching and performance optimization layers',
+  'main': 'dist/index.js',
+  'types': 'dist/index.d.ts',
+  'scripts': {
+    'build': 'tsc',
+    'test': 'jest --passWithNoTests',
+    'lint': 'cd ../.. && npx eslint packages/performance/src/**/*.ts',
+    'clean': 'rm -rf dist',
+    'dev': 'tsc --watch'
   },
-  "dependencies": {
-    "@foundation/contracts": "workspace:*",
-    "@foundation/observability": "workspace:*",
-    "@types/node": "^20.0.0"
+  'dependencies': {
+    '@foundation/contracts': 'workspace:*',
+    '@foundation/observability': 'workspace:*',
+    '@types/node': '^20.0.0'
   },
-  "devDependencies": {
-    "typescript": "^5.0.0"
+  'devDependencies': {
+  'typescript': '5.3.3'
   }
-}
+};
