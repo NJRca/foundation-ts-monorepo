@@ -1,0 +1,8 @@
+node_modules/
+**/dist/
+packages/*/node_modules/
+packages/*/dist/
+packages/*/package.json
+packages/*/tsconfig.tsbuildinfo
+packages/**/node_modules/
+services/**/node_modules/

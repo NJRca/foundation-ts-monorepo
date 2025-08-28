@@ -61,8 +61,8 @@ export interface Span {
 export interface Tracer {
   startSpan(operationName: string, parentSpan?: Span): Span;
   finishSpan(span: Span): void;
-  extractSpan(context: Record<string, any>): Span | undefined;
-  injectSpan(span: Span, context: Record<string, any>): void;
+  extractSpan(context: Record<string, unknown>): Span | undefined;
+  injectSpan(span: Span, context: Record<string, unknown>): void;
 }
 
 // In-memory distributed tracer

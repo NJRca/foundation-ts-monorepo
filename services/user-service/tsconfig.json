@@ -17,13 +17,11 @@
     "removeComments": false,
     "types": ["node"],
     "composite": true,
-    "baseUrl": "..",
+    "baseUrl": "../..",
     "paths": {
-      "@foundation/contracts": [
-        "../packages/contracts/dist/index.d.ts",
-        "../packages/contracts/src"
-      ],
-      "@foundation/config": ["../packages/config/dist/index.d.ts", "../packages/config/src"]
+      "@foundation/*": ["packages/*/dist", "packages/*/src"],
+      "@foundation/contracts": ["packages/contracts/dist/index.d.ts", "packages/contracts/src"],
+      "@foundation/config": ["packages/config/dist/index.d.ts", "packages/config/src"]
     }
   },
   "include": ["src/**/*"],

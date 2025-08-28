@@ -1,14 +1,14 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "composite": true
+  'extends': '../../tsconfig.json',
+  'compilerOptions': {
+    'outDir': './dist',
+    'rootDir': './src',
+    'composite': true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"],
-  "references": [
-    { "path": "../contracts" },
-    { "path": "../observability" }
+  'include': ['src/**/*'],
+  'exclude': ['node_modules', 'dist', '**/*.test.ts', '**/*.spec.ts'],
+  'references': [
+    { 'path': '../contracts' },
+    { 'path': '../observability' }
   ]
-}
+};

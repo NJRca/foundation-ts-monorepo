@@ -1,28 +1,28 @@
 {
-  "name": "@foundation/api-gateway",
-  "version": "1.0.0",
-  "description": "API Gateway with routing and middleware layers",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "tsc",
-    "test": "jest --passWithNoTests --testPathPattern=src/base-middleware.test.js",
-    "lint": "cd ../.. && npx eslint packages/api-gateway/src/**/*.ts",
-    "clean": "rm -rf dist",
-    "dev": "tsc --watch"
+  'name': '@foundation/api-gateway',
+  'version': '1.0.0',
+  'description': 'API Gateway with routing and middleware layers',
+  'main': 'dist/index.js',
+  'types': 'dist/index.d.ts',
+  'scripts': {
+    'build': 'tsc',
+    'test': 'jest --passWithNoTests --testPathPattern=src/base-middleware.test.js',
+    'lint': 'cd ../.. && npx eslint packages/api-gateway/src/**/*.ts',
+    'clean': 'rm -rf dist',
+    'dev': 'tsc --watch'
   },
-  "dependencies": {
-    "@foundation/contracts": "workspace:*",
-    "@foundation/observability": "workspace:*",
-    "@foundation/security": "workspace:*",
-    "@types/node": "^20.0.0",
-    "express": "^4.18.0",
-    "cors": "^2.8.0",
-    "helmet": "^7.0.0",
-    "@types/express": "^4.17.0",
-    "@types/cors": "^2.8.0"
+  'dependencies': {
+    '@foundation/contracts': 'workspace:*',
+    '@foundation/observability': 'workspace:*',
+    '@foundation/security': 'workspace:*',
+    '@types/node': '^20.0.0',
+    'express': '^4.18.0',
+    'cors': '^2.8.0',
+    'helmet': '^7.0.0',
+    '@types/express': '^4.17.0',
+    '@types/cors': '^2.8.0'
   },
-  "devDependencies": {
-    "typescript": "5.3.3"
+  'devDependencies': {
+    'typescript': '5.3.3'
   }
-}
+};

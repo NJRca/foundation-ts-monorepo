@@ -15,9 +15,9 @@ export interface CacheEntry<T> {
 }
 
 export interface CacheStrategy {
-  shouldEvict(entry: CacheEntry<any>, now: number): boolean;
-  onAccess(entry: CacheEntry<any>): void;
-  onSet(entry: CacheEntry<any>): void;
+  shouldEvict(entry: CacheEntry<unknown>, now: number): boolean;
+  onAccess(entry: CacheEntry<unknown>): void;
+  onSet(entry: CacheEntry<unknown>): void;
 }
 
 export interface CacheStats {

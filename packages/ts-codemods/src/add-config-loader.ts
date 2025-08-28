@@ -5,7 +5,7 @@ import { Project } from 'ts-morph';
 // Replaces direct process.env access with loadConfig() accessor import if outside config package
 export const addConfigLoader: Codemod = (project: Project, targetGlobs) => {
   const files = project.getSourceFiles(targetGlobs || ['**/*.ts']);
-  const touched: any[] = [];
+  const touched: Array<import('ts-morph').SourceFile> = [];
   for (const sf of files) {
     const rel = sf.getFilePath();
     if (/packages\/config\/src/.test(rel)) continue;

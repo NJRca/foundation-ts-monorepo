@@ -82,5 +82,19 @@ module.exports = {
         'no-fallthrough': 'off',
       },
     },
+    {
+      files: ['scripts/**/*.js', 'scripts/**/*.ts', 'packages/refactor-cli/src/**/*.ts'],
+      rules: {
+        'no-console': 'off',
+        'no-process-env': 'off',
+      },
+    },
+    {
+      files: ['services/user-service/src/**/*.js', 'services/user-service/src/**/*.ts'],
+      rules: {
+        'no-console': 'off',
+        'no-process-env': 'off',
+      },
+    },
   ],
 };

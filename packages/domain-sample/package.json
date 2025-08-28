@@ -1,23 +1,23 @@
 {
-  "name": "@foundation/domain-sample",
-  "version": "1.0.0",
-  "description": "Sample domain implementation",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "tsc",
-    "test": "jest --passWithNoTests",
-    "lint": "cd ../.. && npx eslint packages/domain-sample/src/**/*.ts",
-    "analyze": "echo 'No static analysis configured for domain-sample'",
-    "clean": "rm -rf dist",
-    "dev": "tsc --watch",
-    "typecheck": "tsc --noEmit"
+  'name': '@foundation/domain-sample',
+  'version': '1.0.0',
+  'description': 'Sample domain implementation',
+  'main': 'dist/index.js',
+  'types': 'dist/index.d.ts',
+  'scripts': {
+    'build': 'tsc',
+    'test': 'jest --passWithNoTests',
+    'lint': 'cd ../.. && npx eslint packages/domain-sample/src/**/*.ts',
+    'analyze': 'echo \'No static analysis configured for domain-sample\'',
+    'clean': 'rm -rf dist',
+    'dev': 'tsc --watch',
+    'typecheck': 'tsc --noEmit'
   },
-  "dependencies": {
-    "@foundation/contracts": "workspace:*"
+  'dependencies': {
+    '@foundation/contracts': 'workspace:*'
   },
-  "devDependencies": {},
-  "files": [
-    "dist/**/*"
+  'devDependencies': {},
+  'files': [
+    'dist/**/*'
   ]
-}
+};

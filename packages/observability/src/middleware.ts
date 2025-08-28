@@ -1,4 +1,4 @@
-import { Config, Logger } from '@foundation/contracts';
+import { Config, Logger, assertNonNull } from '@foundation/contracts';
 import {
   LogLevel,
   MetricsCollector,
@@ -8,7 +8,6 @@ import {
   createLogger,
 } from './index';
 
-import { assertNonNull } from '@foundation/contracts';
 import { createTracingService } from './tracing';
 // ALLOW_COMPLEXITY_DELTA: Observability middleware contains plumbing and
 // cross-cutting concerns. Marking as allowed for complexity policy.
@@ -43,7 +42,7 @@ export interface ObservableRequest {
   startTime?: number;
   method?: string;
   path?: string;
-  headers?: Record<string, any>;
+  headers?: Record<string, string | undefined>;
   ip?: string;
   connection?: { remoteAddress?: string };
   route?: { path?: string };
@@ -113,7 +112,26 @@ export class ObservabilityMiddleware {
    * Main observability middleware
    */
   middleware() {
-    return (req: any, res: any, next: any) => {
+    type Req = ObservableRequest & {
+      method?: string;
+      path?: string;
+      headers?: Record<string, string | undefined>;
+      ip?: string;
+      connection?: { remoteAddress?: string };
+      route?: { path?: string };
+    };
+
+    type Res = {
+      setHeader(name: string, value: string): void;
+      on(event: 'finish' | 'error', cb: (...args: unknown[]) => void): void;
+      status(code: number): { send(body: unknown): void; json(body: unknown): void };
+      send(body: unknown): void;
+      getHeader(name: string): unknown;
+    };
+
+    type Next = (...args: unknown[]) => void;
+
+    return (req: Req, res: Res, next: Next) => {
       assertNonNull(req, 'req');
       assertNonNull(res, 'res');
       const observableReq = req as ObservableRequest;
@@ -121,7 +139,7 @@ export class ObservabilityMiddleware {
       observableReq.startTime = startTime;
 
       // Skip certain paths
-      if (this.shouldSkipPath(req.path)) {
+      if (this.shouldSkipPath(req.path ?? '')) {
         return next();
       }
 
@@ -140,10 +158,10 @@ export class ObservabilityMiddleware {
 
       // Log request start
       observableReq.logger.info('Request started', {
-        method: req.method,
-        path: req.path,
-        userAgent: req.headers['user-agent'],
-        ip: req.ip || req.connection.remoteAddress,
+        method: req.method ?? 'unknown',
+        path: req.path ?? 'unknown',
+        userAgent: req.headers?.['user-agent'],
+        ip: req.ip || req.connection?.remoteAddress,
       });
 
       // Track active connections
@@ -157,8 +175,11 @@ export class ObservabilityMiddleware {
       });
 
       // Handle errors
-      res.on('error', (error: Error) => {
-        this.handleRequestError(observableReq, error);
+      res.on('error', (error?: unknown) => {
+        this.handleRequestError(
+          observableReq,
+          error instanceof Error ? error : new Error(String(error))
+        );
       });
 
       next();
@@ -169,7 +190,11 @@ export class ObservabilityMiddleware {
    * Error handling middleware
    */
   errorMiddleware() {
-    return (error: Error, req: any, res: any, next: any) => {
+    type Req = ObservableRequest & { method?: string; path?: string };
+    type Res = { status(code: number): { send(body: unknown): void } };
+    type Next = (...args: unknown[]) => void;
+
+    return (error: Error, req: Req, res: Res, next: Next) => {
       const observableReq = req as ObservableRequest;
 
       // Log error with context
@@ -180,8 +205,8 @@ export class ObservabilityMiddleware {
             message: error.message,
             stack: error.stack,
           },
-          method: req.method,
-          path: req.path,
+          method: req.method ?? 'unknown',
+          path: req.path ?? 'unknown',
         });
       }
 
@@ -200,7 +225,7 @@ export class ObservabilityMiddleware {
       // Record error metrics
       if (this.metrics) {
         this.metrics.incrementCounter('http_errors_total', {
-          method: req.method,
+          method: req.method ?? 'unknown',
           error_type: error.name,
         });
       }
@@ -213,7 +238,14 @@ export class ObservabilityMiddleware {
    * Metrics endpoint middleware
    */
   metricsEndpoint() {
-    return (req: any, res: any) => {
+    return (
+      req: { path?: string },
+      res: {
+        setHeader(name: string, value: string): void;
+        send(body: unknown): void;
+        status(code: number): { send(body: unknown): void };
+      }
+    ) => {
       if (req.path === this.config.metricsPath && this.metrics) {
         res.setHeader('Content-Type', 'text/plain; version=0.0.4; charset=utf-8');
         res.send(this.metrics.getMetrics());
@@ -227,7 +259,13 @@ export class ObservabilityMiddleware {
    * Health check endpoint with observability
    */
   healthEndpoint() {
-    return (req: any, res: any) => {
+    return (
+      req: { path?: string },
+      res: {
+        status(code: number): { json(body: unknown): void; send(body: unknown): void };
+        send(body: unknown): void;
+      }
+    ) => {
       if (req.path === this.config.healthPath) {
         const health = {
           status: 'healthy',
@@ -256,10 +294,14 @@ export class ObservabilityMiddleware {
     return this.config.skipPaths.some(skipPath => path.startsWith(skipPath));
   }
 
-  private addCorrelationId(req: any, res: any): void {
-    const correlationId = req.headers[this.config.correlationHeader] || randomUUID();
-    req.correlationId = correlationId;
-    res.setHeader(this.config.correlationHeader, correlationId);
+  private addCorrelationId(
+    req: { headers?: Record<string, string | undefined>; correlationId?: string },
+    res: { setHeader(name: string, value: string): void }
+  ): void {
+    const correlationId =
+      (req.headers && req.headers[this.config.correlationHeader]) || randomUUID();
+    req.correlationId = correlationId as string;
+    res.setHeader(this.config.correlationHeader, correlationId as string);
   }
 
   private startTracing(req: ObservableRequest): void {
@@ -322,12 +364,12 @@ export class ObservabilityMiddleware {
 
   private handleRequestCompletion(
     observableReq: ObservableRequest,
-    req: any,
-    res: any,
+    req: { method?: string; path?: string; route?: { path?: string } },
+    res: { statusCode?: number; getHeader(name: string): unknown },
     startTime: number
   ): void {
     const duration = Date.now() - startTime;
-    const statusCode = res.statusCode;
+    const statusCode = typeof res.statusCode === 'number' ? res.statusCode : 0;
 
     // Log request completion
     if (observableReq.logger) {
@@ -339,8 +381,8 @@ export class ObservabilityMiddleware {
       }
 
       observableReq.logger[logLevel]('Request completed', {
-        method: req.method,
-        path: req.path,
+        method: req.method ?? 'unknown',
+        path: req.path ?? 'unknown',
         statusCode,
         duration,
         responseSize: res.getHeader('content-length') || 0,
@@ -358,13 +400,13 @@ export class ObservabilityMiddleware {
     // Record metrics
     if (this.metrics) {
       this.metrics.incrementCounter('http_requests_total', {
-        method: req.method,
+        method: req.method ?? 'unknown',
         status_code: statusCode.toString(),
-        route: req.route?.path || req.path,
+        route: req.route?.path || req.path || 'unknown',
       });
 
       this.metrics.observeHistogram('http_request_duration_seconds', duration / 1000, {
-        method: req.method,
+        method: req.method ?? 'unknown',
         status_code: statusCode.toString(),
       });
 

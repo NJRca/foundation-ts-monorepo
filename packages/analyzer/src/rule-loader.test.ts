@@ -12,7 +12,7 @@ describe('rule-loader (ts file but plain JS content)', () => {
     const todoRule = rules.get('todo-comment');
     const consoleRule = rules.get('console-usage');
 
-    const sample = "// TODO: fix this later\nconsole.log('hello world');\nconst x = 1;";
+    const sample = '// TODO: fix this later\nconsole.log(\'hello world\');\nconst x = 1;';
 
     const todoResults = todoRule.check(sample, 'sample.ts');
     const consoleResults = consoleRule.check(sample, 'sample.ts');
