@@ -81,7 +81,7 @@ export interface LLMClient {
 export class OpenAIClient implements LLMClient {
   private readonly config: Config;
   private readonly defaultModel: LLMModel;
-  private openaiClient: any; // We'll initialize this dynamically
+  private openaiClient: unknown; // We'll initialize this dynamically
 
   constructor(config: Config) {
     this.config = config;
@@ -132,7 +132,7 @@ export class OpenAIClient implements LLMClient {
   async complete(request: LLMRequest): Promise<LLMResponse> {
     await this.ensureOpenAIClient();
 
-    if (!this.openaiClient) {
+  if (!this.openaiClient) {
       throw new Error('OpenAI client not initialized');
     }
 
@@ -141,7 +141,7 @@ export class OpenAIClient implements LLMClient {
     const maxTokens = request.maxTokens ?? 2000;
 
     try {
-      const messages: any[] = [];
+  const messages: unknown[] = [];
 
       // Add system prompt if provided
       if (request.systemPrompt) {
@@ -157,7 +157,22 @@ export class OpenAIClient implements LLMClient {
         content: request.prompt,
       });
 
-      const completion = await this.openaiClient.chat.completions.create({
+      type OpenAIChatClient = {
+        chat: {
+          completions: {
+            create(opts: Record<string, unknown>): Promise<Record<string, unknown>>;
+          };
+        };
+      };
+
+      const client = this.openaiClient as unknown as OpenAIChatClient;
+      type CompletionResult = {
+        model: string;
+        usage?: { prompt_tokens?: number; completion_tokens?: number; total_tokens?: number };
+        choices: Array<{ message?: { content?: string }; finish_reason?: string }>;
+      };
+
+      const completionUnknown = await client.chat.completions.create({
         model,
         messages,
         temperature,
@@ -167,6 +182,7 @@ export class OpenAIClient implements LLMClient {
         presence_penalty: 0,
       });
 
+      const completion = completionUnknown as unknown as CompletionResult;
       const choice = completion.choices[0];
       if (!choice?.message?.content) {
         throw new Error('No content received from OpenAI API');
@@ -177,9 +193,9 @@ export class OpenAIClient implements LLMClient {
         model: completion.model,
         usage: completion.usage
           ? {
-              promptTokens: completion.usage.prompt_tokens,
-              completionTokens: completion.usage.completion_tokens,
-              totalTokens: completion.usage.total_tokens,
+              promptTokens: completion.usage.prompt_tokens ?? 0,
+              completionTokens: completion.usage.completion_tokens ?? 0,
+              totalTokens: completion.usage.total_tokens ?? 0,
             }
           : undefined,
         finishReason: choice.finish_reason || undefined,
@@ -292,8 +308,9 @@ export async function createLLMClient(config: Config, useMock = false): Promise<
   try {
     const client = new OpenAIClient(config);
     return client;
-  } catch (error) {
-    console.warn('Failed to create OpenAI client, falling back to mock:', error);
-    return new MockLLMClient();
-  }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn('Failed to create OpenAI client, falling back to mock:', error);
+      return new MockLLMClient();
+    }
 }

@@ -47,7 +47,7 @@ export interface RefreshTokenPayload {
 export interface Permission {
   resource: string;
   action: string;
-  conditions?: Record<string, any>;
+  conditions?: Record<string, unknown>;
 }
 
 export interface Role {
@@ -364,7 +364,7 @@ export class AuthorizationService {
     userRoles: string[],
     resource: string,
     action: string,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ): boolean {
     for (const roleName of userRoles) {
       const role = this.roles.get(roleName);
@@ -398,7 +398,7 @@ export class AuthorizationService {
     permission: Permission,
     resource: string,
     action: string,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ): boolean {
     // Check resource match (support wildcards)
     if (!this.matchesPattern(permission.resource, resource)) {

@@ -335,7 +335,7 @@ export class PerformanceMonitoringMiddleware {
   }
 
   // Get performance dashboard data
-  getDashboardData(): any {
+  getDashboardData(): Record<string, unknown> {
     return {
       global: this.getGlobalMetrics(),
       endpoints: this.getEndpointMetrics(),

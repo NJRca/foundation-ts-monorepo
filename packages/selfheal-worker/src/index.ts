@@ -21,7 +21,7 @@ export interface HealingContext {
   recentLogs: any[];
   codeContext?: string;
   relatedFiles?: string[];
-  environmentInfo?: Record<string, any>;
+  environmentInfo?: Record<string, unknown>;
 }
 
 export interface HealingResult {
@@ -541,13 +541,16 @@ Format your response as JSON with this structure:
     try {
       const parsed = JSON.parse(response);
 
-      return (parsed.actions || []).map((action: any) => ({
-        type: action.type || 'code_fix',
-        description: action.description || 'LLM suggested action',
-        target: action.target || 'unknown',
-        content: action.content,
-        executed: false,
-      }));
+      return (parsed.actions || []).map((action: unknown) => {
+        const a = action as Record<string, unknown>;
+        return {
+          type: (a.type as string) || 'code_fix',
+          description: (a.description as string) || 'LLM suggested action',
+          target: (a.target as string) || 'unknown',
+          content: a.content as string | undefined,
+          executed: false,
+        };
+      });
     } catch {
       // Fallback: parse text response for common patterns
       const actions: HealingAction[] = [];
@@ -577,7 +580,7 @@ Format your response as JSON with this structure:
   /**
    * Get healing statistics
    */
-  getHealingStats(): Record<string, any> {
+  getHealingStats(): Record<string, unknown> {
     const fingerprints = this.ingestService.getFingerprints();
 
     return {

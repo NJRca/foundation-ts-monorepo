@@ -14,7 +14,7 @@ export interface LogEntry {
   requestId?: string;
   userId?: string;
   stackTrace?: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export interface ErrorFingerprint {
@@ -37,7 +37,7 @@ export interface SelfHealEvent {
   eventType: 'error_detected' | 'healing_started' | 'healing_completed' | 'healing_failed';
   service: string;
   severity: ErrorFingerprint['severity'];
-  metadata: Record<string, any>;
+  metadata: Record<string, unknown>;
 }
 
 /**

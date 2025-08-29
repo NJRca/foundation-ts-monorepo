@@ -90,6 +90,19 @@ module.exports = {
       },
     },
     {
+      // Allow explicit any in ambient declarations and tooling files used for refactors
+      files: [
+        'packages/refactor-cli/src/**/*.d.ts',
+        'packages/ts-codemods/src/**/*.ts',
+        'packages/selfheal-*/src/**/*.{ts,js}',
+        'packages/selfheal-*/src/**/*.d.ts',
+      ],
+      rules: {
+        '@typescript-eslint/no-explicit-any': 'warn',
+        'no-console': 'off',
+      },
+    },
+    {
       files: ['services/user-service/src/**/*.js', 'services/user-service/src/**/*.ts'],
       rules: {
         'no-console': 'off',

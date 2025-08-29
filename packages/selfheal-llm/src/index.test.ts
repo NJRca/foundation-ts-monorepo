@@ -11,15 +11,15 @@ import { beforeEach, describe, expect, it } from '@jest/globals';
 import { Config } from '@foundation/contracts';
 
 // Mock dependencies
-const mockConfig: Config = {
-  get: jest.fn().mockImplementation((key: string, defaultValue?: any) => {
-    const mockValues: Record<string, any> = {
+    const mockConfig: Config = {
+      get: jest.fn().mockImplementation((key: string, defaultValue?: unknown) => {
+        const mockValues: Record<string, unknown> = {
       LLM_PROVIDER: 'mock',
       // Use a clearly marked test-only placeholder key
       OPENAI_API_KEY: 'placeholder-test-openai-key',
       OPENAI_MODEL: 'gpt-4o-mini',
     };
-    return mockValues[key] || defaultValue;
+        return (mockValues as Record<string, any>)[key] || (defaultValue as any);
   }),
 } as any;
 

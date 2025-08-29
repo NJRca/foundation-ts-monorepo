@@ -64,7 +64,7 @@ export class PromptManager {
   /**
    * Process a prompt template with variables
    */
-  processTemplate(template: string, variables: Record<string, any>): string {
+  processTemplate(template: string, variables: Record<string, unknown>): string {
     let processed = template;
 
     for (const [key, value] of Object.entries(variables)) {

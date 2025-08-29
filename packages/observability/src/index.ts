@@ -120,15 +120,16 @@ export class InMemoryTracer implements Tracer {
     this.exportSpan(span);
   }
 
-  extractSpan(context: Record<string, any>): Span | undefined {
-    const spanId = context['span-id'] || context.spanId;
-    return spanId ? this.spans.get(spanId) : undefined;
+  extractSpan(context: Record<string, unknown>): Span | undefined {
+    const spanId = (context as any)['span-id'] || (context as any).spanId;
+    return spanId ? this.spans.get(String(spanId)) : undefined;
   }
 
-  injectSpan(span: Span, context: Record<string, any>): void {
-    context['trace-id'] = span.traceId;
-    context['span-id'] = span.spanId;
-    context['parent-span-id'] = span.parentSpanId;
+  injectSpan(span: Span, context: Record<string, unknown>): void {
+    // Use indexed access because context is an open bag of values from external frameworks
+    (context as any)['trace-id'] = span.traceId;
+    (context as any)['span-id'] = span.spanId;
+    (context as any)['parent-span-id'] = span.parentSpanId;
   }
 
   private exportSpan(span: Span): void {
