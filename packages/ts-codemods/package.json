@@ -1,22 +1,22 @@
 {
-  'name': '@foundation/ts-codemods',
-  'version': '0.1.0',
-  'type': 'module',
-  'main': 'dist/index.js',
-  'types': 'dist/index.d.ts',
-  'files': [
-    'dist'
+  "name": "@foundation/ts-codemods",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
   ],
-  'scripts': {
-    'build': 'tsc -p tsconfig.json',
-    'test': 'node --loader ts-node/esm tests/run-tests.ts'
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --loader ts-node/esm tests/run-tests.ts"
   },
-  'dependencies': {
-    'ts-morph': '^22.0.0'
+  "dependencies": {
+    "ts-morph": "^22.0.0"
   },
-  'devDependencies': {
-    'ts-node': '^10.9.2',
-    '@types/node': '^20.0.0',
-  'typescript': '5.3.3'
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "@types/node": "^20.0.0",
+    "typescript": "5.3.3"
   }
-};
+}

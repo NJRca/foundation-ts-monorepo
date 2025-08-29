@@ -1,30 +1,30 @@
 {
-  'name': '@foundation/selfheal-worker',
-  'version': '1.0.0',
-  'description': 'Self-healing worker for issue detection and healing orchestration',
-  'main': 'dist/index.js',
-  'types': 'dist/index.d.ts',
-  'scripts': {
-    'build': 'tsc',
-    'test': 'jest --passWithNoTests --testPathPattern=src/index.test.js',
-    'lint': 'cd ../.. && npx eslint packages/selfheal-worker/src/**/*.ts',
-    'clean': 'rm -rf dist',
-    'dev': 'tsc --watch'
+  "name": "@foundation/selfheal-worker",
+  "version": "1.0.0",
+  "description": "Self-healing worker for issue detection and healing orchestration",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest --passWithNoTests --testPathPattern=src/index.test.js",
+    "lint": "cd ../.. && npx eslint packages/selfheal-worker/src/**/*.ts",
+    "clean": "rm -rf dist",
+    "dev": "tsc --watch"
   },
-  'dependencies': {
-    '@foundation/contracts': 'workspace:*',
-    '@foundation/observability': 'workspace:*',
-    '@foundation/database': 'workspace:*',
-    '@foundation/events': 'workspace:*',
-    '@foundation/selfheal-ingest': 'workspace:*',
-    '@foundation/selfheal-llm': 'workspace:*',
-    '@types/node': '^20.0.0',
-    'node-cron': '^3.0.0'
+  "dependencies": {
+    "@foundation/contracts": "workspace:*",
+    "@foundation/observability": "workspace:*",
+    "@foundation/database": "workspace:*",
+    "@foundation/events": "workspace:*",
+    "@foundation/selfheal-ingest": "workspace:*",
+    "@foundation/selfheal-llm": "workspace:*",
+    "@types/node": "^20.0.0",
+    "node-cron": "^3.0.0"
   },
-  'devDependencies': {
-    'typescript': '5.3.3',
-    'jest': '^29.0.0',
-    '@types/jest': '^29.0.0',
-    '@types/node-cron': '^3.0.0'
+  "devDependencies": {
+    "typescript": "5.3.3",
+    "jest": "^29.0.0",
+    "@types/jest": "^29.0.0",
+    "@types/node-cron": "^3.0.0"
   }
-};
+}
